@@ -50,12 +50,12 @@ async function checkAndSendFollowups() {
     const followupsNeeded = getLeadsNeedingFollowup();
 
     if (followupsNeeded.length === 0) {
-      console.log('✅ Planificateur: aucune relance necessaire pour l\'instant');
+      console.log('✅ Planificateur: aucune relance necessaire pour l'instant');
       isRunning = false;
       return;
     }
 
-    console.log(`\n⏰ Planificateur: ${followupsNeeded.length} relance(s) a envoyer`);
+    console.log(`\n¯Planificateur: ${followupsNeeded.length} relance(s) a envoyer`);
 
     for (const { lead, followupNumber } of followupsNeeded) {
       console.log(`📤 Relance #${followupNumber} pour ${lead.firstName} (${lead.contactId})`);
