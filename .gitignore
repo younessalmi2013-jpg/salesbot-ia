@@ -1,0 +1,12 @@
+# Ne jamais uploader ces fichiers sur GitHub !
+.env
+.whatsapp-session/
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db

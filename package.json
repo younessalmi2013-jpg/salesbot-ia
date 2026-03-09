@@ -1,0 +1,33 @@
+{
+  "name": "multi-agent-sales",
+  "version": "1.0.0",
+  "description": "Salesbot IA multi-canaux : WhatsApp QR, Instagram, Telegram, Email + Appels IA",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "whatsapp": "node src/agents/whatsapp/index.js",
+    "test:openai": "node src/llm/test.js",
+    "test": "node test-complet.js",
+    "setup": "bash setup.sh"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "whatsapp-web.js": "^1.23.0",
+    "qrcode-terminal": "^0.12.0",
+    "openai": "^4.28.0",
+    "axios": "^1.6.7",
+    "dotenv": "^16.4.1",
+    "node-cron": "^3.0.3",
+    "uuid": "^9.0.0",
+    "chalk": "^4.1.2",
+    "puppeteer": "^21.7.0",
+    "node-telegram-bot-api": "^0.66.0",
+    "nodemailer": "^6.9.9",
+    "imap-simple": "^5.1.0",
+    "mailparser": "^3.6.9"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}
