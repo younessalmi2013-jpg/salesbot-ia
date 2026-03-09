@@ -31,7 +31,7 @@ const LEAD_STATUS = {
 
 /**
  * Cree ou recupere un lead existant
- * @param {string} contactId t- ID unique du contact (numero whatsapp ou ID instagram)
+ * @param {string} contactId - ID unique du contact (numero whatsapp ou ID instagram)
  * @param {string} channel - 'whatsapp' ou 'instagram'
  * @param {Object} extraInfo - Infos supplementaires (nom, etc.)
  */
@@ -146,7 +146,7 @@ async function updateLeadScore(contactId) {
     return scoreData;
   } catch (error) {
     console.error('Erreur calcul score:', error.message);
-    return { score: lead.score, nexqction: 'nurture' };
+    return { score: lead.score, nextAction: 'nurture' };
   }
 }
 
@@ -174,7 +174,8 @@ function getLeadsNeedingFollowup() {
     const day2 = parseInt(process.env.FOLLOWUP_DAY_2) || 3;
     const day3 = parseInt(process.env.FOLLOWUP_DAY_3) || 7;
 
-    if (lead.followupCount === 0 && daysSince >= day1) {      followupsNeeded.push({ lead, followupNumber: 1 });
+    if (lead.followupCount === 0 && daysSince >= day1) {
+      followupsNeeded.push({ lead, followupNumber: 1 });
     } else if (lead.followupCount === 1 && daysSince >= day2) {
       followupsNeeded.push({ lead, followupNumber: 2 });
     } else if (lead.followupCount === 2 && daysSince >= day3) {
@@ -268,10 +269,11 @@ async function syncToAirtable(lead) {
       await axios.post(
         `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE_ID}/${process.env.AIRTABLE_TABLE_NAME}`,
         { fields },
-        { headers: { 'Authorization': `Bearer ${process.env.AIRTABLE_API_KEY}` } }
+        { headers: { 'Authorization': `Bearer ${process.env.AIRTABLE_API_KEY}`, 'Content-Type': 'application/json' } }
       );
     }
   } catch (error) {
+    // On ne bloque pas l'application si Airtable a une erreur
     console.log('⚠️  Airtable sync failed (non critique):', error.message);
   }
 }
