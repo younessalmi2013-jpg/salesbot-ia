@@ -50,8 +50,8 @@ client.on('authenticated', () => {
 });
 
 // Pret a recevoir des messages
-client.on(')ready', () => {
-  console.log('âœ… WhatsApp: Agent prÃªt et connectÃ©!');
+client.on('ready', () => {
+  console.log('âœ… WhatsApp: Agent pret et connecte!');
   console.log(`ðŸ“± Connecte au numero: ${client.info?.pushname || 'WhatsApp Business'}`);
 });
 
@@ -133,26 +133,44 @@ async function simulateTyping(chatId, duration) {
     await new Promise(resolve => setTimeout(resolve, duration));
     await chat.clearState();
   } catch (e) {
-    // Pas critique si ca echo ue
+    // Pas critique si ca echoue
     await new Promise(resolve => setTimeout(resolve, duration));
   }
 }
 
 /**
  * Envoie un message a un contact WhatsApp
-  * (utilise par l'orchestrateur pour les relances)
+ * (utilise par l'orchestrateur pour les relances)
  */
 async function sendMessage(contactId, message) {
   try {
     await client.sendMessage(contactId, message);
-    console.log(`ø§!HY\ÜØYÙHÚ]Ð\[›ÞYHH	ØÛÛXÝYX
-NÂˆHØ]Ú
-\œ›ÜŠHÂˆÛÛœÛÛK™\œ›ÜŠ8§c\œ™]\ˆ[›ÚHÚ]Ð\H	ØÛÛXÝYN˜\œ›Ü‹›Y\ÜØYÙJNÂˆ›ÝÈ\œ›ÜŽÂˆBŸB‚‹ÊŠ‚ˆ
-ˆ[›ÚYH[ˆYYXH
-[XYÙKŠHH[ˆÛÛXÝˆ
-‹Â˜\Þ[˜È[˜Ý[ÛˆÙ[™YYXJÛÛXÝYYYXT]Ø\[ÛˆH	ÉÊHÂˆžHÂˆÛÛœÝÈY\ÜØYÙSYYXHHH™\]Z\™J	ÝÚ]Ø\]ÙX‹šœÉÊNÂˆÛÛœÝYYXHHY\ÜØYÙSYYXK™œ›ÛQš[T]
-YYXT]
-NÂˆ]ØZ]ÛY[œÙ[™Y\ÜØYÙJÛÛXÝYYYXKÈØ\[ÛˆJNÂˆÛÛœÛÛK›ÙÊ	8§!HYYXHÚ]Ð\[›ÞYHH	ØÛÛXÝYX
-NÂˆHØ]Ú
-\œ›ÜŠHÂˆÛÛœÛÛK™\œ›ÜŠ8§c\œ™]\ˆ[›ÚHYYXHÚ]Ð\˜\œ›Ü‹›Y\ÜØYÙJNÂˆ›ÝÈ\œ›ÜŽÂˆBŸB‚‹ËÈKKKHSPT”QÑHKKKB˜ÛÛœÛÛK›ÙÊ	ü'æ [X\œ˜YÙHH	ØYÙ[Ú]Ð\‹‹‰ÊNÂ˜ÛÛœÛÛK›ÙÊ	ü'ä¨H[ˆTˆÛÙH˜H\\˜Z]™HOˆØØ[›™K[H]™XÈÛˆÚ]Ð\‰ÊNÂ˜ÛY[š[š]X[^™J
-NÂ‚‹ËÈ^ÜÝ\ˆ][\Ø][Ûˆ\ˆ	ÛÜ˜Ú\Ý˜]]\‚›[Ù[K™^ÜÈHÈÛY[Ù[™Y\ÜØYÙKÙ[™YYXHNÂ
+    console.log(`âœ… Message WhatsApp envoye a ${contactId}`);
+  } catch (error) {
+    console.error(`âŒ Erreur envoi WhatsApp a ${contactId}:`, error.message);
+    throw error;
+  }
+}
+
+/**
+ * Envoie un media (image, PDF) a un contact
+ */
+async function sendMedia(contactId, mediaPath, caption = '') {
+  try {
+    const { MessageMedia } = require('whatsapp-web.js');
+    const media = MessageMedia.fromFilePath(mediaPath);
+    await client.sendMessage(contactId, media, { caption });
+    console.log(`âœ… Media WhatsApp envoye a ${contactId}`);
+  } catch (error) {
+    console.error(`âŒ Erreur envoi media WhatsApp:`, error.message);
+    throw error;
+  }
+}
+
+// ---- DEMARRAGE ----
+console.log('ðŸš€ Demarrage de l\'agent WhatsApp...');
+console.log('ðŸ’¡ Un QR code va apparaitre -> scanne-le avec ton WhatsApp\n');
+client.initialize();
+
+// Export pour utilisation par l'orchestrateur
+module.exports = { client, sendMessage, sendMedia };
