@@ -50,7 +50,7 @@ async function checkAndSendFollowups() {
     const followupsNeeded = getLeadsNeedingFollowup();
 
     if (followupsNeeded.length === 0) {
-      console.log('✅ Planificateur: aucune relance necessaire pour l'instant');
+      console.log('✅ Planificateur: aucune relance necessaire pour l\'instant');
       isRunning = false;
       return;
     }
