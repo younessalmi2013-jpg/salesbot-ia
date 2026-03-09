@@ -36,7 +36,7 @@ PHASE 1 - ACCUEIL (premier message):
 PHASE 2 - QUALIFICATION (2-5 messages):
 - Comprend leur situation actuelle
 - Identifie leur probleme principal
-- Evalue leur urgence et budget SANS demander directement
+- Evalue leur urgence et budget SAMSdetander directement
 
 PHASE 3 - TRANSITION (quand ils sont qualifies):
 - Propose un appel de 15-20 min
@@ -86,7 +86,7 @@ const VOICE_AGENT_PROMPT = `Tu es ${BOT_NAME}, conseillere chez [NOM ENTREPRISE]
 Tu appelles un prospect qui a montre de l'interet pour ${PRODUCT_NAME}.
 
 STRUCTURE DE L'APPEL (15-20 minutes max):
-1. INTRODUCTION (1 min): Te presenter, remercier pour l'interet, confirme tou parles au bon interlocuteur
+1. INTRODUCTION (1 min): Te presenter, remercier pour l'interet, confirmer tu parles au bon interlocuteur
 2. DECOUVERTE (7-8 min): Situation actuelle, problemes, ce qu'ils ont deja essaye
 3. PRESENTATION (3-4 min): Solution adaptee a LEUR situation specifique
 4. TRAITEMENT OBJECTIONS (3-4 min): Budget, timing, doutes - traite avec empathie
@@ -111,11 +111,11 @@ GESTION DES OBJECTIONS COMMUNES:
 const QUALIFICATION_QUESTIONS = {
   budget: [
     "Pour aller plus loin, est-ce que tu as un budget approximatif en tete pour regler ca ?",
-    "Juste pour m'assurer qu'on est sur la meme longueur d'onde niveau investissement, t'as un idee du budget ?"
+    "Juste pour m'assurer qu'on est sur la meme longueur d'onde niveau investissement, t'as une idee du budget ?"
   ],
   urgency: [
-    "C'est quelque chose que tu veux regler$ans les prochaines semaines ou plutot a long terme ?",
-    "Si tu trouvais la bonne solution maintenant, tu serais pret(e) a te lancer,quand ?"
+    "C'est quelque chose que tu veux regler dans les prochaines semaines ou plutot a long terme ?",
+    "Si tu trouvais la bonne solution maintenant, tu serais pret(e) a te lancer quand ?"
   ],
   pain: [
     "C'est quoi le plus gros probleme que ca te cause en ce moment ?",
@@ -123,4 +123,15 @@ const QUALIFICATION_QUESTIONS = {
   ],
   cta: [
     "Je pense qu'on peut vraiment t'aider ! Tu serais dispo pour un appel de 15 min cette semaine ?",
-    "Ca me semblerait utile qu'on se parle 15-20 min",â¡Ω’»ÅŸΩ•»ÅÕ§ÅΩ∏ÅïÕ–Å’∏ÅâΩ∏ÅµÖ—ç†∏ÅPùÖÃÅ’∏Åç…ïπïÖ‘Ä¸à(ÄÅt)ÙÏ()µΩë’±îπï·¡Ω…—ÃÄÙÅÏ(ÄÅ9’IQUI%9}9Q}AI=5AP∞(ÄÅ=11=]UA|≈}AI=5AP∞(ÄÅ=11=]UA|…}AI=5AP∞(ÄÅ=11=]UA|Õ}AI=5AP∞(ÄÅY=%}9Q}AI=5AP∞(ÄÅEU1%%Q%=9}EUMQ%=9L)ÙÏ(
+    "Ca me semblerait utile qu'on se parle 15-20 min pour voir si on est un bon match. T'as un creneau ?"
+  ]
+};
+
+module.exports = {
+  NURTURING_AGENT_PROMPT,
+  FOLLOWUP_1_PROMPT,
+  FOLLOWUP_2_PROMPT,
+  FOLLOWUP_3_PROMPT,
+  VOICE_AGENT_PROMPT,
+  QUALIFICATION_QUESTIONS
+};
