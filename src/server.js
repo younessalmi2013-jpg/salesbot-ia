@@ -16,7 +16,7 @@ const { getBookingStats, getAllBookings } = require('./booking/manager');
 const instagramAgent = require('./agents/instagram/index');
 const voiceAgent = require('./agents/voice/index');
 
-// Telegram (optional â€” nÃ©cessite TELEGRAM_BOV_TOKEN)
+// Telegram (optionnel â€” nÃ©cessite TELEGRAM_BOT_TOKEN)
 let telegramAgent = null;
 try {
   telegramAgent = require('./agents/telegram/index');
@@ -24,38 +24,204 @@ try {
   console.log('â„¹ï¸  Module Telegram non disponible');
 }
 
-// Email (optionnal â€” {Ã©cessite EMAIL_USER + EMAIL_PASSWORD)
+// Email (optionnel â€” nÃ©cessite EMAIL_USER + EMAIL_PASSWORD)
 let emailAgent = null;
 try {
   emailAgent = require('./agents/email/index');
 } catch (e) {
-  console.log('ø¡.{î#È[Ù[H[XZ[›Ûˆ\ÜÛšX›IÊNÂŸB‚˜ÛÛœİ\H^™\ÜÊ
-NÂ˜ÛÛœİÔ•H›ØÙ\ÜË™[‹”Ô•ÌÂ‚‹ËÈKKKHRQUĞT‘TÈKKKB˜\\ÙJ^™\ÜËšœÛÛŠ
-JNÂ˜\\ÙJ^™\ÜË\›[˜ÛÙY
-È^[™YˆYHJJNÂ˜\\ÙJ^™\ÜËœİ]XÊ]š›Ú[Š×Ù\›˜[YK	Ë‹‹ÜX›XÉÊJJNÂ‚‹ËÈÙÈ\È™\]pê\È[˜[\Â˜\‹Üİ
-	Î‹
-™\K™\Ë™^
-HOˆÂˆÛÛœİ\›H™\K›ÜšYÚ[˜[\›™\K\›ÂˆÛÛœÛÛK›ÙÊÉÛ™]È]J
-KÒTÓÔİš[™Ê
-KœÛXÙJNJ_WH<'å$ÈY]ÙH	İ\›X
-NÂˆ™^
+  console.log('â„¹ï¸  Module Email non disponible');
+}
 
-NÂŸJNÂ‚‹ËÈKKKH“ÕUTÈKKKB˜\‹04IĞ›ÛÚ[™Ô›İ]\ßJNÂ˜\™Ù]
-	ËØ\KÙ\Ú›Ø\™	Ë\Ş[˜È
-™\K™\ÊHOˆÂˆHÂˆÛÛœİİ]ÈH]ØZ]Ù]\Ú›Ø\™İ]Ê
-NÂˆ™\ËšœÛÛŠÈİXØÙ\ÜÎˆYK]Nˆİ]ÈJNÂˆHØ]Ú
-\œ›ÜŠHÂˆ™\ËšœÛÛŠÈİXØÙ\ÜÎˆ˜[ÙK\œ›Üˆ\œ›Ü‹›Y\ÜØYÙHJNÂˆBŸJNÂ‚˜\™Ù]
-	ËØ\KØ›ÛÚÚ[™ÜÉË\Ş[˜È
-™\K™\ÊHOˆÂˆHÂˆÛÛœİ›ÛÚÚ[™ÜÈH]ØZ]Ù][›ÛÚÚ[™ÜÊ
-NÂˆ™\ËšœÛÛŠÈİXØÙ\ÜÎˆYK]Nˆ›ÛÚÚ[™ÜÈJNÂˆHØ]Ú
-\œ›ÜŠHÂˆ™\ËšœÛÛŠÈİXØÙ\ÜÎˆ˜[ÙK\œ›Üˆ\œ›Ü‹›Y\ÜØYÙHJNÂˆBŸJNÂ‚‹ËÈKKKHS’UPSTĞUSÓˆKKKB˜\›\İ[ŠÔ•\Ş[˜È
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-HOˆÂˆÛÛœÛÛK›ÙÊ¼'å$H[ÙH[ˆ	Ü›ØÙ\ÜË™[‹““ÑWÑS•ŸX
-NÂˆÛÛœÛÛK›ÙÊ<'æ ÛØÛH0êHØØ[Üİ‰ÔÔ•H
-NÂˆÛÛœÛÛK›ÙÊ	ø§!H\Ú›Ø\™ˆ‹ËÛØØ[Üİ‰È
-ÈÔ•
-NÂˆÛÛœÛÛK›ÙÊ	ğªÈ8§!ˆTH‘Õˆ‹ËÛØØ[Üİ‰È
-ÈÔ•
-È	ËØ\t"H	ÊNÂ‚ˆ]ØZ][š]YÙ[Ê
-NÂˆ]ØZ]İ\ØÚY[\Š
-NÂŸJNÂ
+// ---- MIDDLEWARES ----
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, '../public')));
+
+// Log des requÃªtes entrantes
+app.use((req, res, next) => {
+  if (!req.path.startsWith('/api')) {
+    console.log(`ğŸŒ ${req.method} ${req.path}`);
+  }
+  next();
+});
+
+// ============================================================
+// â”€â”€ WEBHOOLS â”€â”€
+// ============================================================
+
+// Instagram â€” vÃ©rification
+app.get('/webhook/instagram', (req, res) => instagramAgent.verifyWebhook(req, res));
+
+// Instagram â€” messages entrants
+app.post('/webhook/instagram', async (req, res) => {
+  await instagramAgent.handleWebhookEvent(req, res);
+});
+
+// Vapi â€” Ã©vÃ©nements d'appel
+app.post('/webhook/vapi', async (req, res) => {
+  await voiceAgent.handleVapiWebhook(req, res);
+});
+
+// ============================================================
+// â”€â”€ API REST â”€â”€
+// ============================================================
+
+// â”€â”€ Routes de rÃ©servation (booking) â”€â”€
+app.use('/api', bookingRoutes);
+
+// Statut global
+app.get('/api/status', (req, res) => {
+  const systemStats = getStats();
+  res.json({
+    status: 'running',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    stats: getDashboardStats(),
+    systemStats,
+    agents: {
+      whatsapp: false, // gÃ©rÃ© sÃ©parÃ©ment
+      instagram: !!process.env.META_ACCESS_TOKEN,
+      telegram: !!process.env.TELEGRAM_BOT_TOKEN,
+      email: !!(process.env.EMAIL_USER && process.env.EMAIL_PASSWORD),
+      vapi: !!process.env.VAPI_API_KEY,
+      openai: !!process.env.OPENAI_API_KEY,
+      scheduler: true,
+    },
+  });
+});
+
+// Dashboard stats
+app.get('/api/dashboard', (req, res) => {
+  const stats = getDashboardStats();
+  const recentLeads = Array.from(leadsDB.values())
+    .sort((a, b) => new Date(b.lastMessageAt) - new Date(a.lastMessageAt))
+    .slice(0, 10)
+    .map(l => ({
+      name: l.firstName, channel: l.channel, status: l.status, score: l.score,
+    }));
+  res.json({ stats, recentLeads });
+});
+
+// Tous les leads
+app.get('/api/leads', (req, res) => {
+  const leads = Array.from(leadsDB.values())
+    .sort((a, b) => new Date(b.lastMessageAt) - new Date(a.lastMessageAt))
+    .map(l => ({
+      id: l.id,
+      contactId: l.contactId,
+      firstName: l.firstName,
+      channel: l.channel,
+      status: l.status,
+      score: l.score,
+      messageCount: l.messageCount,
+      createdAt: l.createdAt,
+      lastMessageAt: l.lastMessageAt,
+      needsHuman: l.needsHuman,
+    }));
+  res.json({ total: leads.length, leads });
+});
+
+// Conversation complÃ¨te d'un lead
+app.get('/api/leads/:contactId', (req, res) => {
+  const lead = leadsDB.get(decodeURIComponent(req.params.contactId));
+  if (!lead) return res.status(404).json({ error: 'Lead non trouvÃ©' });
+  res.json(lead);
+});
+
+// Historique des appels
+app.get('/api/calls', async (req, res) => {
+  const calls = await voiceAgent.getCallHistory(20);
+  res.json({ calls });
+});
+
+// Stats rendez-vous pour le dashboard
+app.get('/api/bookings-dashboard', (req, res) => {
+  const stats = getBookingStats();
+  const upcoming = getAllBookings({ upcoming: true })
+    .slice(0, 5)
+    .map(b => ({
+      id: b.id,
+      firstName: b.firstName,
+      lastName: b.lastName,
+      slotDate: b.slotDate,
+      slotTime: b.slotTime,
+      channel: b.channel,
+      status: b.status,
+    }));
+  res.json({ stats, upcoming });
+});
+
+// Page de rÃ©servation
+app.get('/booking', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/booking.html'));
+});
+
+// Dashboard principal â†’ sert le fichier HTML
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/dashboard.html'));
+});
+
+// ============================================================
+// â”€â”€ DÃ‰MARRAGE â”€â”€
+// ============================================================
+async function start() {
+  console.log('\nâ•”â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•—');
+  console.log('â•‘   ğŸ¤– SALESBOT IA â€” DÃ©marrage multi-canaux        â•‘');
+  console.log('â• â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•£');
+
+  // â”€â”€ Telegram â”€â”€
+  let telegramInstance = null;
+  if (telegramAgent && process.env.TELEGRAM_BOT_TOKEN) {
+    telegramInstance = telegramAgent.startBot();
+    console.log('â•‘   âœ… Telegram Bot dÃ©marrÃ©                         â•‘');
+  } else {
+    console.log('â•‘   âš ï¸  Telegram inactif (TELEGRAM_BOT_TOKEN manquant) â•‘');
+  }
+
+  // â”€â”€ Email â”€â”€
+  if (emailAgent && process.env.EMAIL_USER && process.env.EMAIL_PASSWORD) {
+    emailAgent.startEmailPolling();
+    console.log('â•‘   âœ… Agent Email dÃ©marrÃ© (polling IMAP)           â•‘');
+  } else {
+    console.log('â•‘   âš ï¸  Email inactif (EMAIL_USER/PASSWORD manquant) â•‘');
+  }
+
+  // â”€â”€ Orchestrateur â”€â”€
+  initAgents({
+    instagram: instagramAgent,
+    voice: voiceAgent,
+    telegram: telegramInstance ? {
+      sendMessage: telegramAgent.sendMessage,
+    } : null,
+    email: emailAgent ? {
+      sendMessageFromOrchestrator: emailAgent.sendMessageFromOrchestrator,
+    } : null,
+  });
+
+  // â”€â”€ Scheduler de relances â”€â”€
+  startScheduler();
+  console.log('â•‘   âœ… Scheduleur de relances actif                  â•‘');
+
+  // â”€â”€ Serveur HTTP â”€â”€
+  app.listen(PORT, () => {
+    console.log(`â•‘   âœ… Serveur HTTP: http://localhost:${PORT}           â•‘`);
+    console.log('â• â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•£');
+    console.log('â•‘                                                  â•‘');
+    console.log(`â•‘   ğŸ“Š Dashboard:  http://localhost:${PORT}/            â•‘`);
+    console.log(`â•‘   ğŸ“‹ API Leads:  http://localhost:${PORT}/api/leads   â•‘`);
+    console.log(`â•‘   ğŸ“… RÃ©servation: http://localhost:${PORT}/booking    â•‘`);
+    console.log('â•‘                                                  â•‘');
+    console.log('â•‘   ğŸ“± WhatsApp QR: npm run whatsapp (autre terminal) â•‘');
+    console.log('â•‘   ğŸŒ Webhooks:   npx ngrok http 3000             â•‘');
+    console.log('â•‘                                                  â•‘');
+    console.log('â•šâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•\n');
+  });
+}
+
+process.on('uncaughtException', err => console.error('âŒ Exception:', err.message));
+process.on('unhandledRejection', reason => console.error('âŒ Rejection:', reason));
+
+start();
