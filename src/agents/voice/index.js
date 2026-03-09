@@ -13,10 +13,10 @@ const { updateLead, LEAD_STATUS } = require('../crm/index');
 const VAPI_API_KEY = process.env.VAPI_API_KEY;
 const VAPI_BASE_URL = 'https://api.vapi.ai';
 
-/** 
+/**
  * Lance un appel sortant vers un lead
-  * @param {Object} callConfig - {phone, leadName, leadContext}
-  */
+ * @param {Object} callConfig - {phone, leadName, leadContext}
+ */
 async function makeCall(callConfig) {
   if (!VAPI_API_KEY) {
     console.log('âš ï¸  Vapi non configure (VAPI_API_KEY manquant)');
@@ -25,14 +25,14 @@ async function makeCall(callConfig) {
 
   const { phone, leadName, leadContext } = callConfig;
 
-  // Formate le numÃ©ro au format international
+  // Formate le numero au format international
   const phoneNumber = formatPhoneNumber(phone);
 
   console.log(`ğŸ“ Lancement appel Vapi vers ${phoneNumber} pour ${leadName}...`);
 
   try {
-    // Option 1: Utilise un assistant prÃ©-configurÃ© dans le dashboard Vapi
-    // (Recommande pour les dÃ©butants - configure l'assistant visuellement)
+    // Option 1: Utilise un assistant pre-configure dans le dashboard Vapi
+    // (Recommande pour les debutants - configure l'assistant visuellement)
     if (process.env.VAPI_ASSISTANT_ID) {
       const response = await axios.post(
         `${VAPI_BASE_URL}/call`,
@@ -59,11 +59,11 @@ async function makeCall(callConfig) {
         }
       );
 
-      console.log(`âœ… Appel lancÃ© ! ID: ${response.data.id}`);
+      console.log(`âœ… Appel lance! ID: ${response.data.id}`);
       return { callId: response.data.id, status: 'initiated' };
     }
 
-    // Option 2: CrÃ©e l'assistant dynamiquement avec GPT-4o
+    // Option 2: Cree l'assistant dynamiquement avec GPT-4o
     // (Plus flexible mais plus complexe)
     const response = await axios.post(
       `${VAPI_BASE_URL}/call`,
@@ -77,13 +77,13 @@ async function makeCall(callConfig) {
           // Modele IA a utiliser
           model: {
             provider: 'openai',
-            model: 'gpt-4o",
-            messages: [{*              role: 'system',
-              content: VOICE_AGENT_PROMPT 
-) x \n\nContexte lead: ${leadContext || 'Premier contact'}`,
+            model: 'gpt-4o',
+            messages: [{
+              role: 'system',
+              content: VOICE_AGENT_PROMPT + `\n\nContexte lead: ${leadContext || 'Premier contact'}`,
             }],
           },
-          // Configuration de la voik (change voiceId pour utiliser ta propre voik clonee)
+          // Configuration de la voix (change voiceId pour utiliser ta propre voix clonee)
           voice: {
             provider: 'elevenlabs',
             voiceId: 'pFZP5JQG7iQjIQuC4Bku', // Voix par defaut ElevenLabs
@@ -115,7 +115,7 @@ async function makeCall(callConfig) {
       }
     );
 
-    console.log(`âœ… Appel lancÃ© ! ID: ${response.data.id}`);
+    console.log(`âœ… Appel lance! ID: ${response.data.id}`);
     return { callId: response.data.id, status: 'initiated' };
 
   } catch (error) {
@@ -126,6 +126,122 @@ async function makeCall(callConfig) {
 
 /**
  * Traite les evenements webhook de Vapi
-  * Vapi nous notifie en temps rÃ©el: appel commence, fin, transcription...
-  
- "•	…Ñ €¡”°¤ì(€€€½¹Í½±”¹•ÉÉ½È ŸŠv0ÉÉ•ÕÈÉ•ÕÁ•É…Ñ¥½¸…ÁÁ•°èœ°•ÉÉ½È¹µ•ÍÍ…”¤ì(€€€É•ÑÕÉ¸¹Õ±°ì(€ô)ô((¼¨¨(€¨½Éµ…Ñ”Õ¸¹Õµ•É¼‘”Ñ•±•Á¡½¹”…Ô™½Éµ…Ğ¥¹Ñ•É¹…Ñ¥½¹…°(€€¨¼)™Õ¹Ñ¥½¸™½Éµ…ÑA¡½¹•9Õµ‰•È¡Á¡½¹”¤ì(€€¼¼MÕÁÁÉ¥µ”Ñ½ÕĞÍ…Õ˜±•Ì¡¥™™É•Ì•Ğ±”€¬(€±•Ğ±•…¹•€ôÁ¡½¹”¹É•Á±…” ½myq­t½œ°€œœ¤ì((€€¼¼M¤½µµ•¹”Á…È€À°É•µÁ±…”Á…È€¬ÌÌ€¡É…¹”¤(€¥˜€¡±•…¹•¹ÍÑ…ÉÑÍ]¥Ñ  œÀœ¤¤ì(€€€±•…¹•€ô€œ¬ÌÌœ€¬±•…¹•¹ÍÕ‰ÍÑÉ¥¹œ Ä¤ì(€ô((€€¼¼M¤Á…Ì‘”€¬°…©½ÕÑ”€¬ÌÌ(€¥˜€ …±•…¹•¹ÍÑ…ÉÑÍ]¥Ñ  œ¬œ¤¤ì(€€€±•…¹•€ô€œ¬ÌÌœ€¬±•…¹•ì(€ô((€É•ÑÕÉ¸±•…¹•ì)ô((¼¨¨(€¨I•ÕÁ•É”±„±¥ÍÑ”‘•Ì…ÁÁ•±ÌÁ…ÍÏ¥Ì(€€¨¼)…Íå¹Œ™Õ¹Ñ¥½¸•Ñ…±±!¥ÍÑ½Éä¡±¥µ¥Ğ€ô€ÈÀ¤ì(€¥˜€ …YA%}A%}-d¤É•ÑÕÉ¸mtì((€ÑÉäì(€€€½¹ÍĞÉ•ÍÁ½¹Í”€ô…İ…¥Ğ…á¥½Ì¹•Ğ (€€€€€€‘íYA%}	M}UI1ô½…±±€°(€€€€€ì(€€€€€€€¡•…‘•ÉÌèì€ÕÑ¡½É¥é…Ñ¥½¸œè	•…É•È€‘íYA%}A%}-eõ€ô°(€€€€€€€Á…É…µÌèì±¥µ¥Ğô°(€€€€€ô(€€€€¤ì(€€€É•ÑÕÉ¸É•ÍÁ½¹Í”¹‘…Ñ„ì(€ô…Ñ €¡•ÉÉ½È¤ì(€€€½¹Í½±”¹•ÉÉ½È ÉÉ•ÕÈ…¥ÍÑ½É¥ÅÕ”…ÁÁ•±Ìèœ°•ÉÉ½È¹µ•ÍÍ…”¤ì(€€€É•ÑÕÉ¸mtì(€ô)ô()µ½‘Õ±”¹•áÁ½ÉÑÌ€ôì(€µ…­•…±°°(€¡…¹‘±•Y…Á¥]•‰¡½½¬°(€•Ñ…±±•Ñ…¥±Ì°(€•Ñ…±±!¥ÍÑ½Éä°)ô(
+ * Vapi nous notifie en temps reel: appel commence, fin, transcription...
+ */
+async function handleVapiWebhook(req, res) {
+  res.sendStatus(200); // Repondre immediatement
+
+  const event = req.body;
+  const eventType = event.message?.type;
+
+  console.log(`ğŸ“ Vapi webhook: ${eventType}`);
+
+  switch (eventType) {
+    case 'call-started':
+      console.log(`âœ… Appel commence: ${event.message.call?.id}`);
+      break;
+
+    case 'call-ended': {
+      const call = event.message.call;
+      const summary = event.message.analysis?.summary || '';
+      const transcript = event.message.artifact?.transcript || '';
+
+      console.log(`\nğŸ“ Appel termine: ${call?.id}`);
+      console.log(`Duree: ${call?.endedAt ? 'Calcul...' : 'N/A'}`);
+      console.log(`Resume: ${summary}`);
+
+      // Met a jour le CRM avec le resultat de l'appel
+      if (call?.customer?.number) {
+        const phone = call.customer.number;
+        // Cherche le lead par telephone dans le CRM
+        // NOTE: Dans une vraie app, tu aurais un index par telephone
+        console.log(`Mise a jour CRM pour le numero ${phone}`);
+        console.log(`Resume de l'appel: ${summary}`);
+      }
+      break;
+    }
+
+    case 'end-of-call-report': {
+      const report = event.message;
+      console.log('\nğŸ“Š RAPPORT D\'APPEL:');
+      console.log('Summary:', report.analysis?.summary);
+      console.log('Success:', report.analysis?.successEvaluation);
+      break;
+    }
+
+    case 'transcript': {
+      // Transcription en temps reel (optionnel)
+      const transcript = event.message.transcript;
+      if (transcript) {
+        process.stdout.write(`[${transcript.role}]: ${transcript.transcript}\n`);
+      }
+      break;
+    }
+  }
+}
+
+/**
+ * Recupere les details d'un appel
+ */
+async function getCallDetails(callId) {
+  if (!VAPI_API_KEY) return null;
+
+  try {
+    const response = await axios.get(
+      `${VAPI_BASE_URL}/call/${callId}`,
+      { headers: { 'Authorization': `Bearer ${VAPI_API_KEY}` } }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Erreur recuperation appel:', error.message);
+    return null;
+  }
+}
+
+/**
+ * Formate un numero de telephone au format international
+ */
+function formatPhoneNumber(phone) {
+  // Supprime tout sauf les chiffres et le +
+  let cleaned = phone.replace(/[^\d+]/g, '');
+
+  // Si commence par 0, remplace par +33 (France)
+  if (cleaned.startsWith('0')) {
+    cleaned = '+33' + cleaned.substring(1);
+  }
+
+  // Si pas de +, ajoute +33
+  if (!cleaned.startsWith('+')) {
+    cleaned = '+33' + cleaned;
+  }
+
+  return cleaned;
+}
+
+/**
+ * Recupere la liste des appels passes
+ */
+async function getCallHistory(limit = 20) {
+  if (!VAPI_API_KEY) return [];
+
+  try {
+    const response = await axios.get(
+      `${VAPI_BASE_URL}/call`,
+      {
+        headers: { 'Authorization': `Bearer ${VAPI_API_KEY}` },
+        params: { limit },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Erreur historique appels:', error.message);
+    return [];
+  }
+}
+
+module.exports = {
+  makeCall,
+  handleVapiWebhook,
+  getCallDetails,
+  getCallHistory,
+};
