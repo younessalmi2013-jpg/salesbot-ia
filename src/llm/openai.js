@@ -54,7 +54,7 @@ async function askGPT(systemPrompt, conversationHistory = [], userMessage = null
  */
 async function scoreLead(lead) {
   const prompt = `Tu es un expert en qualification de leads.
-  Analyse ce lead et donne-lui un score de 0 a 100 basÃ© sur:
+  Analyse ce lead et donne-lui un score de 0 a 100 base sur:
   - Budget (a-t-il les moyens ?)
   - Besoin (a-t-il un probleme que notre produit resout ?)
   - Urgence (veut-il agir maintenant ?)
@@ -67,5 +67,20 @@ async function scoreLead(lead) {
   - Canal: ${lead.channel}
   - Messages echanges: ${lead.messageCount}
   - Reponses: ${JSON.stringify(lead.answers || {})}
-  
-  Ce½µ½ÉÑ•µ•¹Ğè€‘í±•…¹‰•¡…Ù¥½Èñğ€¹•ÕÑÉ”õ€ì((€ÑÉäì(€€€½¹ÍĞÉ•ÍÁ½¹Í”€ô…İ…¥Ğ…Í­AP¡ÁÉ½µÁĞ°mt°¹Õ±°¤ì(€€€€¼¼áÑÉ…Ñ¥½¸‘Ô)M=8‘”±„É•Á½¹Í”(€€€½¹ÍĞ©Í½¹5…Ñ €ôÉ•ÍÁ½¹Í”¹µ…Ñ  ½qímqÍqMt©qô¼¤ì(€€€¥˜€¡©Í½¹5…Ñ ¤ì(€€€€€É•ÑÕÉ¸)M=8¹Á…ÉÍ”¡©Í½¹5…Ñ¡lÁt¤ì(€€€ô(€€€É•ÑÕÉ¸ìÍ½É”è€ÔÀ°É•…Í½¸è€M½É”Á…È‘•™…ÕĞœ°¹•áÑÑ¥½¸è€¹ÕÉÑÕÉ”œôì(€ô…Ñ €¡•ÉÉ½È¤ì(€€€½¹Í½±”¹•ÉÉ½È ÉÉ•ÕÈÍ½É¥¹œ±•…èœ°•ÉÉ½È¹µ•ÍÍ…”¤ì(€€€É•ÑÕÉ¸ìÍ½É”è€ÔÀ°É•…Í½¸è€ÉÉ•ÕÈ…±Õ°Í½É”œ°¹•áÑÑ¥½¸è€¹ÕÉÑÕÉ”œôì(€ô)ô()µ½‘Õ±”¹•áÁ½ÉÑÌ€ôì…Í­AP°Í½É•1•…ôì(
+  - Comportement: ${lead.behavior || 'neutre'}`;
+
+  try {
+    const response = await askGPT(prompt, [], null);
+    // Extraction du JSON de la reponse
+    const jsonMatch = response.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      return JSON.parse(jsonMatch[0]);
+    }
+    return { score: 50, reason: 'Score par defaut', nextAction: 'nurture' };
+  } catch (error) {
+    console.error('Erreur scoring lead:', error.message);
+    return { score: 50, reason: 'Errour calcul score', nextAction: 'nurture' };
+  }
+}
+
+module.exports = { askGPT, scoreLead };
