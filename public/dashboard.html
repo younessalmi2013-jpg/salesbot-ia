@@ -3,530 +3,809 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SalesBot IA &mdash; Dashboard</title>
+<title>SalesBot IA â Dashboard</title>
 <style>
-  :root {
-    --bg: #0f1117;
-    --surface: #1a1d27;
-    --surface2: #22263a;
-    --border: #2d3148;
-    --text: #e2e8f0;
-    --muted: #64748b;
-    --blue: #3b82f6;
-    --blue-light: #60a5fa;
-    --green: #22c55e;
-    --orange: #f59e0b;
-    --red: #ef4444;
-    --purple: #8b5cf6;
-    --pink: #ec4899;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0e1a;--sidebar:#0d1117;--card:#111827;--border:#1f2937;
+  --accent:#6366f1;--accent2:#8b5cf6;--green:#10b981;--yellow:#f59e0b;
+  --red:#ef4444;--blue:#3b82f6;--text:#f9fafb;--muted:#9ca3af;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh}
+a{text-decoration:none;color:inherit}
 
-  /* HEADER */
-  .header { display: flex; align-items: center; justify-content: space-between; padding: 16px 28px; background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
-  .header-left { display: flex; align-items: center; gap: 14px; }
-  .logo { width: 36px; height: 36px; background: linear-gradient(135deg, #3b82f6, #8b5cf6); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
-  .header h1 { font-size: 20px; font-weight: 700; }
-  .badge-live { background: #22c55e22; color: #22c55e; border: 1px solid #22c55e55; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px; }
-  .header-right { display: flex; align-items: center; gap: 12px; }
-  .btn-status { background: #22c55e22; color: #22c55e; border: 1px solid #22c55e44; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; }
-  .btn-refresh { background: var(--surface2); color: var(--text); border: 1px solid var(--border); padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; }
-  .btn-refresh:hover { background: var(--border); }
+/* âââ Sidebar âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
+.sidebar{
+  width:240px;min-width:240px;background:var(--sidebar);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  position:fixed;left:0;top:0;height:100vh;z-index:100;
+}
+.sidebar-logo{
+  padding:1.5rem 1.25rem;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;
+}
+.sidebar-logo .icon{
+  width:36px;height:36px;
+  background:linear-gradient(135deg,#6366f1,#8b5cf6);
+  border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;
+}
+.sidebar-logo .name{font-weight:700;font-size:1rem}
+.sidebar-logo .version{font-size:.7rem;color:var(--muted)}
 
-  /* MAIN */
-  .main { padding: 24px 28px; max-width: 1400px; margin: 0 auto; }
-  .section-title { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; }
+.nav{flex:1;padding:1rem 0;overflow-y:auto}
+.nav-section{font-size:.65rem;font-weight:600;color:#4b5563;text-transform:uppercase;letter-spacing:.1em;padding:.5rem 1.25rem;margin-top:.5rem}
+.nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:.625rem 1.25rem;font-size:.875rem;font-weight:500;
+  cursor:pointer;transition:all .15s;border-radius:0;
+  color:var(--muted);
+}
+.nav-item:hover{background:rgba(255,255,255,.05);color:var(--text)}
+.nav-item.active{background:rgba(99,102,241,.15);color:var(--accent);border-right:2px solid var(--accent)}
+.nav-item .icon{width:18px;text-align:center;font-size:16px}
 
-  /* STATS GRID */
-  .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
-  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; position: relative; overflow: hidden; }
-  .stat-card.blue { border-top: 3px solid var(--blue); }
-  .stat-card.green { border-top: 3px solid var(--green); }
-  .stat-card.orange { border-top: 3px solid var(--orange); }
-  .stat-card.purple { border-top: 3px solid var(--purple); }
-  .stat-card.pink { border-top: 3px solid var(--pink); }
-  .stat-card.red { border-top: 3px solid var(--red); }
-  .stat-label { font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
-  .stat-value { font-size: 32px; font-weight: 800; line-height: 1; margin-bottom: 6px; }
-  .stat-sub { font-size: 12px; color: var(--muted); }
-  .stat-icon { position: absolute; top: 16px; right: 16px; font-size: 22px; opacity: 0.6; }
+.sidebar-footer{
+  padding:1rem 1.25rem;border-top:1px solid var(--border);
+}
+.user-info{display:flex;align-items:center;gap:10px;margin-bottom:.75rem}
+.user-avatar{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:700;flex-shrink:0;
+}
+.user-details .name{font-size:.85rem;font-weight:600}
+.user-details .role{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.btn-logout{
+  width:100%;padding:.5rem;
+  background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);
+  color:#fca5a5;border-radius:8px;font-size:.8rem;font-weight:500;
+  cursor:pointer;transition:all .2s;
+}
+.btn-logout:hover{background:rgba(239,68,68,.2)}
 
-  /* CHANNELS */
-  .channels-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-bottom: 32px; }
-  .channel-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; display: flex; align-items: center; gap: 14px; }
-  .channel-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
-  .ch-wa .channel-icon { background: #25d36622; }
-  .ch-ig .channel-icon { background: #e1306c22; }
-  .ch-tg .channel-icon { background: #27a1f222; }
-  .ch-em .channel-icon { background: #f59e0b22; }
-  .channel-name { font-weight: 700; font-size: 15px; margin-bottom: 2px; }
-  .channel-count { font-size: 22px; font-weight: 800; line-height: 1; }
-  .channel-status { font-size: 12px; font-weight: 600; margin-top: 4px; }
-  .channel-status.active { color: var(--green); }
-  .channel-status.inactive { color: var(--muted); }
+/* âââ Main content ââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
+.main{margin-left:240px;flex:1;display:flex;flex-direction:column}
+.topbar{
+  padding:1rem 1.5rem;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(13,17,23,.8);backdrop-filter:blur(10px);
+  position:sticky;top:0;z-index:50;
+}
+.topbar-title{font-size:1.1rem;font-weight:600}
+.topbar-right{display:flex;align-items:center;gap:.75rem}
+.badge-live{
+  background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);
+  color:#6ee7b7;padding:.25rem .75rem;border-radius:20px;font-size:.75rem;font-weight:600;
+  display:flex;align-items:center;gap:.4rem;
+}
+.badge-live::before{content:'';width:6px;height:6px;background:#10b981;border-radius:50%;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.lang-badge{
+  cursor:pointer;padding:.25rem .75rem;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:8px;font-size:.8rem;color:var(--muted);
+  transition:all .2s;
+}
+.lang-badge:hover{border-color:var(--accent);color:var(--text)}
 
-  /* BOOKING STATS */
-  .booking-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px; }
+.content{padding:1.5rem;flex:1}
 
-  /* LEADS TABLE */
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-bottom: 28px; }
-  .card-header { padding: 18px 22px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-  .card-title { font-weight: 700; font-size: 15px; }
-  .card-badge { background: var(--surface2); color: var(--muted); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
-  .leads-table { width: 100%; border-collapse: collapse; }
-  .leads-table th { padding: 12px 18px; text-align: left; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; background: var(--surface2); }
-  .leads-table td { padding: 14px 18px; border-top: 1px solid var(--border); font-size: 14px; }
-  .leads-table tr:hover td { background: #ffffff08; }
-  .lead-info { display: flex; align-items: center; gap: 10px; }
-  .avatar { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: white; flex-shrink: 0; }
-  .lead-name { font-weight: 600; }
-  .lead-id { font-size: 11px; color: var(--muted); }
-  .channel-tag { padding: 3px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; }
-  .channel-tag.whatsapp { background: #25d36622; color: #25d366; }
-  .channel-tag.instagram { background: #e1306c22; color: #e1306c; }
-  .channel-tag.telegram { background: #27a1f222; color: #27a1f2; }
-  .channel-tag.email { background: #f59e0b22; color: #f59e0b; }
-  .status-tag { padding: 3px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; }
-  .status-tag.qualifie { background: #22c55e22; color: #22c55e; }
-  .status-tag.qualifying { background: #3b82f622; color: #60a5fa; }
-  .status-tag.appele { background: #8b5cf622; color: #a78bfa; }
-  .status-tag.perdu { background: #ef444422; color: #f87171; }
-  .status-tag.nouveau { background: #64748b22; color: #94a3b8; }
-  .score-bar { display: flex; align-items: center; gap: 8px; }
-  .score-num { font-weight: 700; min-width: 28px; font-size: 14px; }
-  .bar { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; min-width: 60px; }
-  .bar-fill { height: 100%; border-radius: 3px; }
-  .empty-state { padding: 40px; text-align: center; color: var(--muted); font-size: 14px; }
+/* âââ Pages âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
+.page{display:none}
+.page.active{display:block}
 
-  /* AGENTS STATUS */
-  .agents-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; padding: 18px; }
-  .status-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; }
-  .status-item-left { display: flex; align-items: center; gap: 12px; }
-  .status-indicator { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-  .status-indicator.on { background: var(--green); box-shadow: 0 0 8px #22c55e88; }
-  .status-indicator.off { background: var(--border); }
-  .status-item-name { font-weight: 600; font-size: 13px; }
-  .status-item-desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
-  .status-item-right { font-size: 12px; font-weight: 600; }
-  .status-item-right.on { color: var(--green); }
-  .status-item-right.off { color: var(--muted); }
+/* âââ Stat cards ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:1.5rem}
+.stat-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:1.25rem;position:relative;overflow:hidden;
+  transition:transform .2s;
+}
+.stat-card:hover{transform:translateY(-2px)}
+.stat-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--c1,#6366f1),var(--c2,#8b5cf6));
+}
+.stat-card.green{--c1:#10b981;--c2:#059669}
+.stat-card.yellow{--c1:#f59e0b;--c2:#d97706}
+.stat-card.blue{--c1:#3b82f6;--c2:#2563eb}
+.stat-card.purple{--c1:#8b5cf6;--c2:#7c3aed}
+.stat-value{font-size:2rem;font-weight:700;margin-bottom:.25rem}
+.stat-label{font-size:.8rem;color:var(--muted);font-weight:500}
+.stat-icon{position:absolute;top:1rem;right:1rem;font-size:1.5rem;opacity:.6}
 
-  /* ALERTS */
-  .alert-panel { margin: 16px 22px; background: #f59e0b11; border: 1px solid #f59e0b44; border-radius: 10px; overflow: hidden; }
-  .alert-header { padding: 12px 16px; background: #f59e0b22; font-weight: 700; font-size: 13px; color: var(--orange); }
-  .alert-lead { padding: 12px 16px; border-top: 1px solid #f59e0b22; display: flex; align-items: center; justify-content: space-between; }
+/* âââ Tables ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
+.section-card{background:var(--card);border:1px solid var(--border);border-radius:14px;margin-bottom:1.5rem}
+.section-header{
+  padding:1rem 1.25rem;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.section-title{font-size:.95rem;font-weight:600}
+.section-sub{font-size:.8rem;color:var(--muted)}
+table{width:100%;border-collapse:collapse}
+th{font-size:.7rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;padding:.875rem 1.25rem;text-align:left;border-bottom:1px solid var(--border)}
+td{padding:.875rem 1.25rem;font-size:.875rem;border-bottom:1px solid rgba(255,255,255,.04)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,.02)}
 
-  /* BOOKINGS TABLE */
-  .booking-table-wrap { padding: 0 0 8px; }
+/* âââ Status badges âââââââââââââââââââââââââââââââââââââââââââââââââââââ */
+.status{display:inline-flex;align-items:center;gap:.3rem;padding:.2rem .6rem;border-radius:20px;font-size:.72rem;font-weight:600}
+.status.new{background:rgba(59,130,246,.15);color:#93c5fd}
+.status.qualified{background:rgba(16,185,129,.15);color:#6ee7b7}
+.status.rdv{background:rgba(245,158,11,.15);color:#fcd34d}
+.status.client{background:rgba(99,102,241,.15);color:#a5b4fc}
+.status.lost{background:rgba(239,68,68,.15);color:#fca5a5}
 
-  /* FOOTER */
-  .footer { text-align: center; padding: 20px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); margin-top: 8px; }
+/* âââ Connexions âââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
+.integrations-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.integration-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:1.25rem;
+  transition:all .2s;
+}
+.integration-card:hover{border-color:rgba(99,102,241,.4)}
+.int-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.int-info{display:flex;align-items:center;gap:.75rem}
+.int-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.int-name{font-weight:600;font-size:.95rem}
+.int-desc{font-size:.75rem;color:var(--muted);margin-top:2px}
+.int-status{padding:.2rem .6rem;border-radius:20px;font-size:.7rem;font-weight:600}
+.int-status.ok{background:rgba(16,185,129,.15);color:#6ee7b7}
+.int-status.warn{background:rgba(245,158,11,.15);color:#fcd34d}
+.int-status.off{background:rgba(107,114,128,.15);color:#9ca3af}
+.int-body{font-size:.8rem;color:var(--muted);margin-bottom:.75rem;line-height:1.6}
+.int-value{
+  background:#1f2937;border:1px solid var(--border);
+  border-radius:8px;padding:.5rem .75rem;
+  font-size:.8rem;color:var(--text);
+  font-family:monospace;word-break:break-all;
+  margin-bottom:.75rem;
+}
+.btn-sm{
+  padding:.4rem .875rem;border-radius:8px;font-size:.8rem;font-weight:500;
+  cursor:pointer;border:none;transition:all .2s;
+}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:#5254cc}
+.btn-secondary{background:rgba(255,255,255,.08);color:var(--text);border:1px solid var(--border)}
+.btn-secondary:hover{background:rgba(255,255,255,.12)}
 
-  /* LOADING */
-  .loading { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 40px; color: var(--muted); font-size: 14px; }
-  .spinner { width: 20px; height: 20px; border: 2px solid var(--border); border-top-color: var(--blue); border-radius: 50%; animation: spin 0.8s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
+/* âââ Admin: client manager ââââââââââââââââââââââââââââââââââââââââââââ */
+.form-row{display:flex;gap:.75rem;flex-wrap:wrap}
+.form-group-inline{flex:1;min-width:140px}
+.form-group-inline label{display:block;font-size:.75rem;color:var(--muted);margin-bottom:.3rem;font-weight:500}
+.form-group-inline input{
+  width:100%;padding:.6rem .875rem;background:#1f2937;
+  border:1px solid var(--border);border-radius:8px;
+  color:var(--text);font-size:.875rem;outline:none;
+}
+.form-group-inline input:focus{border-color:var(--accent)}
+.empty-state{text-align:center;padding:3rem;color:var(--muted)}
+.empty-icon{font-size:3rem;margin-bottom:1rem}
 
-  /* BOOKING PAGE LINK */
-  .btn-link { background: var(--blue); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+/* âââ Loading overlay âââââââââââââââââââââââââââââââââââââââââââââââââââ */
+#loading{
+  position:fixed;inset:0;background:var(--bg);
+  display:flex;align-items:center;justify-content:center;z-index:9999;
+  flex-direction:column;gap:1rem;
+}
+.loading-spinner{width:40px;height:40px;border:3px solid rgba(99,102,241,.3);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* âââ Toast âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
+.toast{
+  position:fixed;bottom:1.5rem;right:1.5rem;
+  background:#1f2937;border:1px solid var(--border);
+  border-radius:12px;padding:.875rem 1.25rem;
+  font-size:.875rem;color:var(--text);z-index:9999;
+  transform:translateY(100px);opacity:0;transition:all .3s;
+  max-width:320px;box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{border-color:rgba(16,185,129,.4);background:rgba(16,185,129,.1)}
+.toast.error{border-color:rgba(239,68,68,.4);background:rgba(239,68,68,.1)}
+
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}
+  .main{margin-left:0}
+}
 </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="header-left">
-    <div class="logo">&#x1F916;</div>
-    <h1>SalesBot IA</h1>
-    <span class="badge-live">LIVE</span>
-  </div>
-  <div class="header-right">
-    <div class="btn-status" id="system-status">&#x1F7E2; Syst&egrave;me actif</div>
-    <button class="btn-refresh" onclick="loadData()">&#x21BA; Actualiser</button>
-  </div>
+<!-- Loading screen -->
+<div id="loading">
+  <div class="loading-spinner"></div>
+  <div style="font-size:.875rem;color:var(--muted)" id="loadingText">Chargement...</div>
 </div>
 
-<div class="main">
-
-  <!-- VUE D'ENSEMBLE -->
-  <div class="section-title">Vue d&#x2019;ensemble</div>
-  <div id="stats-grid" class="stats-grid">
-    <div class="loading"><div class="spinner"></div> Chargement...</div>
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="icon">ð¤</div>
+    <div>
+      <div class="name">SalesBot IA</div>
+      <div class="version" id="sb-version">v2.0 Â· SaaS</div>
+    </div>
   </div>
 
-  <!-- CANAUX ACTIFS -->
-  <div class="section-title">Canaux actifs</div>
-  <div class="channels-grid">
-    <div class="channel-card ch-wa">
-      <div class="channel-icon">&#x1F4AC;</div>
-      <div>
-        <div class="channel-name">WhatsApp</div>
-        <div class="channel-count" id="count-wh">—</div>
-        <div class="channel-status inactive" id="status-wh">Chargement...</div>
+  <nav class="nav">
+    <div class="nav-section" data-i18n="nav_overview">Vue d'ensemble</div>
+    <div class="nav-item active" onclick="showPage('overview')" id="nav-overview">
+      <span class="icon">ð</span><span data-i18n="nav_dashboard">Dashboard</span>
+    </div>
+
+    <div class="nav-section" data-i18n="nav_sales">Commercial</div>
+    <div class="nav-item" onclick="showPage('leads')" id="nav-leads">
+      <span class="icon">ð¥</span><span data-i18n="nav_leads">Leads</span>
+    </div>
+    <div class="nav-item" onclick="showPage('bookings')" id="nav-bookings">
+      <span class="icon">ð</span><span data-i18n="nav_rdv">Rendez-vous</span>
+    </div>
+    <div class="nav-item" onclick="showPage('calls')" id="nav-calls">
+      <span class="icon">ð</span><span data-i18n="nav_calls">Appels IA</span>
+    </div>
+
+    <div class="nav-section" data-i18n="nav_config">Configuration</div>
+    <div class="nav-item" onclick="showPage('integrations')" id="nav-integrations">
+      <span class="icon">ð</span><span data-i18n="nav_connect">Connexions</span>
+    </div>
+    <div class="nav-item" id="nav-admin" style="display:none" onclick="showPage('admin')">
+      <span class="icon">âï¸</span><span data-i18n="nav_admin">Admin</span>
+    </div>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="user-info">
+      <div class="user-avatar" id="userAvatar">?</div>
+      <div class="user-details">
+        <div class="name" id="userName">...</div>
+        <div class="role" id="userRole">...</div>
       </div>
     </div>
-    <div class="channel-card ch-ig">
-      <div class="channel-icon">&#x1F4F8;</div>
-      <div>
-        <div class="channel-name">Instagram</div>
-        <div class="channel-count" id="count-in">—</div>
-        <div class="channel-status inactive" id="status-in">Chargement...</div>
+    <button class="btn-logout" onclick="logout()" data-i18n="btn_logout">DÃ©connexion</button>
+  </div>
+</aside>
+
+<!-- Main -->
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-title" id="pageTitle">Dashboard</div>
+    <div class="topbar-right">
+      <div class="badge-live" id="liveStatus">LIVE</div>
+      <div class="lang-badge" onclick="toggleLang()" id="langToggle">ð«ð· FR</div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ââ OVERVIEW âââââââââââââââââââââââââââââââââââââââââââ -->
+    <div class="page active" id="page-overview">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="stat-total">â</div>
+          <div class="stat-label" data-i18n="stat_total">Total Leads</div>
+          <div class="stat-icon">ð¥</div>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-value" id="stat-new">â</div>
+          <div class="stat-label" data-i18n="stat_new">Nouveaux</div>
+          <div class="stat-icon">ð</div>
+        </div>
+        <div class="stat-card yellow">
+          <div class="stat-value" id="stat-rdv">â</div>
+          <div class="stat-label" data-i18n="stat_rdv">RDV PlanifiÃ©s</div>
+          <div class="stat-icon">ð</div>
+        </div>
+        <div class="stat-card blue">
+          <div class="stat-value" id="stat-clients">â</div>
+          <div class="stat-label" data-i18n="stat_clients">Clients</div>
+          <div class="stat-icon">â­</div>
+        </div>
+        <div class="stat-card purple">
+          <div class="stat-value" id="stat-today">â</div>
+          <div class="stat-label" data-i18n="stat_today">Aujourd'hui</div>
+          <div class="stat-icon">ð</div>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <div class="section-title" data-i18n="recent_leads">Leads RÃ©cents</div>
+            <div class="section-sub" data-i18n="last_10">10 derniers</div>
+          </div>
+          <button class="btn-sm btn-primary" onclick="showPage('leads')" data-i18n="see_all">Voir tout</button>
+        </div>
+        <table>
+          <thead><tr>
+            <th data-i18n="th_name">Nom</th>
+            <th data-i18n="th_phone">TÃ©lÃ©phone</th>
+            <th data-i18n="th_status">Statut</th>
+            <th data-i18n="th_channel">Canal</th>
+            <th data-i18n="th_date">Date</th>
+          </tr></thead>
+          <tbody id="leadsTableBody"><tr><td colspan="5" style="text-align:center;color:var(--muted);padding:2rem">Chargement...</td></tr></tbody>
+        </table>
       </div>
     </div>
-    <div class="channel-card ch-tg">
-      <div class="channel-icon">&#x2708;&#xFE0F;</div>
-      <div>
-        <div class="channel-name">Telegram</div>
-        <div class="channel-count" id="count-te">—</div>
-        <div class="channel-status inactive" id="status-te">Chargement...</div>
+
+    <!-- ââ LEADS ââââââââââââââââââââââââââââââââââââââââââââââââ -->
+    <div class="page" id="page-leads">
+      <div class="section-card">
+        <div class="section-header">
+          <div><div class="section-title" data-i18n="all_leads">Tous les leads</div></div>
+          <button class="btn-sm btn-primary" onclick="loadLeads()" data-i18n="refresh">â» RafraÃ®chir</button>
+        </div>
+        <table>
+          <thead><tr>
+            <th data-i18n="th_name">Nom</th><th data-i18n="th_phone">TÃ©lÃ©phone</th>
+            <th data-i18n="th_email">Email</th><th data-i18n="th_status">Statut</th>
+            <th data-i18n="th_channel">Canal</th><th data-i18n="th_actions">Actions</th>
+          </tr></thead>
+          <tbody id="allLeadsBody"><tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--muted)">Chargement...</td></tr></tbody>
+        </table>
       </div>
     </div>
-    <div class="channel-card ch-em">
-      <div class="channel-icon">&#x1F4E7;</div>
-      <div>
-        <div class="channel-name">Email</div>
-        <div class="channel-count" id="count-em">—</div>
-        <div class="channel-status inactive" id="status-em">Chargement...</div>
+
+    <!-- ââ RDV ââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+    <div class="page" id="page-bookings">
+      <div class="section-card">
+        <div class="section-header">
+          <div><div class="section-title" data-i18n="all_rdv">Rendez-vous</div></div>
+          <button class="btn-sm btn-primary" onclick="loadBookings()" data-i18n="refresh">â» RafraÃ®chir</button>
+        </div>
+        <div id="bookingsContent" style="padding:1.25rem;color:var(--muted);text-align:center">Chargement...</div>
       </div>
     </div>
-  </div>
 
-  <!-- RENDEZ-VOUS -->
-  <div class="section-title">&#x1F4C5; Rendez-vous</div>
-  <div id="booking-stats-grid" class="booking-grid">
-    <div class="loading"><div class="spinner"></div> Chargement...</div>
-  </div>
-  <div class="card" style="margin-bottom:28px">
-    <div class="card-header">
-      <div class="card-title">&#x1F4C5; Prochains rendez-vous</div>
-      <a class="btn-link" href="/booking" target="_blank">+ Voir page de r&eacute;servation &#x2197;</a>
-    </div>
-    <div id="upcoming-bookings-container" class="booking-table-wrap">
-      <div class="loading"><div class="spinner"></div> Chargement...</div>
-    </div>
-  </div>
+    <!-- ââ CALLS ââââââââââââââââââââââââââââââââââââââââââââââââ -->
+    <div class="page" id="page-calls">
+      <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+        <div class="stat-card" style="cursor:pointer" onclick="loadScripts()">
+          <div class="stat-value" style="font-size:1.25rem" data-i18n="scripts_title">10 Scripts IA</div>
+          <div class="stat-label" data-i18n="scripts_sub">FR + AR disponibles</div>
+          <div class="stat-icon">ð­</div>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-value" id="callsPhoneNumber">+1 (339) 233 9319</div>
+          <div class="stat-label" data-i18n="vapi_number">NumÃ©ro Vapi</div>
+          <div class="stat-icon">ð</div>
+        </div>
+      </div>
 
-  <!-- ALERTES HUMAIN -->
-  <div id="human-alerts"></div>
-
-  <!-- LEADS RECENTS -->
-  <div class="card">
-    <div class="card-header">
-      <div class="card-title">&#x1F4CB; Leads r&eacute;cents</div>
-      <div class="card-badge" id="leads-count">—</div>
-    </div>
-    <div id="leads-table-container">
-      <div class="loading"><div class="spinner"></div> Chargement...</div>
-    </div>
-  </div>
-
-  <!-- STATUT DES AGENTS -->
-  <div class="card">
-    <div class="card-header">
-      <div class="card-title">&#x2699;&#xFE0F; Statut des agents</div>
-      <div class="card-badge" id="agents-online">—</div>
-    </div>
-    <div id="agents-status" class="agents-grid">
-      <div class="loading"><div class="spinner"></div> Chargement...</div>
-    </div>
-  </div>
-
-</div>
-
-<div class="footer" id="footer-time">Derni&egrave;re mise &agrave;jour: —</div>
-
-<script>
-const CHANNEL_COLORS = { whatsapp: '#25d366', instagram: '#e1306c', telegram: '#27a1f2', email: '#f59e0b' };
-
-function getScoreColor(score) {
-  if (score >= 70) return '#22c55e';
-  if (score >= 40) return '#f59e0b';
-  return '#ef4444';
-}
-
-function getStatusClass(status) {
-  if (['qualifie', 'rdv_planifie', 'converti'].includes(status)) return 'qualifie';
-  if (['en_qualification', 'relance_1', 'relance_2', 'relance_3'].includes(status)) return 'qualifying';
-  if (status === 'appele') return 'appele';
-  if (status === 'perdu') return 'perdu';
-  return 'nouveau';
-}
-
-function timeAgo(dateStr) {
-  const diff = Date.now() - new Date(dateStr).getTime();
-  const mins = Math.floor(diff / 60000);
-  const hrs = Math.floor(mins / 60);
-  const days = Math.floor(hrs / 24);
-  if (mins < 1) return 'a l\'instant';
-  if (mins < 60) return `il y a ${mins}min`;
-  if (hrs < 24) return `il y a ${hrs}h`;
-  return `il y a ${days}j`;
-}
-
-function initials(name) {
-  return (name || 'P').charAt(0).toUpperCase();
-}
-
-function hashColor(str) {
-  const colors = ['#3b82f6','#8b5cf6','#ec4899','#14b8a6','#f59e0b','#ef4444'];
-  let hash = 0;
-  for (let c of str) hash = (hash * 31 + c.charCodeAt(0)) & 0xffffffff;
-  return colors[Math.abs(hash) % colors.length];
-}
-
-function renderStats(dash, status) {
-  const s = dash.stats || {};
-  const sysStats = status.systemStats || {};
-  document.getElementById('stats-grid').innerHTML = `
-    <div class="stat-card blue">
-      <div class="stat-label">Total Leads</div>
-      <div class="stat-value">${s.total || 0}</div>
-      <div class="stat-sub">Dans le CRM</div>
-      <div class="stat-icon">&#x1F465;</div>
-    </div>
-    <div class="stat-card green">
-      <div class="stat-label">Score Moyen</div>
-      <div class="stat-value">${s.averageScore || 0}<span style="font-size:16px">/100</span></div>
-      <div class="stat-sub">Qualification</div>
-      <div class="stat-icon">&#x2B50;</div>
-    </div>
-    <div class="stat-card orange">
-      <div class="stat-label">Messages traites</div>
-      <div class="stat-value">${sysStats.messagesProcessed || 0}</div>
-      <div class="stat-sub">Depuis le demarrage</div>
-      <div class="stat-icon">&#x1F4AC;</div>
-    </div>
-    <div class="stat-card purple">
-      <div class="stat-label">Reponses envoyees</div>
-      <div class="stat-value">${sysStats.responsesSent || 0}</div>
-      <div class="stat-sub">Via tous canaux</div>
-      <div class="stat-icon">&#x2709;&#xFE0F;</div>
-    </div>
-    <div class="stat-card pink">
-      <div class="stat-label">Appels IA lances</div>
-      <div class="stat-value">${sysStats.callsTriggered || 0}</div>
-      <div class="stat-sub">Via Vapi.ai</div>
-      <div class="stat-icon">&#x1F4DE;</div>
-    </div>
-    <div class="stat-card red">
-      <div class="stat-label">Besoin humain</div>
-      <div class="stat-value" style="color:${s.needsHuman > 0 ? '#f59e0b' : '#22c55e'}">${s.needsHuman || 0}</div>
-      <div class="stat-sub">Action requise</div>
-      <div class="stat-icon">&#x1F6A8;</div>
-    </div>
-  `;
-}
-
-function renderChannels(dash) {
-  const byChannel = dash.stats && dash.stats.byChannel ? dash.stats.byChannel : {};
-  const channels = [
-    { key: 'whatsapp', id: 'wh' },
-    { key: 'instagram', id: 'in' },
-    { key: 'telegram', id: 'te' },
-    { key: 'email', id: 'em' }
-  ];
-  channels.forEach(ch => {
-    const count = byChannel[ch.key] || 0;
-    const countEl = document.getElementById('count-' + ch.id);
-    const statusEl = document.getElementById('status-' + ch.id);
-    if (countEl) countEl.textContent = count;
-    if (statusEl) {
-      const isActive = count > 0;
-      statusEl.textContent = isActive ? 'Actif' : 'En attente';
-      statusEl.className = 'channel-status ' + (isActive ? 'active' : 'inactive');
-    }
-  });
-}
-
-function renderLeads(leads) {
-  document.getElementById('leads-count').textContent = `${leads.length} leads`;
-  if (!leads.length) {
-    document.getElementById('leads-table-container').innerHTML = '<div class="empty-state">Aucun lead pour l\'instant</div>';
-    return;
-  }
-  const rows = leads.slice(0, 10).map(lead => {
-    const color = hashColor(lead.firstName || 'P');
-    const scoreColor = getScoreColor(lead.score || 0);
-    const statusClass = getStatusClass(lead.status);
-    const cid = (lead.contactId || '').substring(0, 20);
-    const chKey = lead.channel || 'whatsapp';
-    const chIcon = chKey === 'whatsapp' ? '&#x1F4AC;' : chKey === 'instagram' ? '&#x1F4F8;' : chKey === 'telegram' ? '&#x2708;&#xFE0F;' : '&#x1F4E7;';
-    return `
-      <tr>
-        <td>
-          <div class="lead-info">
-            <div class="avatar" style="background:${color}">${initials(lead.firstName)}</div>
-            <div>
-              <div class="lead-name">${lead.firstName || 'Prospect'}</div>
-              <div class="lead-id">${cid}</div>
+      <div class="section-card">
+        <div class="section-header">
+          <div><div class="section-title" data-i18n="trigger_call">DÃ©clencher un appel</div></div>
+        </div>
+        <div style="padding:1.25rem">
+          <div class="form-row">
+            <div class="form-group-inline">
+              <label data-i18n="lbl_phone">TÃLÃPHONE</label>
+              <input id="callPhone" placeholder="+33600000000" type="tel">
+            </div>
+            <div class="form-group-inline">
+              <label data-i18n="lbl_lead_name">NOM LEAD</label>
+              <input id="callName" placeholder="Mohamed Amine" type="text">
+            </div>
+            <div class="form-group-inline">
+              <label data-i18n="lbl_script">SCRIPT</label>
+              <select id="callScript" style="width:100%;padding:.6rem .875rem;background:#1f2937;border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.875rem;outline:none">
+                <option value="prospection">ð¯ Prospection</option>
+                <option value="qualification">ð Qualification</option>
+                <option value="prise_rdv">ð Prise de RDV</option>
+                <option value="relance">ð Relance</option>
+                <option value="confirmation_rdv">â Confirmation RDV</option>
+                <option value="suivi_post_rdv">ð Suivi Post-RDV</option>
+                <option value="no_show">ð« No-Show</option>
+                <option value="urgence">ð¨ Urgence</option>
+                <option value="recuperation">â»ï¸ RÃ©cupÃ©ration</option>
+                <option value="upsell">ð Upsell</option>
+              </select>
             </div>
           </div>
-        </td>
-        <td><span class="channel-tag ${chKey}">${chIcon} ${chKey.substring(0,2).toUpperCase()}</span></td>
-        <td><span class="status-tag ${statusClass}">${lead.status || '—'}</span></td>
-        <td>
-          <div class="score-bar">
-            <span class="score-num" style="color:${scoreColor}">${lead.score || 0}</span>
-            <div class="bar"><div class="bar-fill" style="width:${lead.score || 0}%;background:${scoreColor}"></div></div>
-          </div>
-        </td>
-        <td style="color:var(--muted);font-size:12px">${timeAgo(lead.lastMessageAt)}</td>
-      </tr>
-    `;
-  }).join('');
-  document.getElementById('leads-table-container').innerHTML = `
-    <table class="leads-table">
-      <thead>
-        <tr><th>Lead</th><th>Canal</th><th>Statut</th><th>Score</th><th>Dernier msg</th></tr>
-      </thead>
-      <tbody>${rows}</tbody>
-    </table>
-  `;
-}
-
-function renderAgentStatus(status) {
-  const agents = status.agents || {};
-  const items = [
-    { name: 'WhatsApp QR', desc: 'Connexion via QR Code', key: 'whatsapp', icon: '&#x1F4AC;' },
-    { name: 'Instagram DM', desc: 'Meta Graph API', key: 'instagram', icon: '&#x1F4F8;' },
-    { name: 'Telegram Bot', desc: 'Bot API polling', key: 'telegram', icon: '&#x2708;&#xFE0F;' },
-    { name: 'Email IMAP', desc: 'Gmail / SMTP', key: 'email', icon: '&#x1F4E7;' },
-    { name: 'Vapi Appels IA', desc: 'Voice agent', key: 'vapi', icon: '&#x1F4DE;' },
-    { name: 'Scheduleur', desc: 'Relances auto J+1/3/7', key: 'scheduler', icon: '&#x23F0;' },
-    { name: 'OpenAI GPT-4o', desc: 'Moteur IA principal', key: 'openai', icon: '&#x1F9E0;' },
-  ];
-  const activeCount = Object.values(agents).filter(Boolean).length;
-  document.getElementById('agents-online').textContent = `${activeCount}/${items.length} actifs`;
-  document.getElementById('agents-status').innerHTML = items.map(item => {
-    const isOn = agents[item.key] === true;
-    return `
-      <div class="status-item">
-        <div class="status-item-left">
-          <div class="status-indicator ${isOn ? 'on' : 'off'}"></div>
-          <div>
-            <div class="status-item-name">${item.icon} ${item.name}</div>
-            <div class="status-item-desc">${item.desc}</div>
+          <div style="margin-top:.75rem">
+            <button class="btn-sm btn-primary" onclick="triggerCall()" data-i18n="btn_call">ð Lancer l'appel</button>
           </div>
         </div>
-        <div class="status-item-right ${isOn ? 'on' : 'off'}">${isOn ? '&#x25CF; Actif' : '&#x25CB; Inactif'}</div>
       </div>
-    `;
-  }).join('');
-}
 
-function renderHumanAlerts(leads) {
-  const humanLeads = leads.filter(l => l.needsHuman);
-  const container = document.getElementById('human-alerts');
-  if (!humanLeads.length) { container.innerHTML = ''; return; }
-  container.innerHTML = `
-    <div class="alert-panel" style="margin-bottom:20px">
-      <div class="alert-header">&#x1F6A8; ${humanLeads.length} lead(s) necessitent une intervention humaine</div>
-      ${humanLeads.map(l => `
-        <div class="alert-lead">
-          <div>
-            <strong>${l.firstName}</strong>
-            <span style="color:var(--muted);font-size:12px;margin-left:8px">${l.channel} &bull; Score: ${l.score}/100</span>
-          </div>
-          <div style="font-size:12px;color:var(--orange)">&rarr; Action requise</div>
+      <div class="section-card">
+        <div class="section-header">
+          <div><div class="section-title" data-i18n="call_history">Historique appels</div></div>
+          <button class="btn-sm btn-secondary" onclick="loadCallHistory()" data-i18n="refresh">â»</button>
         </div>
-      `).join('')}
+        <div id="callHistoryContent" style="padding:1.25rem;color:var(--muted);text-align:center">Cliquez â» pour charger</div>
+      </div>
     </div>
-  `;
+
+    <!-- ââ CONNEXIONS âââââââââââââââââââââââââââââââââââââââââââ -->
+    <div class="page" id="page-integrations">
+      <div class="integrations-grid" id="integrationsGrid">
+        <div style="color:var(--muted);padding:2rem">Chargement des connexions...</div>
+      </div>
+    </div>
+
+    <!-- ââ ADMIN ââââââââââââââââââââââââââââââââââââââââââââââââ -->
+    <div class="page" id="page-admin">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <div class="section-title" data-i18n="admin_clients">Gestion des clients</div>
+            <div class="section-sub" data-i18n="admin_sub">CrÃ©ez et gÃ©rez les accÃ¨s SaaS</div>
+          </div>
+        </div>
+        <div style="padding:1.25rem;border-bottom:1px solid var(--border)">
+          <div class="form-row">
+            <div class="form-group-inline">
+              <label data-i18n="lbl_username">IDENTIFIANT</label>
+              <input id="newUsername" placeholder="client1" type="text">
+            </div>
+            <div class="form-group-inline">
+              <label data-i18n="lbl_password">MOT DE PASSE</label>
+              <input id="newPassword" placeholder="motdepasse123" type="text">
+            </div>
+            <div class="form-group-inline">
+              <label data-i18n="lbl_client_name">NOM AFFICHÃ</label>
+              <input id="newName" placeholder="Entreprise SA" type="text">
+            </div>
+            <div style="display:flex;align-items:flex-end">
+              <button class="btn-sm btn-primary" onclick="createClient()" data-i18n="btn_create">+ CrÃ©er</button>
+            </div>
+          </div>
+        </div>
+        <table>
+          <thead><tr>
+            <th data-i18n="th_username">Identifiant</th>
+            <th data-i18n="th_name">Nom</th>
+            <th data-i18n="th_role">RÃ´le</th>
+            <th data-i18n="th_actions">Actions</th>
+          </tr></thead>
+          <tbody id="clientsTable"><tr><td colspan="4" style="text-align:center;padding:1.5rem;color:var(--muted)">Chargement...</td></tr></tbody>
+        </table>
+        <div style="padding:1rem 1.25rem;background:rgba(245,158,11,.05);border-top:1px solid var(--border)">
+          <div style="font-size:.75rem;color:#fcd34d">â ï¸ <span data-i18n="admin_note">AprÃ¨s crÃ©ation, copiez la valeur USERS_CONFIG et ajoutez-la dans Railway pour persister entre redÃ©marrages.</span></div>
+          <textarea id="usersConfigOutput" style="display:none;width:100%;margin-top:.5rem;padding:.5rem;background:#1f2937;border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:.7rem;font-family:monospace;resize:vertical" rows="3"></textarea>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</main>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// âââ i18n âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+const i18n = {
+  fr:{
+    nav_overview:'Vue d\'ensemble',nav_dashboard:'Dashboard',nav_sales:'Commercial',
+    nav_leads:'Leads',nav_rdv:'Rendez-vous',nav_calls:'Appels IA',nav_config:'Configuration',
+    nav_connect:'Connexions',nav_admin:'Admin',btn_logout:'DÃ©connexion',stat_total:'Total Leads',
+    stat_new:'Nouveaux',stat_rdv:'RDV PlanifiÃ©s',stat_clients:'Clients',stat_today:'Aujourd\'hui',
+    recent_leads:'Leads RÃ©cents',last_10:'10 derniers',see_all:'Voir tout',th_name:'Nom',
+    th_phone:'TÃ©lÃ©phone',th_status:'Statut',th_channel:'Canal',th_date:'Date',th_email:'Email',
+    th_actions:'Actions',all_leads:'Tous les leads',all_rdv:'Rendez-vous',refresh:'â» RafraÃ®chir',
+    scripts_title:'10 Scripts IA',scripts_sub:'FR + AR disponibles',vapi_number:'NumÃ©ro Vapi',
+    trigger_call:'DÃ©clencher un appel',lbl_phone:'TÃLÃPHONE',lbl_lead_name:'NOM LEAD',
+    lbl_script:'SCRIPT',btn_call:'ð Lancer l\'appel',call_history:'Historique appels',
+    admin_clients:'Gestion des clients',admin_sub:'CrÃ©ez et gÃ©rez les accÃ¨s SaaS',
+    lbl_username:'IDENTIFIANT',lbl_password:'MOT DE PASSE',lbl_client_name:'NOM AFFICHÃ',
+    btn_create:'+ CrÃ©er',th_username:'Identifiant',th_role:'RÃ´le',
+    admin_note:'AprÃ¨s crÃ©ation, copiez USERS_CONFIG dans Railway pour persister.',
+    loading:'Chargement...',role_admin:'Admin',role_client:'Client'
+  },
+  ar:{
+    nav_overview:'ÙØ¸Ø±Ø© Ø¹Ø§ÙØ©',nav_dashboard:'ÙÙØ­Ø© Ø§ÙØªØ­ÙÙ',nav_sales:'Ø§ÙÙØ¨ÙØ¹Ø§Øª',
+    nav_leads:'Ø§ÙØ¹ÙÙØ§Ø¡ Ø§ÙÙØ­ØªÙÙÙÙ',nav_rdv:'Ø§ÙÙÙØ§Ø¹ÙØ¯',nav_calls:'ÙÙØ§ÙÙØ§Øª Ø§ÙØ°ÙØ§Ø¡ Ø§ÙØ§ØµØ·ÙØ§Ø¹Ù',nav_config:'Ø§ÙØ¥Ø¹Ø¯Ø§Ø¯Ø§Øª',
+    nav_connect:'Ø§ÙØªÙØµÙÙØ§Øª',nav_admin:'Ø§ÙØ¥Ø¯Ø§Ø±Ø©',btn_logout:'ØªØ³Ø¬ÙÙ Ø§ÙØ®Ø±ÙØ¬',stat_total:'Ø¥Ø¬ÙØ§ÙÙ Ø§ÙØ¹ÙÙØ§Ø¡',
+    stat_new:'Ø¬Ø¯Ø¯',stat_rdv:'ÙÙØ§Ø¹ÙØ¯ ÙØ¬Ø¯ÙÙØ©',stat_clients:'Ø¹ÙÙØ§Ø¡ ÙØ´Ø·ÙÙ',stat_today:'Ø§ÙÙÙÙ',
+    recent_leads:'Ø§ÙØ¹ÙÙØ§Ø¡ Ø§ÙØ£Ø®ÙØ±ÙÙ',last_10:'Ø¢Ø®Ø± 10',see_all:'Ø¹Ø±Ø¶ Ø§ÙÙÙ',th_name:'Ø§ÙØ§Ø³Ù',
+    th_phone:'Ø§ÙÙØ§ØªÙ',th_status:'Ø§ÙØ­Ø§ÙØ©',th_channel:'Ø§ÙÙÙØ§Ø©',th_date:'Ø§ÙØªØ§Ø±ÙØ®',th_email:'Ø§ÙØ¨Ø±ÙØ¯',
+    th_actions:'Ø§ÙØ¥Ø¬Ø±Ø§Ø¡Ø§Øª',all_leads:'Ø¬ÙÙØ¹ Ø§ÙØ¹ÙÙØ§Ø¡',all_rdv:'Ø§ÙÙÙØ§Ø¹ÙØ¯',refresh:'â» ØªØ­Ø¯ÙØ«',
+    scripts_title:'10 Ø³ÙØ±ÙØ¨ØªØ§Øª Ø°ÙØ§Ø¡ Ø§ØµØ·ÙØ§Ø¹Ù',scripts_sub:'ÙØ±ÙØ³Ù + Ø¹Ø±Ø¨Ù',vapi_number:'Ø±ÙÙ Vapi',
+    trigger_call:'Ø¨Ø¯Ø¡ ÙÙØ§ÙÙØ©',lbl_phone:'Ø§ÙÙØ§ØªÙ',lbl_lead_name:'Ø§Ø³Ù Ø§ÙØ¹ÙÙÙ',
+    lbl_script:'Ø§ÙØ³ÙØ±ÙØ¨Øª',btn_call:'ð Ø¨Ø¯Ø¡ Ø§ÙÙÙØ§ÙÙØ©',call_history:'Ø³Ø¬Ù Ø§ÙÙÙØ§ÙÙØ§Øª',
+    admin_clients:'Ø¥Ø¯Ø§Ø±Ø© Ø§ÙØ¹ÙÙØ§Ø¡',admin_sub:'Ø¥ÙØ´Ø§Ø¡ ÙØ¥Ø¯Ø§Ø±Ø© Ø§ÙÙØµÙÙ SaaS',
+    lbl_username:'Ø§Ø³Ù Ø§ÙÙØ³ØªØ®Ø¯Ù',lbl_password:'ÙÙÙØ© Ø§ÙÙØ±ÙØ±',lbl_client_name:'Ø§ÙØ§Ø³Ù Ø§ÙÙØ¹Ø±ÙØ¶',
+    btn_create:'+ Ø¥ÙØ´Ø§Ø¡',th_username:'Ø§Ø³Ù Ø§ÙÙØ³ØªØ®Ø¯Ù',th_role:'Ø§ÙØ¯ÙØ±',
+    admin_note:'Ø¨Ø¹Ú/ Ø§ÙØ¥ÙØ´Ø§Ø¡Ø Ø§ÙØ³Ø® USERS_CONFIG Ø¥ÙÙ Railway.',
+    loading:'Ø¬Ø§Ø±Ù Ø§ÙØªØ­ÙÙÙ...',role_admin:'ÙØ³Ø¤ÙÙ',role_client:'Ø¹ÙÙÙ'
+  }
+};
+
+let lang = 'fr';
+let currentUser = null;
+
+function applyI18n() {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (i18n[lang][key]) el.textContent = i18n[lang][key];
+  });
+  document.getElementById('langToggle').textContent = lang === 'fr' ? 'ð«ð· FR' : 'ð²ð¦ AR';
+  document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
 }
 
-function renderBookings(bookingData) {
-  const stats = bookingData.stats || {};
-  const upcoming = bookingData.upcoming || [];
-  document.getElementById('booking-stats-grid').innerHTML = `
-    <div class="stat-card blue">
-      <div class="stat-label">Aujourd'hui</div>
-      <div class="stat-value">${stats.today || 0}</div>
-      <div class="stat-sub">RDV du jour</div>
-      <div class="stat-icon">&#x1F4C5;</div>
-    </div>
-    <div class="stat-card green">
-      <div class="stat-label">Confirmes</div>
-      <div class="stat-value">${stats.confirmed || 0}</div>
-      <div class="stat-sub">En attente</div>
-      <div class="stat-icon">&#x2705;</div>
-    </div>
-    <div class="stat-card purple">
-      <div class="stat-label">A venir (7j)</div>
-      <div class="stat-value">${stats.upcoming || 0}</div>
-      <div class="stat-sub">Prochains RDV</div>
-      <div class="stat-icon">&#x1F52E;</div>
-    </div>
-    <div class="stat-card orange">
-      <div class="stat-label">Total RDV</div>
-      <div class="stat-value">${stats.total || 0}</div>
-      <div class="stat-sub">Depuis le debut</div>
-      <div class="stat-icon">&#x1F4CA;</div>
-    </div>
-  `;
-  const container = document.getElementById('upcoming-bookings-container');
-  if (!upcoming.length) {
-    container.innerHTML = `<div class="empty-state">Aucun rendez-vous &agrave; venir &middot; <a href="/booking" target="_blank" style="color:var(--blue-light)">Voir la page de r&eacute;servation</a></div>`;
+function toggleLang() {
+  lang = lang === 'fr' ? 'ar' : 'fr';
+  applyI18n();
+  showToast(lang === 'fr' ? 'Langue : FranÃ§ais' : 'Ø§ÙÙØºØ©: Ø§ÙØ¹Ø±Ø¨ÙØ©');
+}
+
+// âââ Toast ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'toast ' + type;
+  setTimeout(() => t.classList.add('show'), 10);
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// âââ Auth âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+async function checkAuth() {
+  try {
+    const res = await fetch('/auth/me', { credentials: 'include' });
+    if (!res.ok) { window.location.href = '/login'; return; }
+    currentUser = await res.json();
+    document.getElementById('userName').textContent = currentUser.name;
+    document.getElementById('userRole').textContent = currentUser.role === 'admin' ? (i18n[lang].role_admin||'Admin') : (i18n[lang].role_client||'Client');
+    document.getElementById('userAvatar').textContent = (currentUser.name||'?')[0].toUpperCase();
+    if (currentUser.role === 'admin') {
+      document.getElementById('nav-admin').style.display = 'flex';
+    }
+    document.getElementById('loading').style.display = 'none';
+    loadOverview();
+  } catch {
+    window.location.href = '/login';
+  }
+}
+
+async function logout() {
+  await fetch('/auth/logout', { method: 'POST', credentials: 'include' });
+  window.location.href = '/login';
+}
+
+// âââ Navigation âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  const nav = document.getElementById('nav-' + page);
+  if (nav) nav.classList.add('active');
+  const titles = {overview:'Dashboard',leads:'Leads',bookings:'Rendez-vous',calls:'Appels IA',integrations:'Connexions',admin:'Admin'};
+  document.getElementById('pageTitle').textContent = titles[page] || page;
+  if (page === 'leads') loadLeads();
+  if (page === 'bookings') loadBookings();
+  if (page === 'integrations') loadIntegrations();
+  if (page === 'admin') loadClients();
+  if (page === 'calls') loadIntegrations(); // to get phone number
+}
+
+// âââ Overview ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+async function loadOverview() {
+  try {
+    const [stats, leads] = await Promise.all([
+      fetch('/api/stats', {credentials:'include'}).then(r=>r.json()),
+      fetch('/api/leads', {credentials:'include'}).then(r=>r.json())
+    ]);
+    document.getElementById('stat-total').textContent = stats.total || 0;
+    document.getElementById('stat-new').textContent = stats.new || 0;
+    document.getElementById('stat-rdv').textContent = stats.rdv || 0;
+    document.getElementById('stat-clients').textContent = stats.clients || 0;
+    document.getElementById('stat-today').textContent = stats.todayNew || 0;
+    renderLeadsTable('leadsTableBody', leads.slice(0,10), false);
+  } catch(e) { console.error(e); }
+}
+
+// âââ Leads ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+async function loadLeads() {
+  try {
+    const leads = await fetch('/api/leads', {credentials:'include'}).then(r=>r.json());
+    renderLeadsTable('allLeadsBody', leads, true);
+  } catch { }
+}
+
+function renderLeadsTable(tbodyId, leads, showActions) {
+  const tbody = document.getElementById(tbodyId);
+  if (!leads || !leads.length) {
+    tbody.innerHTML = `<tr><td colspan="${showActions?6:5}" style="text-align:center;padding:2rem;color:var(--muted)">Aucun lead</td></tr>`;
     return;
   }
-  const statusColors = { confirmed: '#22c55e', pending: '#f59e0b', cancelled: '#ef4444', completed: '#8b5cf6' };
-  const statusLabels = { confirmed: 'Confirme', pending: 'En attente', cancelled: 'Annule', completed: 'Termine' };
-  const rows = upcoming.map(b => {
-    const color = statusColors[b.status] || '#64748b';
-    const label = statusLabels[b.status] || b.status;
-    const ch = b.channel || 'direct';
-    const chColor = CHANNEL_COLORS[ch] || '#64748b';
-    return `
-      <tr style="border-top:1px solid var(--border)">
-        <td style="padding:12px 18px">
-          <div style="display:flex;align-items:center;gap:10px">
-            <div style="width:32px;height:32px;border-radius:50%;background:${hashColor(b.firstName||'?')};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:white">${initials(b.firstName)}</div>
-            <div style="font-weight:600;font-size:14px">${b.firstName || ''} ${b.lastName || ''}</div>
-          </div>
-        </td>
-        <td style="padding:12px 18px;font-size:14px">${b.slotDate || '—'}</td>
-        <td style="padding:12px 18px;font-size:14px;font-weight:600;color:var(--blue-light)">${b.slotTime || '—'}</td>
-        <td style="padding:12px 18px"><span style="background:${chColor}22;color:${chColor};padding:3px 10px;border-radius:6px;font-size:12px;font-weight:600">${ch}</span></td>
-        <td style="padding:12px 18px"><span style="background:${color}22;color:${color};padding:3px 10px;border-radius:6px;font-size:12px;font-weight:600">&#x25CF; ${label}</span></td>
-      </tr>
-    `;
-  }).join('');
-  container.innerHTML = `
-    <table class="leads-table" style="width:100%">
-      <thead><tr>
-        <th style="padding:12px 18px">CLIENT</th>
-        <th style="padding:12px 18px">DATE</th>
-        <th style="padding:12px 18px">HEURE</th>
-        <th style="padding:12px 18px">CANAL</th>
-        <th style="padding:12px 18px">STATUT</th>
-      </tr></thead>
-      <tbody>${rows}</tbody>
-    </table>
-  `;
+  tbody.innerHTML = leads.map(l => `
+    <tr>
+      <td><strong>${esc(l.name||l.phone||'â')}</strong></td>
+      <td style="font-family:monospace">${esc(l.phone||'â')}</td>
+      ${showActions ? `<td style="font-size:.8rem;color:var(--muted)">${esc(l.email||'â')}</td>` : ''}
+      <td><span class="status ${l.status||'new'}">${statusLabel(l.status)}</span></td>
+      <td>${channelIcon(l.channel)} ${esc(l.channel||'â')}</td>
+      ${!showActions ? `<td style="font-size:.8rem;color:var(--muted)">${fmtDate(l.createdAt)}</td>` : ''}
+      ${showActions ? `<td>
+        <button class="btn-sm btn-secondary" onclick="callLead('${esc(l.id)}','${esc(l.phone)}','${esc(l.name||'')}')">ð</button>
+      </td>` : ''}
+    </tr>`).join('');
 }
 
-async function loadData() {
+function callLead(id, phone, name) {
+  showPage('calls');
+  document.getElementById('callPhone').value = phone;
+  document.getElementById('callName').value = name;
+  showToast('Lead chargÃ© dans le panneau appels');
+}
+
+// âââ Bookings âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+async function loadBookings() {
   try {
-    const [dashRes, leadsRes, statusRes, bookingRes] = await Promise.all([
-      fetch('/api/dashboard').then(r => r.json()),
-      fetch('/api/leads').then(r => r.json()),
-      fetch('/api/status').then(r => r.json()),
-      fetch('/api/bookings-dashboard').then(r => r.json()).catch(() => ({ stats: {}, upcoming: [] })),
-    ]);
-    renderStats(dashRes, statusRes);
-    renderChannels(dashRes);
-    renderLeads(leadsRes.leads || []);
-    renderAgentStatus(statusRes);
-    renderHumanAlerts(leadsRes.leads || []);
-    renderBookings(bookingRes);
-    document.getElementById('footer-time').textContent =
-      `Derniere mise a jour: ${new Date().toLocaleTimeString('fr-FR')} — Uptime: ${Math.floor(statusRes.uptime / 60)} min`;
-  } catch (err) {
-    console.error('Erreur chargement:', err);
+    const bkgs = await fetch('/api/bookings', {credentials:'include'}).then(r=>r.json());
+    const el = document.getElementById('bookingsContent');
+    if (!bkgs || !bkgs.length) {
+      el.innerHTML = '<div class="empty-state"><div class="empty-icon">ð</div><div>Aucun rendez-vous</div></div>';
+      return;
+    }
+    el.innerHTML = `<table style="width:100%"><thead><tr><th>Nom</th><th>Date</th><th>Canal</th><th>Statut</th></tr></thead><tbody>
+      ${bkgs.map(b=>`<tr><td>${esc(b.leadName||b.name||'â')}</td><td>${fmtDate(b.date||b.scheduledAt)}</td><td>${esc(b.channel||'â')}</td><td><span class="status ${b.status||'rdv'}">${esc(b.status||'planifiÃ©')}</span></td></tr>`).join('')}
+    </tbody></table>`;
+  } catch { document.getElementById('bookingsContent').textContent = 'Erreur de chargement'; }
+}
+
+// âââ Calls ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+async function triggerCall() {
+  const phone = document.getElementById('callPhone').value.trim();
+  const name = document.getElementById('callName').value.trim();
+  const script = document.getElementById('callScript').value;
+  if (!phone) { showToast('NumÃ©ro de tÃ©lÃ©phone requis', 'error'); return; }
+  showToast('â³ Appel en cours...');
+  try {
+    const res = await fetch('/api/calls/trigger', {
+      method:'POST', credentials:'include',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ phone, leadName: name, scriptType: script })
+    });
+    const d = await res.json();
+    if (res.ok && d.callId) showToast('â Appel lancÃ© â ID: ' + d.callId.slice(0,8));
+    else showToast(d.error || 'Erreur', 'error');
+  } catch { showToast('Erreur rÃ©seau', 'error'); }
+}
+
+async function loadCallHistory() {
+  try {
+    const calls = await fetch('/api/calls', {credentials:'include'}).then(r=>r.json());
+    const el = document.getElementById('callHistoryContent');
+    if (!calls || !calls.length) { el.textContent = 'Aucun appel'; return; }
+    el.innerHTML = `<table style="width:100%"><thead><tr><th>ID</th><th>TÃ©lÃ©phone</th><th>DurÃ©e</th><th>Statut</th><th>Date</th></tr></thead><tbody>
+      ${calls.map(c=>`<tr><td style="font-family:monospace;font-size:.75rem">${esc((c.id||'').slice(0,8))}</td><td>${esc(c.customer?.number||'â')}</td><td>${c.duration||0}s</td><td><span class="status ${c.status}">${esc(c.status||'â')}</span></td><td>${fmtDate(c.createdAt)}</td></tr>`).join('')}
+    </tbody></table>`;
+  } catch { document.getElementById('callHistoryContent').textContent = 'Erreur'; }
+}
+
+// âââ Integrations âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+async function loadIntegrations() {
+  try {
+    const data = await fetch('/api/integrations', {credentials:'include'}).then(r=>r.json());
+    const grid = document.getElementById('integrationsGrid');
+    const intConfigs = [
+      { key:'openai', icon:'ð§ ', name:'OpenAI GPT-4o', color:'#10b981',
+        desc: lang==='ar'?'ÙØ­Ø±Ù Ø§ÙØ°ÙØ§Ø¡ Ø§ÙØ§ØµØ·ÙØ§Ø¹Ù â ÙØ¯Ø¹Ù Ø§ÙÙØ±ÙØ³ÙØ© ÙØ§ÙØ¹Ø±Ø¨ÙØ©':'Moteur IA â supporte FR + AR',
+        val: data.openai?.enabled ? 'ClÃ© API configurÃ©e â' : 'OPENAI_API_KEY manquante',
+        action: null },
+      { key:'voice', icon:'ð', name:'Vapi Voice IA', color:'#6366f1',
+        desc: lang==='ar'?'Ø³ÙÙÙ â ÙØ³Ø§Ø¹Ø¯Ø© ÙØ¨ÙØ¹Ø§Øª Ø«ÙØ§Ø¦ÙØ© Ø§ÙÙØºØ©':'Sophie â Assistante bilingue FR/AR',
+        val: data.voice?.phone || (data.voice?.enabled ? 'ConfigurÃ©' : 'VAPI_API_KEY manquante'),
+        action: data.voice?.enabled ? null : 'Configurer Vapi' },
+      { key:'whatsapp', icon:'ð¬', name:'WhatsApp Business', color:'#25d366',
+        desc: lang==='ar'?'ØªÙÙÙ ÙØ¥Ø±Ø³Ø§Ù Ø§ÙØ±Ø³Ø§Ø¦Ù':'RÃ©ception et envoi de messages',
+        val: data.whatsapp?.enabled ? 'Meta Webhook configurÃ© â' : 'META_VERIFY_TOKEN manquant',
+        action: data.whatsapp?.enabled ? null : 'Configurer Meta' },
+      { key:'telegram', icon:'âï¸', name:'Telegram Bot', color:'#2AABEE',
+        desc: lang==='ar'?'Ø±ÙØ¨ÙØª ØªÙÙÙØºØ±Ø§Ù':'Bot Telegram automatisÃ©',
+        val: data.telegram?.enabled ? 'Token configurÃ© â' : 'TELEGRAM_TOKEN manquant',
+        action: data.telegram?.enabled ? null : 'Configurer Telegram' },
+      { key:'email', icon:'ð§', name:'Email (SMTP/IMAP)', color:'#f59e0b',
+        desc: lang==='ar'?'Ø¥Ø±Ø³Ø§Ù ÙØ§Ø³ØªÙØ¨Ø§Ù Ø§ÙØ¥ÙÙÙÙØ§Øª':'Envoi et rÃ©ception d\'emails',
+        val: data.email?.enabled ? 'Email configurÃ© â' : 'EMAIL_USER manquant',
+        action: data.email?.enabled ? null : 'Configurer Email' },
+      { key:'instagram', icon:'ð¸', name:'Instagram DM', color:'#e1306c',
+        desc: lang==='ar'?'Ø±Ø³Ø§Ø¦Ù Ø¥ÙØ³ØªØºØ±Ø§Ù (ÙØ±ÙØ¨Ø§Ù)':'Messages Instagram (bientÃ´t)',
+        val: lang==='ar'?'ÙØ±ÙØ¨Ø§Ù':'Disponible bientÃ´t',
+        action: null, comingSoon: true }
+    ];
+
+    grid.innerHTML = intConfigs.map(c => {
+      const st = data[c.key] || {};
+      const statusClass = c.comingSoon ? 'off' : (st.enabled ? 'ok' : 'warn');
+      const statusTxt = c.comingSoon ? (lang==='ar'?'ÙØ±ÙØ¨Ø§Ù':'BientÃ´t') : (st.enabled ? (lang==='ar'?'ÙØ¹ÙÙ':'Actif') : (lang==='ar'?'ØºÙØ± ÙÙØªÙÙ':'Manquant'));
+      return `
+      <div class="integration-card">
+        <div class="int-header">
+          <div class="int-info">
+            <div class="int-icon" style="background:${c.color}22">${c.icon}</div>
+            <div><div class="int-name">${c.name}</div><div class="int-desc">${c.desc}</div></div>
+          </div>
+          <span class="int-status ${statusClass}">${statusTxt}</span>
+        </div>
+        <div class="int-value">${c.val}</div>
+        ${c.action ? `<button class="btn-sm btn-secondary" onclick="showToast('Configurez via Railway Variables: ${c.key.toUpperCase()}_TOKEN/KEY', 'success')">${lang==='ar'?'ÙÙÙÙØ© Ø§ÙØ¥Ø¹Ø¯Ø§Ø¯':'Comment configurer'} â</button>` : ''}
+      </div>`;
+    }).join('');
+
+    // Update phone number in calls page
+    if (data.voice?.phone) document.getElementById('callsPhoneNumber').textContent = data.voice.phone;
+  } catch(e) {
+    document.getElementById('integrationsGrid').innerHTML = '<div style="color:var(--muted)">Erreur de chargement</div>';
   }
 }
 
-loadData();
-setInterval(loadData, 15000);
+// âââ Admin ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+async function loadClients() {
+  try {
+    const clients = await fetch('/api/admin/clients', {credentials:'include'}).then(r=>r.json());
+    const tbody = document.getElementById('clientsTable');
+    if (!clients.length) {
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:1.5rem;color:var(--muted)">Aucun client</td></tr>';
+      return;
+    }
+    tbody.innerHTML = clients.map(c => `
+      <tr>
+        <td style="font-family:monospace">${esc(c.username)}</td>
+        <td>${esc(c.name||'â')}</td>
+        <td><span class="status ${c.role==='admin'?'client':'new'}">${c.role}</span></td>
+        <td><button class="btn-sm" style="background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.3)" onclick="deleteClient('${esc(c.username)}')">ð</button></td>
+      </tr>`).join('');
+  } catch { }
+}
+
+async function createClient() {
+  const username = document.getElementById('newUsername').value.trim();
+  const password = document.getElementById('newPassword').value.trim();
+  const name = document.getElementById('newName').value.trim();
+  if (!username || !password) { showToast('Identifiant + mot de passe requis', 'error'); return; }
+  try {
+    const res = await fetch('/api/admin/clients', {
+      method:'POST', credentials:'include',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ username, password, name })
+    });
+    const d = await res.json();
+    if (res.ok) {
+      showToast('â Client crÃ©Ã©: ' + username);
+      document.getElementById('newUsername').value = '';
+      document.getElementById('newPassword').value = '';
+      document.getElementById('newName').value = '';
+      if (d.newUsersConfig) {
+        const out = document.getElementById('usersConfigOutput');
+        out.style.display = 'block';
+        out.value = 'USERS_CONFIG=' + d.newUsersConfig;
+      }
+      loadClients();
+    } else { showToast(d.error || 'Erreur', 'error'); }
+  } catch { showToast('Erreur rÃ©seau', 'error'); }
+}
+
+async function deleteClient(username) {
+  if (!confirm('Supprimer ' + username + ' ?')) return;
+  await fetch('/api/admin/clients/' + username, { method:'DELETE', credentials:'include' });
+  showToast('Client supprimÃ©');
+  loadClients();
+}
+
+// âââ Helpers ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function statusLabel(s) {
+  const m = {new:'Nouveau',qualified:'QualifiÃ©',rdv_programme:'RDV',client:'Client',lost:'Perdu',no_show:'No-Show',inbound:'Entrant'};
+  return m[s]||s||'â';
+}
+function channelIcon(ch) { const m={whatsapp:'ð¬',telegram:'âï¸',instagram:'ð¸',email:'ð§',voice:'ð',web:'ð'}; return m[ch]||''; }
+function fmtDate(d) { if(!d) return 'â'; const dt = new Date(d); return isNaN(dt)?d:dt.toLocaleDateString('fr-FR',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}); }
+
+// âââ Init âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+applyI18n();
+checkAuth();
+
+// Auto-refresh stats every 30s
+setInterval(() => { if (document.getElementById('page-overview').classList.contains('active')) loadOverview(); }, 30000);
 </script>
 </body>
 </html>
