@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SalesBot IA â Connexion</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#0a0e1a;
+    --card:#111827;
+    --border:#1f2937;
+    --accent:#6366f1;
+    --accent2:#8b5cf6;
+    --text:#f9fafb;
+    --muted:#9ca3af;
+    --error:#ef4444;
+    --success:#10b981;
+  }
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--bg);
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    position:relative;
+  }
+  /* Animated background */
+  .bg-glow{
+    position:fixed;
+    border-radius:50%;
+    filter:blur(80px);
+    opacity:0.15;
+    animation:float 8s ease-in-out infinite;
+    pointer-events:none;
+  }
+  .bg-glow:nth-child(1){width:500px;height:500px;background:#6366f1;top:-100px;left:-100px;animation-delay:0s}
+  .bg-glow:nth-child(2){width:400px;height:400px;background:#8b5cf6;bottom:-100px;right:-50px;animation-delay:-3s}
+  .bg-glow:nth-child(3){width:300px;height:300px;background:#06b6d4;top:50%;left:50%;animation-delay:-6s}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+
+  .container{
+    position:relative;
+    z-index:10;
+    width:100%;
+    max-width:440px;
+    padding:2rem;
+  }
+
+  /* Logo */
+  .logo-wrap{text-align:center;margin-bottom:2.5rem}
+  .logo{
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+  }
+  .logo-icon{
+    width:48px;height:48px;
+    background:linear-gradient(135deg,#6366f1,#8b5cf6);
+    border-radius:14px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:24px;
+    box-shadow:0 0 30px rgba(99,102,241,0.4);
+  }
+  .logo-text{font-size:1.5rem;font-weight:700;color:var(--text)}
+  .logo-sub{font-size:.8rem;color:var(--muted);margin-top:2px}
+
+  /* Card */
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:2.5rem;
+    backdrop-filter:blur(10px);
+    box-shadow:0 25px 50px rgba(0,0,0,0.5);
+  }
+  .card-title{
+    font-size:1.25rem;font-weight:600;color:var(--text);
+    margin-bottom:.5rem;
+  }
+  .card-sub{font-size:.875rem;color:var(--muted);margin-bottom:2rem}
+
+  /* Lang toggle */
+  .lang-toggle{
+    display:flex;
+    background:#1f2937;
+    border-radius:10px;
+    padding:4px;
+    margin-bottom:2rem;
+    gap:4px;
+  }
+  .lang-btn{
+    flex:1;padding:.5rem;border:none;border-radius:8px;
+    cursor:pointer;font-size:.85rem;font-weight:500;
+    transition:all .2s;background:transparent;color:var(--muted);
+  }
+  .lang-btn.active{background:var(--accent);color:#fff;box-shadow:0 2px 8px rgba(99,102,241,.4)}
+
+  /* Form */
+  .form-group{margin-bottom:1.25rem}
+  label{display:block;font-size:.8rem;font-weight:500;color:var(--muted);margin-bottom:.5rem;letter-spacing:.05em;text-transform:uppercase}
+  input{
+    width:100%;padding:.875rem 1rem;
+    background:#1f2937;border:1px solid var(--border);
+    border-radius:12px;color:var(--text);font-size:.95rem;
+    font-family:'Inter',sans-serif;
+    transition:all .2s;outline:none;
+  }
+  input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(99,102,241,.15)}
+  input::placeholder{color:#4b5563}
+
+  /* Button */
+  .btn-login{
+    width:100%;padding:1rem;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    border:none;border-radius:12px;
+    color:#fff;font-size:1rem;font-weight:600;
+    cursor:pointer;letter-spacing:.02em;
+    transition:all .2s;margin-top:.5rem;
+    box-shadow:0 4px 15px rgba(99,102,241,.4);
+    position:relative;overflow:hidden;
+  }
+  .btn-login:hover{transform:translateY(-1px);box-shadow:0 8px 25px rgba(99,102,241,.5)}
+  .btn-login:active{transform:translateY(0)}
+  .btn-login:disabled{opacity:.6;cursor:not-allowed;transform:none}
+  .btn-login .spinner{display:none;width:20px;height:20px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* Error/Success */
+  .alert{
+    padding:.875rem 1rem;border-radius:10px;
+    font-size:.875rem;font-weight:500;margin-bottom:1rem;
+    display:none;align-items:center;gap:.5rem;
+  }
+  .alert.error{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#fca5a5;display:flex}
+  .alert.success{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);color:#6ee7b7;display:flex}
+
+  /* Footer */
+  .footer{text-align:center;margin-top:1.5rem;font-size:.8rem;color:#4b5563}
+  .footer a{color:var(--accent);text-decoration:none}
+
+  /* RTL support for Arabic */
+  [dir="rtl"] .logo{flex-direction:row-reverse}
+  [dir="rtl"] input{text-align:right}
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow"></div>
+
+<div class="container">
+  <div class="logo-wrap">
+    <div class="logo">
+      <div class="logo-icon">ð¤</div>
+      <div>
+        <div class="logo-text">SalesBot IA</div>
+        <div class="logo-sub" id="logo-sub">Intelligence Commerciale</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('fr')">ð«ð· FranÃ§ais</button>
+      <button class="lang-btn" onclick="setLang('ar')">ð²ð¦ Ø§ÙØ¹Ø±Ø¨ÙØ©</button>
+    </div>
+
+    <h1 class="card-title" id="title">Connexion</h1>
+    <p class="card-sub" id="subtitle">AccÃ©dez Ã  votre tableau de bord</p>
+
+    <div class="alert" id="alert">
+      <span>â ï¸</span>
+      <span id="alert-msg"></span>
+    </div>
+
+    <form id="loginForm" onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label id="lbl-user">IDENTIFIANT</label>
+        <input type="text" id="username" placeholder="votre identifiant" autocomplete="username" required>
+      </div>
+      <div class="form-group">
+        <label id="lbl-pass">MOT DE PASSE</label>
+        <input type="password" id="password" placeholder="â¢â¢â¢â¢â¢â¢â¢â¢" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="btn-login" id="loginBtn">
+        <span id="btnText">Se connecter</span>
+        <div class="spinner" id="spinner"></div>
+      </button>
+    </form>
+  </div>
+
+  <div class="footer" id="footer">
+    SalesBot IA &copy; 2024 &nbsp;Â·&nbsp; <a href="mailto:support@salesbot.ia" id="support-link">Support</a>
+  </div>
+</div>
+
+<script>
+const t = {
+  fr: {
+    dir:'ltr', logoSub:'Intelligence Commerciale',
+    title:'Connexion', subtitle:'AccÃ©dez Ã  votre tableau de bord',
+    lblUser:'IDENTIFIANT', lblPass:'MOT DE PASSE',
+    placeholder:'votre identifiant', placeholderPass:'â¢â¢â¢â¢â¢â¢â¢â¢',
+    btn:'Se connecter', loading:'Connexion en cours...',
+    errWrong:'Identifiants incorrects. Veuillez rÃ©essayer.',
+    errServer:'Erreur serveur. RÃ©essayez plus tard.',
+    footer:'Support'
+  },
+  ar: {
+    dir:'rtl', logoSub:'Ø§ÙØ°ÙØ§Ø¡ Ø§ÙØªØ¬Ø§Ø±Ù',
+    title:'ØªØ³Ø¬ÙÙ Ø§ÙØ¯Ø®ÙÙ', subtitle:'Ø§Ø¯Ø®Ù Ø¥ÙÙ ÙÙØ­Ø© Ø§ÙØªØ­ÙÙ Ø§ÙØ®è§ØµØ© Ø¨Ù',
+    lblUser:'Ø§Ø³Ù Ø§ÙÙØ³ØªØ®Ø¯Ù', lblPass:'ÙÙÙØ© Ø§ÙÙØ±ÙØ±',
+    placeholder:'Ø§Ø³Ù Ø§ÙÙØ³ØªØ®Ø¯Ù', placeholderPass:'â¢â¢â¢â¢â¢â¢â¢â¢',
+    btn:'Ø¯Ø®ÙÙ', loading:'Ø¬Ø§Ø±Ù Ø§ÙØ§ØªØµØ§Ù...',
+    errWrong:'Ø¨Ùè§ÙØ§Øª Ø§ÙØ¯Ø®ÙÙ ØºÙØ± ØµØ­ÙØ­Ø©. Ø­Ø§ÙÙ ÙØ¬Ø¯Ø¯Ø§Ù.',
+    errServer:'Ø®Ø·Ø£ ÙÙ Ø§ÙØ®Ø§Ø¯Ù. Ø­Ø§ÙÙ ÙØ§Ø­ÙØ§Ù.',
+    footer:'Ø§ÙØ¯Ø¹Ù Ø§ÙÙÙÙ'
+  }
+};
+
+let currentLang = 'fr';
+
+function setLang(lang) {
+  currentLang = lang;
+  const l = t[lang];
+  document.documentElement.setAttribute('lang', lang);
+  document.documentElement.setAttribute('dir', l.dir);
+  document.getElementById('logo-sub').textContent = l.logoSub;
+  document.getElementById('title').textContent = l.title;
+  document.getElementById('subtitle').textContent = l.subtitle;
+  document.getElementById('lbl-user').textContent = l.lblUser;
+  document.getElementById('lbl-pass').textContent = l.lblPass;
+  document.getElementById('username').placeholder = l.placeholder;
+  document.getElementById('password').placeholder = l.placeholderPass;
+  document.getElementById('btnText').textContent = l.btn;
+  document.getElementById('support-link').textContent = l.footer;
+  document.querySelectorAll('.lang-btn').forEach((b,i) => b.classList.toggle('active', (i===0&&lang==='fr')||(i===1&&lang==='ar')));
+  hideAlert();
+}
+
+function showAlert(msg, type='error') {
+  const el = document.getElementById('alert');
+  el.className = 'alert ' + type;
+  document.getElementById('alert-msg').textContent = msg;
+}
+function hideAlert() { document.getElementById('alert').className = 'alert'; }
+
+async function handleLogin(e) {
+  e.preventDefault();
+  const btn = document.getElementById('loginBtn');
+  const spinner = document.getElementById('spinner');
+  const btnText = document.getElementById('btnText');
+  const l = t[currentLang];
+
+  btn.disabled = true;
+  spinner.style.display = 'block';
+  btnText.style.display = 'none';
+  hideAlert();
+
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value;
+
+  try {
+    const res = await fetch('/auth/login', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      credentials:'include',
+      body: JSON.stringify({ username, password })
+    });
+    const data = await res.json();
+    if (res.ok && data.success) {
+      showAlert('â ' + (currentLang==='ar' ? 'ÙØ±Ø­Ø¨Ø§Ù ' + data.name : 'Bienvenue ' + data.name), 'success');
+      setTimeout(() => window.location.href = '/', 800);
+    } else {
+      showAlert(data.error || l.errWrong);
+      btn.disabled = false; spinner.style.display='none'; btnText.style.display='block';
+    }
+  } catch {
+    showAlert(l.errServer);
+    btn.disabled = false; spinner.style.display='none'; btnText.style.display='block';
+  }
+}
+
+// Auto-detect language preference
+if (navigator.language.startsWith('ar')) setLang('ar');
+</script>
+</body>
+</html>
