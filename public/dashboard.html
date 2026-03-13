@@ -729,21 +729,33 @@ async function loadAdmin() {
   }
 }
 
+let waPollingInterval = null;
+
 async function loadConnections() {
   try {
-    const res = await fetch('/api/stats');
+    const res = await fetch('/api/whatsapp/status');
     if(!res.ok) return;
     const data = await res.json();
-    const agents = data.agents || {};
     const waStatus = document.getElementById('wa-status');
-    if(agents.whatsapp) {
-      waStatus.textContent = 'Connecte';
-      waStatus.parentElement.querySelector('.dot').className = 'dot green';
+    const dot = waStatus.parentElement.querySelector('.dot');
+    if(data.connected) {
+      waStatus.textContent = 'Connecte' + (data.phone ? ' - ' + data.phone : '');
+      dot.className = 'dot green';
+      document.getElementById('wa-qr').style.display = 'none';
+      if(waPollingInterval) { clearInterval(waPollingInterval); waPollingInterval = null; }
+    } else if(data.initializing) {
+      waStatus.textContent = 'Initialisation...';
+      dot.className = 'dot yellow';
+    } else {
+      waStatus.textContent = 'Non connecte';
+      dot.className = 'dot red';
     }
   } catch(e){}
 }
 
 async function connectWhatsApp() {
+  const btn = document.querySelector('#page-connexions button[onclick="connectWhatsApp()"]');
+  if(btn) { btn.textContent = 'Connexion...'; btn.disabled = true; }
   try {
     const res = await fetch('/api/whatsapp/qr');
     if(res.ok) {
@@ -752,11 +764,37 @@ async function connectWhatsApp() {
         document.getElementById('wa-qr').style.display='block';
         document.getElementById('wa-qr-img').src=data.qr;
         document.getElementById('wa-status').textContent='Scanner le QR Code';
+        document.getElementById('wa-status').parentElement.querySelector('.dot').className='dot yellow';
+      } else if(data.connected) {
+        document.getElementById('wa-status').textContent='Connecte'+(data.phone?' - '+data.phone:'');
+        document.getElementById('wa-status').parentElement.querySelector('.dot').className='dot green';
+        if(btn) { btn.textContent='Connecte'; }
+        return;
+      } else {
+        document.getElementById('wa-status').textContent='Initialisation en cours...';
       }
     }
-  } catch(e) {
-    alert('Demarrez le service WhatsApp sur le serveur');
-  }
+  } catch(e) { alert('Erreur connexion WhatsApp'); }
+  if(btn) { btn.textContent='Connecter WhatsApp'; btn.disabled=false; }
+  if(waPollingInterval) clearInterval(waPollingInterval);
+  waPollingInterval = setInterval(async () => {
+    try {
+      const r = await fetch('/api/whatsapp/qr');
+      if(!r.ok) return;
+      const d = await r.json();
+      if(d.qr) {
+        document.getElementById('wa-qr').style.display='block';
+        document.getElementById('wa-qr-img').src=d.qr;
+        document.getElementById('wa-status').textContent='Scanner le QR Code';
+        document.getElementById('wa-status').parentElement.querySelector('.dot').className='dot yellow';
+      } else if(d.connected) {
+        document.getElementById('wa-qr').style.display='none';
+        document.getElementById('wa-status').textContent='Connecte'+(d.phone?' - '+d.phone:'');
+        document.getElementById('wa-status').parentElement.querySelector('.dot').className='dot green';
+        clearInterval(waPollingInterval); waPollingInterval=null;
+      }
+    } catch(e){}
+  }, 3000);
 }
 
 async function logout() {
