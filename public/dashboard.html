@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SalesBot IA â Dashboard</title>
+<title>SalesBot IA - Dashboard</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
@@ -13,9 +13,6 @@
   --red:#ef4444;--blue:#3b82f6;--text:#f9fafb;--muted:#9ca3af;
 }
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh}
-a{text-decoration:none;color:inherit}
-
-/* âââ Sidebar âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 .sidebar{
   width:240px;min-width:240px;background:var(--sidebar);
   border-right:1px solid var(--border);
@@ -23,789 +20,399 @@ a{text-decoration:none;color:inherit}
   position:fixed;left:0;top:0;height:100vh;z-index:100;
 }
 .sidebar-logo{
-  padding:1.5rem 1.25rem;
-  border-bottom:1px solid var(--border);
+  padding:1.25rem;border-bottom:1px solid var(--border);
   display:flex;align-items:center;gap:10px;
 }
 .sidebar-logo .icon{
   width:36px;height:36px;
   background:linear-gradient(135deg,#6366f1,#8b5cf6);
   border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;
+  flex-shrink:0;
 }
-.sidebar-logo .name{font-weight:700;font-size:1rem}
-.sidebar-logo .version{font-size:.7rem;color:var(--muted)}
-
-.nav{flex:1;padding:1rem 0;overflow-y:auto}
-.nav-section{font-size:.65rem;font-weight:600;color:#4b5563;text-transform:uppercase;letter-spacing:.1em;padding:.5rem 1.25rem;margin-top:.5rem}
+.sidebar-logo .name{font-weight:700;font-size:.95rem}
+.sidebar-logo .version{font-size:.68rem;color:var(--muted)}
+.nav{flex:1;padding:.75rem 0;overflow-y:auto}
+.nav-section{
+  font-size:.62rem;font-weight:600;color:#4b5563;
+  text-transform:uppercase;letter-spacing:.08em;
+  padding:.5rem 1.25rem;margin-top:.5rem;
+}
 .nav-item{
   display:flex;align-items:center;gap:10px;
-  padding:.625rem 1.25rem;font-size:.875rem;font-weight:500;
-  cursor:pointer;transition:all .15s;border-radius:0;
-  color:var(--muted);
+  padding:.6rem 1.25rem;font-size:.85rem;font-weight:500;
+  cursor:pointer;transition:all .15s;color:var(--muted);
 }
 .nav-item:hover{background:rgba(255,255,255,.05);color:var(--text)}
 .nav-item.active{background:rgba(99,102,241,.15);color:var(--accent);border-right:2px solid var(--accent)}
-.nav-item .icon{width:18px;text-align:center;font-size:16px}
-
-.sidebar-footer{
-  padding:1rem 1.25rem;border-top:1px solid var(--border);
-}
+.nav-icon{width:18px;text-align:center;font-size:15px;flex-shrink:0}
+.sidebar-footer{padding:1rem 1.25rem;border-top:1px solid var(--border)}
 .user-info{display:flex;align-items:center;gap:10px;margin-bottom:.75rem}
 .user-avatar{
-  width:36px;height:36px;border-radius:50%;
+  width:34px;height:34px;border-radius:50%;
   background:linear-gradient(135deg,var(--accent),var(--accent2));
   display:flex;align-items:center;justify-content:center;
-  font-size:14px;font-weight:700;flex-shrink:0;
+  font-size:13px;font-weight:700;flex-shrink:0;
 }
-.user-details .name{font-size:.85rem;font-weight:600}
-.user-details .role{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.user-name{font-size:.82rem;font-weight:600}
+.user-role{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
 .btn-logout{
-  width:100%;padding:.5rem;
+  width:100%;padding:.45rem;
   background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);
-  color:#fca5a5;border-radius:8px;font-size:.8rem;font-weight:500;
+  color:#fca5a5;border-radius:8px;font-size:.78rem;font-weight:500;
   cursor:pointer;transition:all .2s;
 }
 .btn-logout:hover{background:rgba(239,68,68,.2)}
-
-/* âââ Main content ââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
-.main{margin-left:240px;flex:1;display:flex;flex-direction:column}
+.main{margin-left:240px;flex:1;display:flex;flex-direction:column;min-height:100vh}
 .topbar{
-  padding:1rem 1.5rem;border-bottom:1px solid var(--border);
+  padding:.875rem 1.5rem;border-bottom:1px solid var(--border);
   display:flex;align-items:center;justify-content:space-between;
   background:rgba(13,17,23,.8);backdrop-filter:blur(10px);
   position:sticky;top:0;z-index:50;
 }
-.topbar-title{font-size:1.1rem;font-weight:600}
+.topbar-title{font-size:1rem;font-weight:600}
 .topbar-right{display:flex;align-items:center;gap:.75rem}
 .badge-live{
   background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);
-  color:#6ee7b7;padding:.25rem .75rem;border-radius:20px;font-size:.75rem;font-weight:600;
-  display:flex;align-items:center;gap:.4rem;
+  color:#6ee7b7;padding:.2rem .65rem;border-radius:20px;font-size:.72rem;font-weight:600;
+  display:flex;align-items:center;gap:.35rem;
 }
-.badge-live::before{content:'';width:6px;height:6px;background:#10b981;border-radius:50%;animation:pulse 1.5s infinite}
+.badge-live-dot{width:6px;height:6px;background:#10b981;border-radius:50%;animation:pulse 1.5s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.lang-badge{
-  cursor:pointer;padding:.25rem .75rem;
+.lang-btn{
+  cursor:pointer;padding:.2rem .65rem;
   background:var(--card);border:1px solid var(--border);
-  border-radius:8px;font-size:.8rem;color:var(--muted);
+  border-radius:8px;font-size:.78rem;color:var(--muted);
   transition:all .2s;
 }
-.lang-badge:hover{border-color:var(--accent);color:var(--text)}
-
+.lang-btn:hover{border-color:var(--accent);color:var(--text)}
 .content{padding:1.5rem;flex:1}
-
-/* âââ Pages âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 .page{display:none}
 .page.active{display:block}
-
-/* âââ Stat cards ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:1.5rem}
+.stats-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;
+  margin-bottom:1.5rem;
+}
 .stat-card{
   background:var(--card);border:1px solid var(--border);
-  border-radius:14px;padding:1.25rem;position:relative;overflow:hidden;
-  transition:transform .2s;
+  border-radius:14px;padding:1.25rem;
+  transition:all .2s;cursor:default;
 }
-.stat-card:hover{transform:translateY(-2px)}
-.stat-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--c1,#6366f1),var(--c2,#8b5cf6));
+.stat-card:hover{border-color:rgba(99,102,241,.4)}
+.stat-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.75rem}
+.stat-icon{
+  width:38px;height:38px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:17px;
 }
-.stat-card.green{--c1:#10b981;--c2:#059669}
-.stat-card.yellow{--c1:#f59e0b;--c2:#d97706}
-.stat-card.blue{--c1:#3b82f6;--c2:#2563eb}
-.stat-card.purple{--c1:#8b5cf6;--c2:#7c3aed}
-.stat-value{font-size:2rem;font-weight:700;margin-bottom:.25rem}
-.stat-label{font-size:.8rem;color:var(--muted);font-weight:500}
-.stat-icon{position:absolute;top:1rem;right:1rem;font-size:1.5rem;opacity:.6}
-
-/* âââ Tables ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
-.section-card{background:var(--card);border:1px solid var(--border);border-radius:14px;margin-bottom:1.5rem}
-.section-header{
+.stat-icon.purple{background:rgba(99,102,241,.15)}
+.stat-icon.green{background:rgba(16,185,129,.15)}
+.stat-icon.blue{background:rgba(59,130,246,.15)}
+.stat-icon.teal{background:rgba(6,182,212,.15)}
+.stat-icon.yellow{background:rgba(245,158,11,.15)}
+.stat-value{font-size:1.8rem;font-weight:700;line-height:1;color:var(--text)}
+.stat-label{font-size:.78rem;color:var(--muted);margin-top:.3rem}
+.stat-change{font-size:.72rem;font-weight:500;padding:.15rem .4rem;border-radius:6px;}
+.stat-change.up{color:#34d399;background:rgba(52,211,153,.1)}
+.stat-change.down{color:#f87171;background:rgba(248,113,113,.1)}
+.card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;overflow:hidden;margin-bottom:1.5rem;
+}
+.card-header{
   padding:1rem 1.25rem;border-bottom:1px solid var(--border);
   display:flex;align-items:center;justify-content:space-between;
 }
-.section-title{font-size:.95rem;font-weight:600}
-.section-sub{font-size:.8rem;color:var(--muted)}
+.card-title{font-size:.9rem;font-weight:600}
+.card-subtitle{font-size:.75rem;color:var(--muted);margin-top:.15rem}
+.btn-small{
+  padding:.35rem .85rem;background:var(--accent);
+  border:none;border-radius:8px;color:#fff;font-size:.78rem;
+  font-weight:500;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif;
+}
+.btn-small:hover{opacity:.85}
 table{width:100%;border-collapse:collapse}
-th{font-size:.7rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;padding:.875rem 1.25rem;text-align:left;border-bottom:1px solid var(--border)}
-td{padding:.875rem 1.25rem;font-size:.875rem;border-bottom:1px solid rgba(255,255,255,.04)}
-tr:last-child td{border-bottom:none}
-tr:hover td{background:rgba(255,255,255,.02)}
-
-/* âââ Status badges âââââââââââââââââââââââââââââââââââââââââââââââââââââ */
-.status{display:inline-flex;align-items:center;gap:.3rem;padding:.2rem .6rem;border-radius:20px;font-size:.72rem;font-weight:600}
-.status.new{background:rgba(59,130,246,.15);color:#93c5fd}
-.status.qualified{background:rgba(16,185,129,.15);color:#6ee7b7}
-.status.rdv{background:rgba(245,158,11,.15);color:#fcd34d}
-.status.client{background:rgba(99,102,241,.15);color:#a5b4fc}
-.status.lost{background:rgba(239,68,68,.15);color:#fca5a5}
-
-/* âââ Connexions âââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
-.integrations-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
-.integration-card{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:14px;padding:1.25rem;
-  transition:all .2s;
+thead th{
+  padding:.75rem 1.25rem;font-size:.7rem;font-weight:600;
+  color:#4b5563;text-transform:uppercase;letter-spacing:.06em;
+  text-align:left;border-bottom:1px solid var(--border);
 }
-.integration-card:hover{border-color:rgba(99,102,241,.4)}
-.int-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
-.int-info{display:flex;align-items:center;gap:.75rem}
-.int-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
-.int-name{font-weight:600;font-size:.95rem}
-.int-desc{font-size:.75rem;color:var(--muted);margin-top:2px}
-.int-status{padding:.2rem .6rem;border-radius:20px;font-size:.7rem;font-weight:600}
-.int-status.ok{background:rgba(16,185,129,.15);color:#6ee7b7}
-.int-status.warn{background:rgba(245,158,11,.15);color:#fcd34d}
-.int-status.off{background:rgba(107,114,128,.15);color:#9ca3af}
-.int-body{font-size:.8rem;color:var(--muted);margin-bottom:.75rem;line-height:1.6}
-.int-value{
-  background:#1f2937;border:1px solid var(--border);
-  border-radius:8px;padding:.5rem .75rem;
-  font-size:.8rem;color:var(--text);
-  font-family:monospace;word-break:break-all;
-  margin-bottom:.75rem;
+tbody tr{transition:background .15s}
+tbody tr:hover{background:rgba(255,255,255,.03)}
+tbody td{padding:.875rem 1.25rem;font-size:.83rem;border-bottom:1px solid rgba(31,41,55,.5);}
+tbody tr:last-child td{border-bottom:none}
+.badge{
+  display:inline-flex;align-items:center;gap:.3rem;
+  padding:.25rem .65rem;border-radius:20px;font-size:.72rem;font-weight:600;
 }
-.btn-sm{
-  padding:.4rem .875rem;border-radius:8px;font-size:.8rem;font-weight:500;
-  cursor:pointer;border:none;transition:all .2s;
+.badge.new{background:rgba(59,130,246,.15);color:#93c5fd;border:1px solid rgba(59,130,246,.25)}
+.badge.qualified{background:rgba(245,158,11,.15);color:#fcd34d;border:1px solid rgba(245,158,11,.25)}
+.badge.booked{background:rgba(16,185,129,.15);color:#6ee7b7;border:1px solid rgba(16,185,129,.25)}
+.badge.client{background:rgba(99,102,241,.15);color:#a5b4fc;border:1px solid rgba(99,102,241,.25)}
+.badge.lost{background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.25)}
+.channel-icon{display:inline-flex;align-items:center;gap:.4rem;font-size:.82rem;color:var(--muted);}
+.tabs{display:flex;gap:.5rem;margin-bottom:1.5rem}
+.tab{
+  padding:.45rem 1rem;border-radius:8px;font-size:.82rem;
+  font-weight:500;cursor:pointer;transition:all .2s;
+  background:var(--card);border:1px solid var(--border);color:var(--muted);
 }
-.btn-primary{background:var(--accent);color:#fff}
-.btn-primary:hover{background:#5254cc}
-.btn-secondary{background:rgba(255,255,255,.08);color:var(--text);border:1px solid var(--border)}
-.btn-secondary:hover{background:rgba(255,255,255,.12)}
-
-/* âââ Admin: client manager ââââââââââââââââââââââââââââââââââââââââââââ */
-.form-row{display:flex;gap:.75rem;flex-wrap:wrap}
-.form-group-inline{flex:1;min-width:140px}
-.form-group-inline label{display:block;font-size:.75rem;color:var(--muted);margin-bottom:.3rem;font-weight:500}
-.form-group-inline input{
-  width:100%;padding:.6rem .875rem;background:#1f2937;
-  border:1px solid var(--border);border-radius:8px;
-  color:var(--text);font-size:.875rem;outline:none;
-}
-.form-group-inline input:focus{border-color:var(--accent)}
-.empty-state{text-align:center;padding:3rem;color:var(--muted)}
-.empty-icon{font-size:3rem;margin-bottom:1rem}
-
-/* âââ Loading overlay âââââââââââââââââââââââââââââââââââââââââââââââââââ */
-#loading{
-  position:fixed;inset:0;background:var(--bg);
-  display:flex;align-items:center;justify-content:center;z-index:9999;
-  flex-direction:column;gap:1rem;
-}
-.loading-spinner{width:40px;height:40px;border:3px solid rgba(99,102,241,.3);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-/* âââ Toast âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
-.toast{
-  position:fixed;bottom:1.5rem;right:1.5rem;
-  background:#1f2937;border:1px solid var(--border);
-  border-radius:12px;padding:.875rem 1.25rem;
-  font-size:.875rem;color:var(--text);z-index:9999;
-  transform:translateY(100px);opacity:0;transition:all .3s;
-  max-width:320px;box-shadow:0 10px 30px rgba(0,0,0,.4);
-}
-.toast.show{transform:translateY(0);opacity:1}
-.toast.success{border-color:rgba(16,185,129,.4);background:rgba(16,185,129,.1)}
-.toast.error{border-color:rgba(239,68,68,.4);background:rgba(239,68,68,.1)}
-
-@media(max-width:768px){
-  .sidebar{transform:translateX(-100%)}
-  .main{margin-left:0}
-}
+.tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.tab:hover:not(.active){border-color:rgba(99,102,241,.4);color:var(--text)}
+.rdv-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+.rdv-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.25rem;}
+.rdv-time{font-size:1.1rem;font-weight:700;margin-bottom:.5rem}
+.rdv-name{font-size:.9rem;font-weight:600}
+.rdv-details{font-size:.78rem;color:var(--muted);margin-top:.25rem}
+.rdv-badge{display:inline-block;margin-top:.6rem;padding:.2rem .6rem;border-radius:6px;font-size:.72rem;font-weight:500;}
+.rdv-confirmed{background:rgba(16,185,129,.15);color:#6ee7b7}
+.rdv-pending{background:rgba(245,158,11,.15);color:#fcd34d}
+.connections-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.conn-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.25rem;display:flex;flex-direction:column;gap:.75rem;}
+.conn-header{display:flex;align-items:center;justify-content:space-between}
+.conn-name{font-size:.9rem;font-weight:600;display:flex;align-items:center;gap:.5rem}
+.conn-status{display:flex;align-items:center;gap:.4rem;font-size:.75rem}
+.dot{width:8px;height:8px;border-radius:50%}
+.dot.green{background:var(--green)}
+.dot.red{background:var(--red)}
+.dot.yellow{background:var(--yellow)}
+.conn-info{font-size:.78rem;color:var(--muted)}
+.btn-connect{padding:.4rem .85rem;border:1px solid var(--border);background:transparent;border-radius:8px;color:var(--muted);font-size:.75rem;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif;}
+.btn-connect:hover{border-color:var(--accent);color:var(--accent)}
+.btn-connect.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.loading-row td{text-align:center;padding:2rem;color:var(--muted);font-size:.85rem}
+.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
 </style>
 </head>
 <body>
-
-<!-- Loading screen -->
-<div id="loading">
-  <div class="loading-spinner"></div>
-  <div style="font-size:.875rem;color:var(--muted)" id="loadingText">Chargement...</div>
-</div>
-
-<!-- Sidebar -->
-<aside class="sidebar" id="sidebar">
+<aside class="sidebar">
   <div class="sidebar-logo">
-    <div class="icon">ð¤</div>
-    <div>
-      <div class="name">SalesBot IA</div>
-      <div class="version" id="sb-version">v2.0 Â· SaaS</div>
-    </div>
+    <div class="icon">&#128200;</div>
+    <div><div class="name">SalesBot IA</div><div class="version">v2.0 &bull; SaaS</div></div>
   </div>
-
   <nav class="nav">
-    <div class="nav-section" data-i18n="nav_overview">Vue d'ensemble</div>
-    <div class="nav-item active" onclick="showPage('overview')" id="nav-overview">
-      <span class="icon">ð</span><span data-i18n="nav_dashboard">Dashboard</span>
-    </div>
-
-    <div class="nav-section" data-i18n="nav_sales">Commercial</div>
-    <div class="nav-item" onclick="showPage('leads')" id="nav-leads">
-      <span class="icon">ð¥</span><span data-i18n="nav_leads">Leads</span>
-    </div>
-    <div class="nav-item" onclick="showPage('bookings')" id="nav-bookings">
-      <span class="icon">ð</span><span data-i18n="nav_rdv">Rendez-vous</span>
-    </div>
-    <div class="nav-item" onclick="showPage('calls')" id="nav-calls">
-      <span class="icon">ð</span><span data-i18n="nav_calls">Appels IA</span>
-    </div>
-
-    <div class="nav-section" data-i18n="nav_config">Configuration</div>
-    <div class="nav-item" onclick="showPage('integrations')" id="nav-integrations">
-      <span class="icon">ð</span><span data-i18n="nav_connect">Connexions</span>
-    </div>
-    <div class="nav-item" id="nav-admin" style="display:none" onclick="showPage('admin')">
-      <span class="icon">âï¸</span><span data-i18n="nav_admin">Admin</span>
-    </div>
+    <div class="nav-section">Vue d'ensemble</div>
+    <div class="nav-item active" onclick="showPage('dashboard')"><span class="nav-icon">&#9732;</span> Dashboard</div>
+    <div class="nav-section">Commercial</div>
+    <div class="nav-item" onclick="showPage('leads')"><span class="nav-icon">&#128101;</span> Leads</div>
+    <div class="nav-item" onclick="showPage('rendez-vous')"><span class="nav-icon">&#128197;</span> Rendez-vous</div>
+    <div class="nav-item" onclick="showPage('appels')"><span class="nav-icon">&#128222;</span> Appels IA</div>
+    <div class="nav-section">Configuration</div>
+    <div class="nav-item" onclick="showPage('connexions')"><span class="nav-icon">&#128279;</span> Connexions</div>
+    <div class="nav-item" onclick="showPage('admin')"><span class="nav-icon">&#9881;</span> Admin</div>
   </nav>
-
   <div class="sidebar-footer">
     <div class="user-info">
-      <div class="user-avatar" id="userAvatar">?</div>
-      <div class="user-details">
-        <div class="name" id="userName">...</div>
-        <div class="role" id="userRole">...</div>
-      </div>
+      <div class="user-avatar" id="userAvatar">A</div>
+      <div><div class="user-name" id="userName">Admin</div><div class="user-role" id="userRole">ADMIN</div></div>
     </div>
-    <button class="btn-logout" onclick="logout()" data-i18n="btn_logout">DÃ©connexion</button>
+    <button class="btn-logout" onclick="logout()">Deconnexion</button>
   </div>
 </aside>
-
-<!-- Main -->
 <main class="main">
-  <div class="topbar">
+  <header class="topbar">
     <div class="topbar-title" id="pageTitle">Dashboard</div>
     <div class="topbar-right">
-      <div class="badge-live" id="liveStatus">LIVE</div>
-      <div class="lang-badge" onclick="toggleLang()" id="langToggle">ð«ð· FR</div>
+      <div class="badge-live"><span class="badge-live-dot"></span> LIVE</div>
+      <div class="lang-btn" id="langBtn" onclick="toggleLang()">FR</div>
+    </div>
+  </header>
+  <div class="content">
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon purple">&#128200;</div><span class="stat-change up" id="changeTotal">+0%</span></div><div class="stat-value" id="statTotal">0</div><div class="stat-label">Total Leads</div></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon blue">&#10024;</div><span class="stat-change up" id="changeNew">+0%</span></div><div class="stat-value" id="statNew">0</div><div class="stat-label">Nouveaux</div></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon green">&#128197;</div></div><div class="stat-value" id="statRdv">0</div><div class="stat-label">RDV Planifies</div></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon teal">&#127775;</div></div><div class="stat-value" id="statClients">0</div><div class="stat-label">Clients</div></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon yellow">&#9889;</div></div><div class="stat-value" id="statToday">0</div><div class="stat-label">Aujourd'hui</div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div><div class="card-title">Leads Recents</div><div class="card-subtitle">10 derniers</div></div><button class="btn-small" onclick="showPage('leads')">Voir tout</button></div>
+        <table><thead><tr><th>Nom</th><th>Telephone</th><th>Statut</th><th>Canal</th><th>Date</th></tr></thead>
+        <tbody id="recentLeadsBody"><tr class="loading-row"><td colspan="5">Chargement...</td></tr></tbody></table>
+      </div>
+    </div>
+    <!-- LEADS -->
+    <div class="page" id="page-leads">
+      <div class="tabs">
+        <div class="tab active" onclick="filterLeads('all',this)">Tous</div>
+        <div class="tab" onclick="filterLeads('new',this)">Nouveaux</div>
+        <div class="tab" onclick="filterLeads('qualified',this)">Qualifies</div>
+        <div class="tab" onclick="filterLeads('booked',this)">RDV pris</div>
+        <div class="tab" onclick="filterLeads('client',this)">Clients</div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div><div class="card-title">Tous les Leads</div><div class="card-subtitle" id="leadsCount">0 leads</div></div></div>
+        <table><thead><tr><th>Nom</th><th>Telephone</th><th>Statut</th><th>Score</th><th>Canal</th><th>Dernier contact</th></tr></thead>
+        <tbody id="allLeadsBody"><tr class="loading-row"><td colspan="6">Chargement...</td></tr></tbody></table>
+      </div>
+    </div>
+    <!-- RENDEZ-VOUS -->
+    <div class="page" id="page-rendez-vous">
+      <div class="rdv-grid" id="rdvGrid"><div style="color:var(--muted);font-size:.85rem;padding:1rem">Chargement...</div></div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">Historique RDV</div></div>
+        <table><thead><tr><th>Client</th><th>Date</th><th>Heure</th><th>Statut</th><th>Canal</th></tr></thead>
+        <tbody id="rdvBody"><tr class="loading-row"><td colspan="5">Chargement...</td></tr></tbody></table>
+      </div>
+    </div>
+    <!-- APPELS -->
+    <div class="page" id="page-appels">
+      <div class="card">
+        <div class="card-header"><div class="card-title">Appels IA Recents</div></div>
+        <table><thead><tr><th>Lead</th><th>Telephone</th><th>Duree</th><th>Resultat</th><th>Date</th></tr></thead>
+        <tbody id="callsBody"><tr class="loading-row"><td colspan="5">Aucun appel pour le moment</td></tr></tbody></table>
+      </div>
+    </div>
+    <!-- CONNEXIONS -->
+    <div class="page" id="page-connexions">
+      <div class="connections-grid">
+        <div class="conn-card"><div class="conn-header"><div class="conn-name">&#128241; WhatsApp</div><div class="conn-status"><span class="dot yellow"></span><span id="wa-status">Non connecte</span></div></div><div class="conn-info">Scanner le QR Code pour connecter votre numero WhatsApp</div><div id="wa-qr" style="display:none;margin:1rem 0;text-align:center"><img id="wa-qr-img" src="" alt="QR" style="width:200px;height:200px;border-radius:10px"></div><button class="btn-connect" onclick="connectWhatsApp()">Connecter WhatsApp</button></div>
+        <div class="conn-card"><div class="conn-header"><div class="conn-name">&#128248; Instagram</div><div class="conn-status"><span class="dot red"></span><span>Non configure</span></div></div><div class="conn-info">Necessite META_ACCESS_TOKEN dans Railway</div><button class="btn-connect">Configurer Meta API</button></div>
+        <div class="conn-card"><div class="conn-header"><div class="conn-name">&#9992; Telegram</div><div class="conn-status"><span class="dot red"></span><span>Non configure</span></div></div><div class="conn-info">Necessite TELEGRAM_BOT_TOKEN dans Railway</div><button class="btn-connect">Configurer Bot</button></div>
+        <div class="conn-card"><div class="conn-header"><div class="conn-name">&#128139; Email</div><div class="conn-status"><span class="dot red"></span><span>Non configure</span></div></div><div class="conn-info">Necessite EMAIL_USER et EMAIL_PASS dans Railway</div><button class="btn-connect">Configurer Email</button></div>
+      </div>
+    </div>
+    <!-- ADMIN -->
+    <div class="page" id="page-admin">
+      <div class="admin-grid">
+        <div class="card"><div class="card-header"><div class="card-title">Configuration Systeme</div></div><div style="padding:1.25rem"><div id="statusJson" style="font-size:.78rem;color:var(--muted);line-height:1.8;font-family:monospace;white-space:pre-wrap;background:#0a0e1a;padding:1rem;border-radius:8px">Chargement...</div></div></div>
+        <div class="card"><div class="card-header"><div class="card-title">Statistiques Systeme</div></div><div style="padding:1.25rem"><table><tbody id="sysStatsBody"><tr class="loading-row"><td colspan="2">Chargement...</td></tr></tbody></table></div></div>
+      </div>
     </div>
   </div>
-
-  <div class="content">
-
-    <!-- ââ OVERVIEW âââââââââââââââââââââââââââââââââââââââââââ -->
-    <div class="page active" id="page-overview">
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-value" id="stat-total">â</div>
-          <div class="stat-label" data-i18n="stat_total">Total Leads</div>
-          <div class="stat-icon">ð¥</div>
-        </div>
-        <div class="stat-card green">
-          <div class="stat-value" id="stat-new">â</div>
-          <div class="stat-label" data-i18n="stat_new">Nouveaux</div>
-          <div class="stat-icon">ð</div>
-        </div>
-        <div class="stat-card yellow">
-          <div class="stat-value" id="stat-rdv">â</div>
-          <div class="stat-label" data-i18n="stat_rdv">RDV PlanifiÃ©s</div>
-          <div class="stat-icon">ð</div>
-        </div>
-        <div class="stat-card blue">
-          <div class="stat-value" id="stat-clients">â</div>
-          <div class="stat-label" data-i18n="stat_clients">Clients</div>
-          <div class="stat-icon">â­</div>
-        </div>
-        <div class="stat-card purple">
-          <div class="stat-value" id="stat-today">â</div>
-          <div class="stat-label" data-i18n="stat_today">Aujourd'hui</div>
-          <div class="stat-icon">ð</div>
-        </div>
-      </div>
-
-      <div class="section-card">
-        <div class="section-header">
-          <div>
-            <div class="section-title" data-i18n="recent_leads">Leads RÃ©cents</div>
-            <div class="section-sub" data-i18n="last_10">10 derniers</div>
-          </div>
-          <button class="btn-sm btn-primary" onclick="showPage('leads')" data-i18n="see_all">Voir tout</button>
-        </div>
-        <table>
-          <thead><tr>
-            <th data-i18n="th_name">Nom</th>
-            <th data-i18n="th_phone">TÃ©lÃ©phone</th>
-            <th data-i18n="th_status">Statut</th>
-            <th data-i18n="th_channel">Canal</th>
-            <th data-i18n="th_date">Date</th>
-          </tr></thead>
-          <tbody id="leadsTableBody"><tr><td colspan="5" style="text-align:center;color:var(--muted);padding:2rem">Chargement...</td></tr></tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- ââ LEADS ââââââââââââââââââââââââââââââââââââââââââââââââ -->
-    <div class="page" id="page-leads">
-      <div class="section-card">
-        <div class="section-header">
-          <div><div class="section-title" data-i18n="all_leads">Tous les leads</div></div>
-          <button class="btn-sm btn-primary" onclick="loadLeads()" data-i18n="refresh">â» RafraÃ®chir</button>
-        </div>
-        <table>
-          <thead><tr>
-            <th data-i18n="th_name">Nom</th><th data-i18n="th_phone">TÃ©lÃ©phone</th>
-            <th data-i18n="th_email">Email</th><th data-i18n="th_status">Statut</th>
-            <th data-i18n="th_channel">Canal</th><th data-i18n="th_actions">Actions</th>
-          </tr></thead>
-          <tbody id="allLeadsBody"><tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--muted)">Chargement...</td></tr></tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- ââ RDV ââââââââââââââââââââââââââââââââââââââââââââââââââ -->
-    <div class="page" id="page-bookings">
-      <div class="section-card">
-        <div class="section-header">
-          <div><div class="section-title" data-i18n="all_rdv">Rendez-vous</div></div>
-          <button class="btn-sm btn-primary" onclick="loadBookings()" data-i18n="refresh">â» RafraÃ®chir</button>
-        </div>
-        <div id="bookingsContent" style="padding:1.25rem;color:var(--muted);text-align:center">Chargement...</div>
-      </div>
-    </div>
-
-    <!-- ââ CALLS ââââââââââââââââââââââââââââââââââââââââââââââââ -->
-    <div class="page" id="page-calls">
-      <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
-        <div class="stat-card" style="cursor:pointer" onclick="loadScripts()">
-          <div class="stat-value" style="font-size:1.25rem" data-i18n="scripts_title">10 Scripts IA</div>
-          <div class="stat-label" data-i18n="scripts_sub">FR + AR disponibles</div>
-          <div class="stat-icon">ð­</div>
-        </div>
-        <div class="stat-card green">
-          <div class="stat-value" id="callsPhoneNumber">+1 (339) 233 9319</div>
-          <div class="stat-label" data-i18n="vapi_number">NumÃ©ro Vapi</div>
-          <div class="stat-icon">ð</div>
-        </div>
-      </div>
-
-      <div class="section-card">
-        <div class="section-header">
-          <div><div class="section-title" data-i18n="trigger_call">DÃ©clencher un appel</div></div>
-        </div>
-        <div style="padding:1.25rem">
-          <div class="form-row">
-            <div class="form-group-inline">
-              <label data-i18n="lbl_phone">TÃLÃPHONE</label>
-              <input id="callPhone" placeholder="+33600000000" type="tel">
-            </div>
-            <div class="form-group-inline">
-              <label data-i18n="lbl_lead_name">NOM LEAD</label>
-              <input id="callName" placeholder="Mohamed Amine" type="text">
-            </div>
-            <div class="form-group-inline">
-              <label data-i18n="lbl_script">SCRIPT</label>
-              <select id="callScript" style="width:100%;padding:.6rem .875rem;background:#1f2937;border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.875rem;outline:none">
-                <option value="prospection">ð¯ Prospection</option>
-                <option value="qualification">ð Qualification</option>
-                <option value="prise_rdv">ð Prise de RDV</option>
-                <option value="relance">ð Relance</option>
-                <option value="confirmation_rdv">â Confirmation RDV</option>
-                <option value="suivi_post_rdv">ð Suivi Post-RDV</option>
-                <option value="no_show">ð« No-Show</option>
-                <option value="urgence">ð¨ Urgence</option>
-                <option value="recuperation">â»ï¸ RÃ©cupÃ©ration</option>
-                <option value="upsell">ð Upsell</option>
-              </select>
-            </div>
-          </div>
-          <div style="margin-top:.75rem">
-            <button class="btn-sm btn-primary" onclick="triggerCall()" data-i18n="btn_call">ð Lancer l'appel</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="section-card">
-        <div class="section-header">
-          <div><div class="section-title" data-i18n="call_history">Historique appels</div></div>
-          <button class="btn-sm btn-secondary" onclick="loadCallHistory()" data-i18n="refresh">â»</button>
-        </div>
-        <div id="callHistoryContent" style="padding:1.25rem;color:var(--muted);text-align:center">Cliquez â» pour charger</div>
-      </div>
-    </div>
-
-    <!-- ââ CONNEXIONS âââââââââââââââââââââââââââââââââââââââââââ -->
-    <div class="page" id="page-integrations">
-      <div class="integrations-grid" id="integrationsGrid">
-        <div style="color:var(--muted);padding:2rem">Chargement des connexions...</div>
-      </div>
-    </div>
-
-    <!-- ââ ADMIN ââââââââââââââââââââââââââââââââââââââââââââââââ -->
-    <div class="page" id="page-admin">
-      <div class="section-card">
-        <div class="section-header">
-          <div>
-            <div class="section-title" data-i18n="admin_clients">Gestion des clients</div>
-            <div class="section-sub" data-i18n="admin_sub">CrÃ©ez et gÃ©rez les accÃ¨s SaaS</div>
-          </div>
-        </div>
-        <div style="padding:1.25rem;border-bottom:1px solid var(--border)">
-          <div class="form-row">
-            <div class="form-group-inline">
-              <label data-i18n="lbl_username">IDENTIFIANT</label>
-              <input id="newUsername" placeholder="client1" type="text">
-            </div>
-            <div class="form-group-inline">
-              <label data-i18n="lbl_password">MOT DE PASSE</label>
-              <input id="newPassword" placeholder="motdepasse123" type="text">
-            </div>
-            <div class="form-group-inline">
-              <label data-i18n="lbl_client_name">NOM AFFICHÃ</label>
-              <input id="newName" placeholder="Entreprise SA" type="text">
-            </div>
-            <div style="display:flex;align-items:flex-end">
-              <button class="btn-sm btn-primary" onclick="createClient()" data-i18n="btn_create">+ CrÃ©er</button>
-            </div>
-          </div>
-        </div>
-        <table>
-          <thead><tr>
-            <th data-i18n="th_username">Identifiant</th>
-            <th data-i18n="th_name">Nom</th>
-            <th data-i18n="th_role">RÃ´le</th>
-            <th data-i18n="th_actions">Actions</th>
-          </tr></thead>
-          <tbody id="clientsTable"><tr><td colspan="4" style="text-align:center;padding:1.5rem;color:var(--muted)">Chargement...</td></tr></tbody>
-        </table>
-        <div style="padding:1rem 1.25rem;background:rgba(245,158,11,.05);border-top:1px solid var(--border)">
-          <div style="font-size:.75rem;color:#fcd34d">â ï¸ <span data-i18n="admin_note">AprÃ¨s crÃ©ation, copiez la valeur USERS_CONFIG et ajoutez-la dans Railway pour persister entre redÃ©marrages.</span></div>
-          <textarea id="usersConfigOutput" style="display:none;width:100%;margin-top:.5rem;padding:.5rem;background:#1f2937;border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:.7rem;font-family:monospace;resize:vertical" rows="3"></textarea>
-        </div>
-      </div>
-    </div>
-
-  </div><!-- /content -->
 </main>
-
-<!-- Toast -->
-<div class="toast" id="toast"></div>
-
 <script>
-// âââ i18n âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-const i18n = {
-  fr:{
-    nav_overview:'Vue d\'ensemble',nav_dashboard:'Dashboard',nav_sales:'Commercial',
-    nav_leads:'Leads',nav_rdv:'Rendez-vous',nav_calls:'Appels IA',nav_config:'Configuration',
-    nav_connect:'Connexions',nav_admin:'Admin',btn_logout:'DÃ©connexion',stat_total:'Total Leads',
-    stat_new:'Nouveaux',stat_rdv:'RDV PlanifiÃ©s',stat_clients:'Clients',stat_today:'Aujourd\'hui',
-    recent_leads:'Leads RÃ©cents',last_10:'10 derniers',see_all:'Voir tout',th_name:'Nom',
-    th_phone:'TÃ©lÃ©phone',th_status:'Statut',th_channel:'Canal',th_date:'Date',th_email:'Email',
-    th_actions:'Actions',all_leads:'Tous les leads',all_rdv:'Rendez-vous',refresh:'â» RafraÃ®chir',
-    scripts_title:'10 Scripts IA',scripts_sub:'FR + AR disponibles',vapi_number:'NumÃ©ro Vapi',
-    trigger_call:'DÃ©clencher un appel',lbl_phone:'TÃLÃPHONE',lbl_lead_name:'NOM LEAD',
-    lbl_script:'SCRIPT',btn_call:'ð Lancer l\'appel',call_history:'Historique appels',
-    admin_clients:'Gestion des clients',admin_sub:'CrÃ©ez et gÃ©rez les accÃ¨s SaaS',
-    lbl_username:'IDENTIFIANT',lbl_password:'MOT DE PASSE',lbl_client_name:'NOM AFFICHÃ',
-    btn_create:'+ CrÃ©er',th_username:'Identifiant',th_role:'RÃ´le',
-    admin_note:'AprÃ¨s crÃ©ation, copiez USERS_CONFIG dans Railway pour persister.',
-    loading:'Chargement...',role_admin:'Admin',role_client:'Client'
-  },
-  ar:{
-    nav_overview:'ÙØ¸Ø±Ø© Ø¹Ø§ÙØ©',nav_dashboard:'ÙÙØ­Ø© Ø§ÙØªØ­ÙÙ',nav_sales:'Ø§ÙÙØ¨ÙØ¹Ø§Øª',
-    nav_leads:'Ø§ÙØ¹ÙÙØ§Ø¡ Ø§ÙÙØ­ØªÙÙÙÙ',nav_rdv:'Ø§ÙÙÙØ§Ø¹ÙØ¯',nav_calls:'ÙÙØ§ÙÙØ§Øª Ø§ÙØ°ÙØ§Ø¡ Ø§ÙØ§ØµØ·ÙØ§Ø¹Ù',nav_config:'Ø§ÙØ¥Ø¹Ø¯Ø§Ø¯Ø§Øª',
-    nav_connect:'Ø§ÙØªÙØµÙÙØ§Øª',nav_admin:'Ø§ÙØ¥Ø¯Ø§Ø±Ø©',btn_logout:'ØªØ³Ø¬ÙÙ Ø§ÙØ®Ø±ÙØ¬',stat_total:'Ø¥Ø¬ÙØ§ÙÙ Ø§ÙØ¹ÙÙØ§Ø¡',
-    stat_new:'Ø¬Ø¯Ø¯',stat_rdv:'ÙÙØ§Ø¹ÙØ¯ ÙØ¬Ø¯ÙÙØ©',stat_clients:'Ø¹ÙÙØ§Ø¡ ÙØ´Ø·ÙÙ',stat_today:'Ø§ÙÙÙÙ',
-    recent_leads:'Ø§ÙØ¹ÙÙØ§Ø¡ Ø§ÙØ£Ø®ÙØ±ÙÙ',last_10:'Ø¢Ø®Ø± 10',see_all:'Ø¹Ø±Ø¶ Ø§ÙÙÙ',th_name:'Ø§ÙØ§Ø³Ù',
-    th_phone:'Ø§ÙÙØ§ØªÙ',th_status:'Ø§ÙØ­Ø§ÙØ©',th_channel:'Ø§ÙÙÙØ§Ø©',th_date:'Ø§ÙØªØ§Ø±ÙØ®',th_email:'Ø§ÙØ¨Ø±ÙØ¯',
-    th_actions:'Ø§ÙØ¥Ø¬Ø±Ø§Ø¡Ø§Øª',all_leads:'Ø¬ÙÙØ¹ Ø§ÙØ¹ÙÙØ§Ø¡',all_rdv:'Ø§ÙÙÙØ§Ø¹ÙØ¯',refresh:'â» ØªØ­Ø¯ÙØ«',
-    scripts_title:'10 Ø³ÙØ±ÙØ¨ØªØ§Øª Ø°ÙØ§Ø¡ Ø§ØµØ·ÙØ§Ø¹Ù',scripts_sub:'ÙØ±ÙØ³Ù + Ø¹Ø±Ø¨Ù',vapi_number:'Ø±ÙÙ Vapi',
-    trigger_call:'Ø¨Ø¯Ø¡ ÙÙØ§ÙÙØ©',lbl_phone:'Ø§ÙÙØ§ØªÙ',lbl_lead_name:'Ø§Ø³Ù Ø§ÙØ¹ÙÙÙ',
-    lbl_script:'Ø§ÙØ³ÙØ±ÙØ¨Øª',btn_call:'ð Ø¨Ø¯Ø¡ Ø§ÙÙÙØ§ÙÙØ©',call_history:'Ø³Ø¬Ù Ø§ÙÙÙØ§ÙÙØ§Øª',
-    admin_clients:'Ø¥Ø¯Ø§Ø±Ø© Ø§ÙØ¹ÙÙØ§Ø¡',admin_sub:'Ø¥ÙØ´Ø§Ø¡ ÙØ¥Ø¯Ø§Ø±Ø© Ø§ÙÙØµÙÙ SaaS',
-    lbl_username:'Ø§Ø³Ù Ø§ÙÙØ³ØªØ®Ø¯Ù',lbl_password:'ÙÙÙØ© Ø§ÙÙØ±ÙØ±',lbl_client_name:'Ø§ÙØ§Ø³Ù Ø§ÙÙØ¹Ø±ÙØ¶',
-    btn_create:'+ Ø¥ÙØ´Ø§Ø¡',th_username:'Ø§Ø³Ù Ø§ÙÙØ³ØªØ®Ø¯Ù',th_role:'Ø§ÙØ¯ÙØ±',
-    admin_note:'Ø¨Ø¹Ú/ Ø§ÙØ¥ÙØ´Ø§Ø¡Ø Ø§ÙØ³Ø® USERS_CONFIG Ø¥ÙÙ Railway.',
-    loading:'Ø¬Ø§Ø±Ù Ø§ÙØªØ­ÙÙÙ...',role_admin:'ÙØ³Ø¤ÙÙ',role_client:'Ø¹ÙÙÙ'
-  }
-};
-
-let lang = 'fr';
-let currentUser = null;
-
-function applyI18n() {
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.dataset.i18n;
-    if (i18n[lang][key]) el.textContent = i18n[lang][key];
+const pages={'dashboard':'Dashboard','leads':'Leads','rendez-vous':'Rendez-vous','appels':'Appels IA','connexions':'Connexions','admin':'Admin'};
+let allLeadsData=[];
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.getElementById('pageTitle').textContent=pages[id]||id;
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+id+"'"))n.classList.add('active');
   });
-  document.getElementById('langToggle').textContent = lang === 'fr' ? 'ð«ð· FR' : 'ð²ð¦ AR';
-  document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+  if(id==='leads')loadLeads();
+  if(id==='rendez-vous')loadRdv();
+  if(id==='admin')loadAdmin();
+  if(id==='connexions')loadConnections();
 }
-
-function toggleLang() {
-  lang = lang === 'fr' ? 'ar' : 'fr';
-  applyI18n();
-  showToast(lang === 'fr' ? 'Langue : FranÃ§ais' : 'Ø§ÙÙØºØ©: Ø§ÙØ¹Ø±Ø¨ÙØ©');
+function toggleLang(){
+  const l=document.getElementById('langBtn').textContent==='FR'?'AR':'FR';
+  document.getElementById('langBtn').textContent=l;
+  document.documentElement.setAttribute('dir',l==='AR'?'rtl':'ltr');
 }
-
-// âââ Toast ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-function showToast(msg, type='success') {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.className = 'toast ' + type;
-  setTimeout(() => t.classList.add('show'), 10);
-  setTimeout(() => t.classList.remove('show'), 3000);
+function statusBadge(s){
+  const map={new:'new',nouveau:'new',qualified:'qualified',qualifie:'qualified',booked:'booked',rdv:'booked',client:'client',lost:'lost',perdu:'lost'};
+  const cls=map[s?.toLowerCase()]||'new';
+  const labels={new:'Nouveau',qualified:'Qualifie',booked:'RDV pris',client:'Client',lost:'Perdu'};
+  return '<span class="badge '+cls+'">'+( labels[cls]||s||'Nouveau')+'</span>';
 }
-
-// âââ Auth âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-async function checkAuth() {
-  try {
-    const res = await fetch('/auth/me', { credentials: 'include' });
-    if (!res.ok) { window.location.href = '/login'; return; }
-    currentUser = await res.json();
-    document.getElementById('userName').textContent = currentUser.name;
-    document.getElementById('userRole').textContent = currentUser.role === 'admin' ? (i18n[lang].role_admin||'Admin') : (i18n[lang].role_client||'Client');
-    document.getElementById('userAvatar').textContent = (currentUser.name||'?')[0].toUpperCase();
-    if (currentUser.role === 'admin') {
-      document.getElementById('nav-admin').style.display = 'flex';
+function channelIcon(c){
+  const icons={whatsapp:'&#128241;',instagram:'&#128248;',telegram:'&#9992;',email:'&#128139;',web:'&#127760;'};
+  return '<span class="channel-icon">'+(icons[c]||'&#127760;')+' '+(c||'')+'</span>';
+}
+function fmtDate(d){
+  if(!d)return '-';
+  try{return new Date(d).toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});}catch(e){return d}
+}
+async function loadDashboard(){
+  try{
+    const[statsRes,leadsRes]=await Promise.all([fetch('/api/status').catch(()=>null),fetch('/api/leads?limit=10').catch(()=>null)]);
+    if(statsRes&&statsRes.ok){
+      const stats=await statsRes.json();
+      const s=stats.stats||{};
+      document.getElementById('statTotal').textContent=s.total||0;
+      document.getElementById('statNew').textContent=s.byStatus?.new||0;
+      document.getElementById('statRdv').textContent=s.byStatus?.booked||0;
+      document.getElementById('statClients').textContent=s.byStatus?.client||0;
+      document.getElementById('statToday').textContent=s.today||0;
     }
-    document.getElementById('loading').style.display = 'none';
-    loadOverview();
-  } catch {
-    window.location.href = '/login';
-  }
-}
-
-async function logout() {
-  await fetch('/auth/logout', { method: 'POST', credentials: 'include' });
-  window.location.href = '/login';
-}
-
-// âââ Navigation âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-function showPage(page) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('page-' + page).classList.add('active');
-  const nav = document.getElementById('nav-' + page);
-  if (nav) nav.classList.add('active');
-  const titles = {overview:'Dashboard',leads:'Leads',bookings:'Rendez-vous',calls:'Appels IA',integrations:'Connexions',admin:'Admin'};
-  document.getElementById('pageTitle').textContent = titles[page] || page;
-  if (page === 'leads') loadLeads();
-  if (page === 'bookings') loadBookings();
-  if (page === 'integrations') loadIntegrations();
-  if (page === 'admin') loadClients();
-  if (page === 'calls') loadIntegrations(); // to get phone number
-}
-
-// âââ Overview ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-async function loadOverview() {
-  try {
-    const [stats, leads] = await Promise.all([
-      fetch('/api/stats', {credentials:'include'}).then(r=>r.json()),
-      fetch('/api/leads', {credentials:'include'}).then(r=>r.json())
-    ]);
-    document.getElementById('stat-total').textContent = stats.total || 0;
-    document.getElementById('stat-new').textContent = stats.new || 0;
-    document.getElementById('stat-rdv').textContent = stats.rdv || 0;
-    document.getElementById('stat-clients').textContent = stats.clients || 0;
-    document.getElementById('stat-today').textContent = stats.todayNew || 0;
-    renderLeadsTable('leadsTableBody', leads.slice(0,10), false);
-  } catch(e) { console.error(e); }
-}
-
-// âââ Leads ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-async function loadLeads() {
-  try {
-    const leads = await fetch('/api/leads', {credentials:'include'}).then(r=>r.json());
-    renderLeadsTable('allLeadsBody', leads, true);
-  } catch { }
-}
-
-function renderLeadsTable(tbodyId, leads, showActions) {
-  const tbody = document.getElementById(tbodyId);
-  if (!leads || !leads.length) {
-    tbody.innerHTML = `<tr><td colspan="${showActions?6:5}" style="text-align:center;padding:2rem;color:var(--muted)">Aucun lead</td></tr>`;
-    return;
-  }
-  tbody.innerHTML = leads.map(l => `
-    <tr>
-      <td><strong>${esc(l.name||l.phone||'â')}</strong></td>
-      <td style="font-family:monospace">${esc(l.phone||'â')}</td>
-      ${showActions ? `<td style="font-size:.8rem;color:var(--muted)">${esc(l.email||'â')}</td>` : ''}
-      <td><span class="status ${l.status||'new'}">${statusLabel(l.status)}</span></td>
-      <td>${channelIcon(l.channel)} ${esc(l.channel||'â')}</td>
-      ${!showActions ? `<td style="font-size:.8rem;color:var(--muted)">${fmtDate(l.createdAt)}</td>` : ''}
-      ${showActions ? `<td>
-        <button class="btn-sm btn-secondary" onclick="callLead('${esc(l.id)}','${esc(l.phone)}','${esc(l.name||'')}')">ð</button>
-      </td>` : ''}
-    </tr>`).join('');
-}
-
-function callLead(id, phone, name) {
-  showPage('calls');
-  document.getElementById('callPhone').value = phone;
-  document.getElementById('callName').value = name;
-  showToast('Lead chargÃ© dans le panneau appels');
-}
-
-// âââ Bookings âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-async function loadBookings() {
-  try {
-    const bkgs = await fetch('/api/bookings', {credentials:'include'}).then(r=>r.json());
-    const el = document.getElementById('bookingsContent');
-    if (!bkgs || !bkgs.length) {
-      el.innerHTML = '<div class="empty-state"><div class="empty-icon">ð</div><div>Aucun rendez-vous</div></div>';
-      return;
+    if(leadsRes&&leadsRes.ok){
+      const data=await leadsRes.json();
+      const leads=data.leads||data||[];
+      const tbody=document.getElementById('recentLeadsBody');
+      if(!leads.length){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--muted)">Aucun lead</td></tr>';return;}
+      tbody.innerHTML=leads.slice(0,10).map(l=>'<tr><td style="font-weight:500">'+( l.name||'-')+'</td><td style="color:var(--muted)">'+( l.phone||l.identifier||'-')+'</td><td>'+statusBadge(l.status)+'</td><td>'+channelIcon(l.channel)+'</td><td style="color:var(--muted);font-size:.78rem">'+fmtDate(l.lastContact||l.createdAt)+'</td></tr>').join('');
     }
-    el.innerHTML = `<table style="width:100%"><thead><tr><th>Nom</th><th>Date</th><th>Canal</th><th>Statut</th></tr></thead><tbody>
-      ${bkgs.map(b=>`<tr><td>${esc(b.leadName||b.name||'â')}</td><td>${fmtDate(b.date||b.scheduledAt)}</td><td>${esc(b.channel||'â')}</td><td><span class="status ${b.status||'rdv'}">${esc(b.status||'planifiÃ©')}</span></td></tr>`).join('')}
-    </tbody></table>`;
-  } catch { document.getElementById('bookingsContent').textContent = 'Erreur de chargement'; }
+  }catch(e){console.error(e);}
 }
-
-// âââ Calls ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-async function triggerCall() {
-  const phone = document.getElementById('callPhone').value.trim();
-  const name = document.getElementById('callName').value.trim();
-  const script = document.getElementById('callScript').value;
-  if (!phone) { showToast('NumÃ©ro de tÃ©lÃ©phone requis', 'error'); return; }
-  showToast('â³ Appel en cours...');
-  try {
-    const res = await fetch('/api/calls/trigger', {
-      method:'POST', credentials:'include',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ phone, leadName: name, scriptType: script })
-    });
-    const d = await res.json();
-    if (res.ok && d.callId) showToast('â Appel lancÃ© â ID: ' + d.callId.slice(0,8));
-    else showToast(d.error || 'Erreur', 'error');
-  } catch { showToast('Erreur rÃ©seau', 'error'); }
+async function loadLeads(){
+  try{
+    const res=await fetch('/api/leads');
+    if(!res.ok)throw new Error('Failed');
+    const data=await res.json();
+    allLeadsData=data.leads||data||[];
+    renderLeads(allLeadsData);
+  }catch(e){document.getElementById('allLeadsBody').innerHTML='<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--muted)">Erreur</td></tr>';}
 }
-
-async function loadCallHistory() {
-  try {
-    const calls = await fetch('/api/calls', {credentials:'include'}).then(r=>r.json());
-    const el = document.getElementById('callHistoryContent');
-    if (!calls || !calls.length) { el.textContent = 'Aucun appel'; return; }
-    el.innerHTML = `<table style="width:100%"><thead><tr><th>ID</th><th>TÃ©lÃ©phone</th><th>DurÃ©e</th><th>Statut</th><th>Date</th></tr></thead><tbody>
-      ${calls.map(c=>`<tr><td style="font-family:monospace;font-size:.75rem">${esc((c.id||'').slice(0,8))}</td><td>${esc(c.customer?.number||'â')}</td><td>${c.duration||0}s</td><td><span class="status ${c.status}">${esc(c.status||'â')}</span></td><td>${fmtDate(c.createdAt)}</td></tr>`).join('')}
-    </tbody></table>`;
-  } catch { document.getElementById('callHistoryContent').textContent = 'Erreur'; }
+function renderLeads(leads){
+  document.getElementById('leadsCount').textContent=leads.length+' leads';
+  const tbody=document.getElementById('allLeadsBody');
+  if(!leads.length){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--muted)">Aucun lead</td></tr>';return;}
+  tbody.innerHTML=leads.map(l=>'<tr><td style="font-weight:500">'+( l.name||'-')+'</td><td style="color:var(--muted)">'+( l.phone||l.identifier||'-')+'</td><td>'+statusBadge(l.status)+'</td><td><div style="display:flex;align-items:center;gap:.4rem"><div style="width:50px;height:4px;background:var(--border);border-radius:2px"><div style="width:'+Math.min(100,(l.score||0)*10)+'%;height:100%;background:var(--accent);border-radius:2px"></div></div><span style="font-size:.75rem;color:var(--muted)">'+( l.score||0)+'/10</span></div></td><td>'+channelIcon(l.channel)+'</td><td style="color:var(--muted);font-size:.78rem">'+fmtDate(l.lastContact||l.createdAt)+'</td></tr>').join('');
 }
-
-// âââ Integrations âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-async function loadIntegrations() {
-  try {
-    const data = await fetch('/api/integrations', {credentials:'include'}).then(r=>r.json());
-    const grid = document.getElementById('integrationsGrid');
-    const intConfigs = [
-      { key:'openai', icon:'ð§ ', name:'OpenAI GPT-4o', color:'#10b981',
-        desc: lang==='ar'?'ÙØ­Ø±Ù Ø§ÙØ°ÙØ§Ø¡ Ø§ÙØ§ØµØ·ÙØ§Ø¹Ù â ÙØ¯Ø¹Ù Ø§ÙÙØ±ÙØ³ÙØ© ÙØ§ÙØ¹Ø±Ø¨ÙØ©':'Moteur IA â supporte FR + AR',
-        val: data.openai?.enabled ? 'ClÃ© API configurÃ©e â' : 'OPENAI_API_KEY manquante',
-        action: null },
-      { key:'voice', icon:'ð', name:'Vapi Voice IA', color:'#6366f1',
-        desc: lang==='ar'?'Ø³ÙÙÙ â ÙØ³Ø§Ø¹Ø¯Ø© ÙØ¨ÙØ¹Ø§Øª Ø«ÙØ§Ø¦ÙØ© Ø§ÙÙØºØ©':'Sophie â Assistante bilingue FR/AR',
-        val: data.voice?.phone || (data.voice?.enabled ? 'ConfigurÃ©' : 'VAPI_API_KEY manquante'),
-        action: data.voice?.enabled ? null : 'Configurer Vapi' },
-      { key:'whatsapp', icon:'ð¬', name:'WhatsApp Business', color:'#25d366',
-        desc: lang==='ar'?'ØªÙÙÙ ÙØ¥Ø±Ø³Ø§Ù Ø§ÙØ±Ø³Ø§Ø¦Ù':'RÃ©ception et envoi de messages',
-        val: data.whatsapp?.enabled ? 'Meta Webhook configurÃ© â' : 'META_VERIFY_TOKEN manquant',
-        action: data.whatsapp?.enabled ? null : 'Configurer Meta' },
-      { key:'telegram', icon:'âï¸', name:'Telegram Bot', color:'#2AABEE',
-        desc: lang==='ar'?'Ø±ÙØ¨ÙØª ØªÙÙÙØºØ±Ø§Ù':'Bot Telegram automatisÃ©',
-        val: data.telegram?.enabled ? 'Token configurÃ© â' : 'TELEGRAM_TOKEN manquant',
-        action: data.telegram?.enabled ? null : 'Configurer Telegram' },
-      { key:'email', icon:'ð§', name:'Email (SMTP/IMAP)', color:'#f59e0b',
-        desc: lang==='ar'?'Ø¥Ø±Ø³Ø§Ù ÙØ§Ø³ØªÙØ¨Ø§Ù Ø§ÙØ¥ÙÙÙÙØ§Øª':'Envoi et rÃ©ception d\'emails',
-        val: data.email?.enabled ? 'Email configurÃ© â' : 'EMAIL_USER manquant',
-        action: data.email?.enabled ? null : 'Configurer Email' },
-      { key:'instagram', icon:'ð¸', name:'Instagram DM', color:'#e1306c',
-        desc: lang==='ar'?'Ø±Ø³Ø§Ø¦Ù Ø¥ÙØ³ØªØºØ±Ø§Ù (ÙØ±ÙØ¨Ø§Ù)':'Messages Instagram (bientÃ´t)',
-        val: lang==='ar'?'ÙØ±ÙØ¨Ø§Ù':'Disponible bientÃ´t',
-        action: null, comingSoon: true }
-    ];
-
-    grid.innerHTML = intConfigs.map(c => {
-      const st = data[c.key] || {};
-      const statusClass = c.comingSoon ? 'off' : (st.enabled ? 'ok' : 'warn');
-      const statusTxt = c.comingSoon ? (lang==='ar'?'ÙØ±ÙØ¨Ø§Ù':'BientÃ´t') : (st.enabled ? (lang==='ar'?'ÙØ¹ÙÙ':'Actif') : (lang==='ar'?'ØºÙØ± ÙÙØªÙÙ':'Manquant'));
-      return `
-      <div class="integration-card">
-        <div class="int-header">
-          <div class="int-info">
-            <div class="int-icon" style="background:${c.color}22">${c.icon}</div>
-            <div><div class="int-name">${c.name}</div><div class="int-desc">${c.desc}</div></div>
-          </div>
-          <span class="int-status ${statusClass}">${statusTxt}</span>
-        </div>
-        <div class="int-value">${c.val}</div>
-        ${c.action ? `<button class="btn-sm btn-secondary" onclick="showToast('Configurez via Railway Variables: ${c.key.toUpperCase()}_TOKEN/KEY', 'success')">${lang==='ar'?'ÙÙÙÙØ© Ø§ÙØ¥Ø¹Ø¯Ø§Ø¯':'Comment configurer'} â</button>` : ''}
-      </div>`;
-    }).join('');
-
-    // Update phone number in calls page
-    if (data.voice?.phone) document.getElementById('callsPhoneNumber').textContent = data.voice.phone;
-  } catch(e) {
-    document.getElementById('integrationsGrid').innerHTML = '<div style="color:var(--muted)">Erreur de chargement</div>';
-  }
+function filterLeads(status,el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  if(status==='all')renderLeads(allLeadsData);
+  else renderLeads(allLeadsData.filter(l=>(l.status||'new')===status));
 }
-
-// âââ Admin ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-async function loadClients() {
-  try {
-    const clients = await fetch('/api/admin/clients', {credentials:'include'}).then(r=>r.json());
-    const tbody = document.getElementById('clientsTable');
-    if (!clients.length) {
-      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:1.5rem;color:var(--muted)">Aucun client</td></tr>';
-      return;
+async function loadRdv(){
+  try{
+    const res=await fetch('/api/bookings');
+    if(!res.ok)throw new Error('Failed');
+    const data=await res.json();
+    const bookings=data.bookings||data||[];
+    const grid=document.getElementById('rdvGrid');
+    const upcoming=bookings.filter(b=>b.status==='confirmed'&&new Date(b.date)>new Date()).slice(0,4);
+    grid.innerHTML=upcoming.length?upcoming.map(b=>'<div class="rdv-card"><div class="rdv-time">'+( b.time||'--:--')+'</div><div class="rdv-name">'+( b.clientName||'-')+'</div><div class="rdv-details">'+fmtDate(b.date)+'</div><span class="rdv-badge rdv-confirmed">Confirme</span></div>').join(''):'<div style="color:var(--muted);font-size:.85rem;padding:1rem">Aucun RDV a venir</div>';
+    const tbody=document.getElementById('rdvBody');
+    if(!bookings.length){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--muted)">Aucun RDV</td></tr>';return;}
+    tbody.innerHTML=bookings.map(b=>'<tr><td style="font-weight:500">'+( b.clientName||'-')+'</td><td>'+fmtDate(b.date)+'</td><td>'+( b.time||'-')+'</td><td><span class="rdv-badge '+(b.status==='confirmed'?'rdv-confirmed':'rdv-pending')+'">'+( b.status||'-')+'</span></td><td>'+channelIcon(b.channel)+'</td></tr>').join('');
+  }catch(e){document.getElementById('rdvBody').innerHTML='<tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--muted)">Erreur</td></tr>';}
+}
+async function loadAdmin(){
+  try{
+    const res=await fetch('/api/status');
+    if(!res.ok)throw new Error('Failed');
+    const data=await res.json();
+    document.getElementById('statusJson').textContent=JSON.stringify(data,null,2);
+    const sys=data.systemStats||{};
+    document.getElementById('sysStatsBody').innerHTML=[['Messages traites',sys.messagesProcessed||0],['Reponses envoyees',sys.responsesSent||0],['Appels declenches',sys.callsTriggered||0],['Relances envoyees',sys.followupsSent||0],['Uptime (s)',Math.round(data.uptime||0)]].map(([k,v])=>'<tr><td style="color:var(--muted);font-size:.82rem">'+k+'</td><td style="font-weight:600;text-align:right">'+v+'</td></tr>').join('');
+  }catch(e){document.getElementById('statusJson').textContent='Erreur';}
+}
+async function loadConnections(){
+  try{
+    const res=await fetch('/api/status');
+    if(!res.ok)return;
+    const data=await res.json();
+    const agents=data.agents||{};
+    const waStatus=document.getElementById('wa-status');
+    if(agents.whatsapp){waStatus.textContent='Connecte';waStatus.parentElement.querySelector('.dot').className='dot green';}
+  }catch(e){}
+}
+async function connectWhatsApp(){
+  try{
+    const res=await fetch('/api/whatsapp/qr');
+    if(res.ok){
+      const data=await res.json();
+      if(data.qr){document.getElementById('wa-qr').style.display='block';document.getElementById('wa-qr-img').src=data.qr;document.getElementById('wa-status').textContent='Scanner le QR Code';}
     }
-    tbody.innerHTML = clients.map(c => `
-      <tr>
-        <td style="font-family:monospace">${esc(c.username)}</td>
-        <td>${esc(c.name||'â')}</td>
-        <td><span class="status ${c.role==='admin'?'client':'new'}">${c.role}</span></td>
-        <td><button class="btn-sm" style="background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.3)" onclick="deleteClient('${esc(c.username)}')">ð</button></td>
-      </tr>`).join('');
-  } catch { }
+  }catch(e){alert('Demarrez le service WhatsApp');}
 }
-
-async function createClient() {
-  const username = document.getElementById('newUsername').value.trim();
-  const password = document.getElementById('newPassword').value.trim();
-  const name = document.getElementById('newName').value.trim();
-  if (!username || !password) { showToast('Identifiant + mot de passe requis', 'error'); return; }
-  try {
-    const res = await fetch('/api/admin/clients', {
-      method:'POST', credentials:'include',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ username, password, name })
-    });
-    const d = await res.json();
-    if (res.ok) {
-      showToast('â Client crÃ©Ã©: ' + username);
-      document.getElementById('newUsername').value = '';
-      document.getElementById('newPassword').value = '';
-      document.getElementById('newName').value = '';
-      if (d.newUsersConfig) {
-        const out = document.getElementById('usersConfigOutput');
-        out.style.display = 'block';
-        out.value = 'USERS_CONFIG=' + d.newUsersConfig;
-      }
-      loadClients();
-    } else { showToast(d.error || 'Erreur', 'error'); }
-  } catch { showToast('Erreur rÃ©seau', 'error'); }
+async function logout(){try{await fetch('/api/auth/logout',{method:'POST'});}catch(e){}window.location.href='/';}
+async function init(){
+  try{
+    const res=await fetch('/api/auth/me');
+    if(!res.ok){window.location.href='/';return;}
+    const data=await res.json();
+    if(data.username){document.getElementById('userName').textContent=data.username;document.getElementById('userRole').textContent=data.role||'USER';document.getElementById('userAvatar').textContent=data.username[0].toUpperCase();}
+  }catch(e){window.location.href='/';return;}
+  loadDashboard();
+  setInterval(loadDashboard,30000);
 }
-
-async function deleteClient(username) {
-  if (!confirm('Supprimer ' + username + ' ?')) return;
-  await fetch('/api/admin/clients/' + username, { method:'DELETE', credentials:'include' });
-  showToast('Client supprimÃ©');
-  loadClients();
-}
-
-// âââ Helpers ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function statusLabel(s) {
-  const m = {new:'Nouveau',qualified:'QualifiÃ©',rdv_programme:'RDV',client:'Client',lost:'Perdu',no_show:'No-Show',inbound:'Entrant'};
-  return m[s]||s||'â';
-}
-function channelIcon(ch) { const m={whatsapp:'ð¬',telegram:'âï¸',instagram:'ð¸',email:'ð§',voice:'ð',web:'ð'}; return m[ch]||''; }
-function fmtDate(d) { if(!d) return 'â'; const dt = new Date(d); return isNaN(dt)?d:dt.toLocaleDateString('fr-FR',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}); }
-
-// âââ Init âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-applyI18n();
-checkAuth();
-
-// Auto-refresh stats every 30s
-setInterval(() => { if (document.getElementById('page-overview').classList.contains('active')) loadOverview(); }, 30000);
+init();
 </script>
 </body>
 </html>
