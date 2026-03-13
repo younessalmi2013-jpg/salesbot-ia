@@ -1,7 +1,12 @@
-// src/booking/index.js — re-export depuis manager.js
 const manager = require('./manager');
 
-// Alias getBookings → getAllBookings pour la compatibilité server.js
-manager.getBookings = manager.getAllBookings;
+const bookingAgent = {
+  getBookings: manager.getAllBookings,
+  createBooking: manager.createBooking,
+  getAvailableSlots: manager.getAvailableSlots,
+  updateBookingStatus: manager.updateBookingStatus,
+  getBookingById: manager.getBookingById,
+  deleteBooking: manager.deleteBooking,
+};
 
-module.exports = manager;
+module.exports = bookingAgent;
