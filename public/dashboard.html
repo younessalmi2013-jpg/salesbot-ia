@@ -13,6 +13,8 @@
   --red:#ef4444;--blue:#3b82f6;--text:#f9fafb;--muted:#9ca3af;
 }
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh}
+
+/* Sidebar */
 .sidebar{
   width:240px;min-width:240px;background:var(--sidebar);
   border-right:1px solid var(--border);
@@ -31,6 +33,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);displ
 }
 .sidebar-logo .name{font-weight:700;font-size:.95rem}
 .sidebar-logo .version{font-size:.68rem;color:var(--muted)}
+
 .nav{flex:1;padding:.75rem 0;overflow-y:auto}
 .nav-section{
   font-size:.62rem;font-weight:600;color:#4b5563;
@@ -45,6 +48,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);displ
 .nav-item:hover{background:rgba(255,255,255,.05);color:var(--text)}
 .nav-item.active{background:rgba(99,102,241,.15);color:var(--accent);border-right:2px solid var(--accent)}
 .nav-icon{width:18px;text-align:center;font-size:15px;flex-shrink:0}
+
 .sidebar-footer{padding:1rem 1.25rem;border-top:1px solid var(--border)}
 .user-info{display:flex;align-items:center;gap:10px;margin-bottom:.75rem}
 .user-avatar{
@@ -62,6 +66,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);displ
   cursor:pointer;transition:all .2s;
 }
 .btn-logout:hover{background:rgba(239,68,68,.2)}
+
+/* Main */
 .main{margin-left:240px;flex:1;display:flex;flex-direction:column;min-height:100vh}
 .topbar{
   padding:.875rem 1.5rem;border-bottom:1px solid var(--border);
@@ -85,9 +91,12 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);displ
   transition:all .2s;
 }
 .lang-btn:hover{border-color:var(--accent);color:var(--text)}
+
 .content{padding:1.5rem;flex:1}
 .page{display:none}
 .page.active{display:block}
+
+/* Stats cards */
 .stats-grid{
   display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;
   margin-bottom:1.5rem;
@@ -110,9 +119,14 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);displ
 .stat-icon.yellow{background:rgba(245,158,11,.15)}
 .stat-value{font-size:1.8rem;font-weight:700;line-height:1;color:var(--text)}
 .stat-label{font-size:.78rem;color:var(--muted);margin-top:.3rem}
-.stat-change{font-size:.72rem;font-weight:500;padding:.15rem .4rem;border-radius:6px;}
+.stat-change{
+  font-size:.72rem;font-weight:500;padding:.15rem .4rem;
+  border-radius:6px;
+}
 .stat-change.up{color:#34d399;background:rgba(52,211,153,.1)}
 .stat-change.down{color:#f87171;background:rgba(248,113,113,.1)}
+
+/* Tables */
 .card{
   background:var(--card);border:1px solid var(--border);
   border-radius:14px;overflow:hidden;margin-bottom:1.5rem;
@@ -129,6 +143,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);displ
   font-weight:500;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif;
 }
 .btn-small:hover{opacity:.85}
+
 table{width:100%;border-collapse:collapse}
 thead th{
   padding:.75rem 1.25rem;font-size:.7rem;font-weight:600;
@@ -137,8 +152,13 @@ thead th{
 }
 tbody tr{transition:background .15s}
 tbody tr:hover{background:rgba(255,255,255,.03)}
-tbody td{padding:.875rem 1.25rem;font-size:.83rem;border-bottom:1px solid rgba(31,41,55,.5);}
+tbody td{
+  padding:.875rem 1.25rem;font-size:.83rem;
+  border-bottom:1px solid rgba(31,41,55,.5);
+}
 tbody tr:last-child td{border-bottom:none}
+
+/* Badges */
 .badge{
   display:inline-flex;align-items:center;gap:.3rem;
   padding:.25rem .65rem;border-radius:20px;font-size:.72rem;font-weight:600;
@@ -148,7 +168,13 @@ tbody tr:last-child td{border-bottom:none}
 .badge.booked{background:rgba(16,185,129,.15);color:#6ee7b7;border:1px solid rgba(16,185,129,.25)}
 .badge.client{background:rgba(99,102,241,.15);color:#a5b4fc;border:1px solid rgba(99,102,241,.25)}
 .badge.lost{background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.25)}
-.channel-icon{display:inline-flex;align-items:center;gap:.4rem;font-size:.82rem;color:var(--muted);}
+
+.channel-icon{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.82rem;color:var(--muted);
+}
+
+/* Tabs */
 .tabs{display:flex;gap:.5rem;margin-bottom:1.5rem}
 .tab{
   padding:.45rem 1rem;border-radius:8px;font-size:.82rem;
@@ -157,16 +183,30 @@ tbody tr:last-child td{border-bottom:none}
 }
 .tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
 .tab:hover:not(.active){border-color:rgba(99,102,241,.4);color:var(--text)}
+
+/* Booking */
 .rdv-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
-.rdv-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.25rem;}
+.rdv-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:1.25rem;
+}
 .rdv-time{font-size:1.1rem;font-weight:700;margin-bottom:.5rem}
 .rdv-name{font-size:.9rem;font-weight:600}
 .rdv-details{font-size:.78rem;color:var(--muted);margin-top:.25rem}
-.rdv-badge{display:inline-block;margin-top:.6rem;padding:.2rem .6rem;border-radius:6px;font-size:.72rem;font-weight:500;}
+.rdv-badge{
+  display:inline-block;margin-top:.6rem;
+  padding:.2rem .6rem;border-radius:6px;font-size:.72rem;font-weight:500;
+}
 .rdv-confirmed{background:rgba(16,185,129,.15);color:#6ee7b7}
 .rdv-pending{background:rgba(245,158,11,.15);color:#fcd34d}
+
+/* Connections */
 .connections-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.conn-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.25rem;display:flex;flex-direction:column;gap:.75rem;}
+.conn-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:1.25rem;
+  display:flex;flex-direction:column;gap:.75rem;
+}
 .conn-header{display:flex;align-items:center;justify-content:space-between}
 .conn-name{font-size:.9rem;font-weight:600;display:flex;align-items:center;gap:.5rem}
 .conn-status{display:flex;align-items:center;gap:.4rem;font-size:.75rem}
@@ -175,38 +215,78 @@ tbody tr:last-child td{border-bottom:none}
 .dot.red{background:var(--red)}
 .dot.yellow{background:var(--yellow)}
 .conn-info{font-size:.78rem;color:var(--muted)}
-.btn-connect{padding:.4rem .85rem;border:1px solid var(--border);background:transparent;border-radius:8px;color:var(--muted);font-size:.75rem;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif;}
+.btn-connect{
+  padding:.4rem .85rem;border:1px solid var(--border);
+  background:transparent;border-radius:8px;color:var(--muted);
+  font-size:.75rem;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif;
+}
 .btn-connect:hover{border-color:var(--accent);color:var(--accent)}
 .btn-connect.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* Empty state */
+.empty{
+  text-align:center;padding:3rem 1rem;color:var(--muted);font-size:.85rem;
+}
+.empty-icon{font-size:2.5rem;margin-bottom:.75rem;opacity:.5}
+
+/* Loader */
 .loading-row td{text-align:center;padding:2rem;color:var(--muted);font-size:.85rem}
+
+/* Admin */
 .admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
 </style>
 </head>
 <body>
+
+<!-- Sidebar -->
 <aside class="sidebar">
   <div class="sidebar-logo">
     <div class="icon">&#128200;</div>
-    <div><div class="name">SalesBot IA</div><div class="version">v2.0 &bull; SaaS</div></div>
+    <div>
+      <div class="name">SalesBot IA</div>
+      <div class="version">v2.0 &bull; SaaS</div>
+    </div>
   </div>
+
   <nav class="nav">
     <div class="nav-section">Vue d'ensemble</div>
-    <div class="nav-item active" onclick="showPage('dashboard')"><span class="nav-icon">&#9732;</span> Dashboard</div>
+    <div class="nav-item active" onclick="showPage('dashboard')">
+      <span class="nav-icon">&#9732;</span> Dashboard
+    </div>
+
     <div class="nav-section">Commercial</div>
-    <div class="nav-item" onclick="showPage('leads')"><span class="nav-icon">&#128101;</span> Leads</div>
-    <div class="nav-item" onclick="showPage('rendez-vous')"><span class="nav-icon">&#128197;</span> Rendez-vous</div>
-    <div class="nav-item" onclick="showPage('appels')"><span class="nav-icon">&#128222;</span> Appels IA</div>
+    <div class="nav-item" onclick="showPage('leads')">
+      <span class="nav-icon">&#128101;</span> Leads
+    </div>
+    <div class="nav-item" onclick="showPage('rendez-vous')">
+      <span class="nav-icon">&#128197;</span> Rendez-vous
+    </div>
+    <div class="nav-item" onclick="showPage('appels')">
+      <span class="nav-icon">&#128222;</span> Appels IA
+    </div>
+
     <div class="nav-section">Configuration</div>
-    <div class="nav-item" onclick="showPage('connexions')"><span class="nav-icon">&#128279;</span> Connexions</div>
-    <div class="nav-item" onclick="showPage('admin')"><span class="nav-icon">&#9881;</span> Admin</div>
+    <div class="nav-item" onclick="showPage('connexions')">
+      <span class="nav-icon">&#128279;</span> Connexions
+    </div>
+    <div class="nav-item" onclick="showPage('admin')">
+      <span class="nav-icon">&#9881;</span> Admin
+    </div>
   </nav>
+
   <div class="sidebar-footer">
     <div class="user-info">
       <div class="user-avatar" id="userAvatar">A</div>
-      <div><div class="user-name" id="userName">Admin</div><div class="user-role" id="userRole">ADMIN</div></div>
+      <div>
+        <div class="user-name" id="userName">Admin</div>
+        <div class="user-role" id="userRole">ADMIN</div>
+      </div>
     </div>
     <button class="btn-logout" onclick="logout()">Deconnexion</button>
   </div>
 </aside>
+
+<!-- Main -->
 <main class="main">
   <header class="topbar">
     <div class="topbar-title" id="pageTitle">Dashboard</div>
@@ -215,23 +295,77 @@ tbody tr:last-child td{border-bottom:none}
       <div class="lang-btn" id="langBtn" onclick="toggleLang()">FR</div>
     </div>
   </header>
+
   <div class="content">
-    <!-- DASHBOARD -->
+
+    <!-- ===== DASHBOARD ===== -->
     <div class="page active" id="page-dashboard">
       <div class="stats-grid">
-        <div class="stat-card"><div class="stat-top"><div class="stat-icon purple">&#128200;</div><span class="stat-change up" id="changeTotal">+0%</span></div><div class="stat-value" id="statTotal">0</div><div class="stat-label">Total Leads</div></div>
-        <div class="stat-card"><div class="stat-top"><div class="stat-icon blue">&#10024;</div><span class="stat-change up" id="changeNew">+0%</span></div><div class="stat-value" id="statNew">0</div><div class="stat-label">Nouveaux</div></div>
-        <div class="stat-card"><div class="stat-top"><div class="stat-icon green">&#128197;</div></div><div class="stat-value" id="statRdv">0</div><div class="stat-label">RDV Planifies</div></div>
-        <div class="stat-card"><div class="stat-top"><div class="stat-icon teal">&#127775;</div></div><div class="stat-value" id="statClients">0</div><div class="stat-label">Clients</div></div>
-        <div class="stat-card"><div class="stat-top"><div class="stat-icon yellow">&#9889;</div></div><div class="stat-value" id="statToday">0</div><div class="stat-label">Aujourd'hui</div></div>
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-icon purple">&#128200;</div>
+            <span class="stat-change up" id="changeTotal">+0%</span>
+          </div>
+          <div class="stat-value" id="statTotal">0</div>
+          <div class="stat-label">Total Leads</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-icon blue">&#10024;</div>
+            <span class="stat-change up" id="changeNew">+0%</span>
+          </div>
+          <div class="stat-value" id="statNew">0</div>
+          <div class="stat-label">Nouveaux</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-icon green">&#128197;</div>
+          </div>
+          <div class="stat-value" id="statRdv">0</div>
+          <div class="stat-label">RDV Planifies</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-icon teal">&#127775;</div>
+          </div>
+          <div class="stat-value" id="statClients">0</div>
+          <div class="stat-label">Clients</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-icon yellow">&#9889;</div>
+          </div>
+          <div class="stat-value" id="statToday">0</div>
+          <div class="stat-label">Aujourd'hui</div>
+        </div>
       </div>
+
       <div class="card">
-        <div class="card-header"><div><div class="card-title">Leads Recents</div><div class="card-subtitle">10 derniers</div></div><button class="btn-small" onclick="showPage('leads')">Voir tout</button></div>
-        <table><thead><tr><th>Nom</th><th>Telephone</th><th>Statut</th><th>Canal</th><th>Date</th></tr></thead>
-        <tbody id="recentLeadsBody"><tr class="loading-row"><td colspan="5">Chargement...</td></tr></tbody></table>
+        <div class="card-header">
+          <div>
+            <div class="card-title">Leads Recents</div>
+            <div class="card-subtitle">10 derniers</div>
+          </div>
+          <button class="btn-small" onclick="showPage('leads')">Voir tout</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Telephone</th>
+              <th>Statut</th>
+              <th>Canal</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="recentLeadsBody">
+            <tr class="loading-row"><td colspan="5">Chargement...</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
-    <!-- LEADS -->
+
+    <!-- ===== LEADS ===== -->
     <div class="page" id="page-leads">
       <div class="tabs">
         <div class="tab active" onclick="filterLeads('all',this)">Tous</div>
@@ -241,177 +375,412 @@ tbody tr:last-child td{border-bottom:none}
         <div class="tab" onclick="filterLeads('client',this)">Clients</div>
       </div>
       <div class="card">
-        <div class="card-header"><div><div class="card-title">Tous les Leads</div><div class="card-subtitle" id="leadsCount">0 leads</div></div></div>
-        <table><thead><tr><th>Nom</th><th>Telephone</th><th>Statut</th><th>Score</th><th>Canal</th><th>Dernier contact</th></tr></thead>
-        <tbody id="allLeadsBody"><tr class="loading-row"><td colspan="6">Chargement...</td></tr></tbody></table>
+        <div class="card-header">
+          <div>
+            <div class="card-title">Tous les Leads</div>
+            <div class="card-subtitle" id="leadsCount">0 leads</div>
+          </div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Telephone</th>
+              <th>Statut</th>
+              <th>Score</th>
+              <th>Canal</th>
+              <th>Dernier contact</th>
+            </tr>
+          </thead>
+          <tbody id="allLeadsBody">
+            <tr class="loading-row"><td colspan="6">Chargement...</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
-    <!-- RENDEZ-VOUS -->
+
+    <!-- ===== RENDEZ-VOUS ===== -->
     <div class="page" id="page-rendez-vous">
-      <div class="rdv-grid" id="rdvGrid"><div style="color:var(--muted);font-size:.85rem;padding:1rem">Chargement...</div></div>
+      <div class="rdv-grid" id="rdvGrid">
+        <div style="color:var(--muted);font-size:.85rem;padding:1rem">Chargement des rendez-vous...</div>
+      </div>
       <div class="card">
-        <div class="card-header"><div class="card-title">Historique RDV</div></div>
-        <table><thead><tr><th>Client</th><th>Date</th><th>Heure</th><th>Statut</th><th>Canal</th></tr></thead>
-        <tbody id="rdvBody"><tr class="loading-row"><td colspan="5">Chargement...</td></tr></tbody></table>
+        <div class="card-header">
+          <div class="card-title">Historique RDV</div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Client</th>
+              <th>Date</th>
+              <th>Heure</th>
+              <th>Statut</th>
+              <th>Canal</th>
+            </tr>
+          </thead>
+          <tbody id="rdvBody">
+            <tr class="loading-row"><td colspan="5">Chargement...</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
-    <!-- APPELS -->
+
+    <!-- ===== APPELS IA ===== -->
     <div class="page" id="page-appels">
       <div class="card">
-        <div class="card-header"><div class="card-title">Appels IA Recents</div></div>
-        <table><thead><tr><th>Lead</th><th>Telephone</th><th>Duree</th><th>Resultat</th><th>Date</th></tr></thead>
-        <tbody id="callsBody"><tr class="loading-row"><td colspan="5">Aucun appel pour le moment</td></tr></tbody></table>
+        <div class="card-header">
+          <div class="card-title">Appels IA Recents</div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Lead</th>
+              <th>Telephone</th>
+              <th>Duree</th>
+              <th>Resultat</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="callsBody">
+            <tr class="loading-row"><td colspan="5">Aucun appel pour le moment</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
-    <!-- CONNEXIONS -->
+
+    <!-- ===== CONNEXIONS ===== -->
     <div class="page" id="page-connexions">
       <div class="connections-grid">
-        <div class="conn-card"><div class="conn-header"><div class="conn-name">&#128241; WhatsApp</div><div class="conn-status"><span class="dot yellow"></span><span id="wa-status">Non connecte</span></div></div><div class="conn-info">Scanner le QR Code pour connecter votre numero WhatsApp</div><div id="wa-qr" style="display:none;margin:1rem 0;text-align:center"><img id="wa-qr-img" src="" alt="QR" style="width:200px;height:200px;border-radius:10px"></div><button class="btn-connect" onclick="connectWhatsApp()">Connecter WhatsApp</button></div>
-        <div class="conn-card"><div class="conn-header"><div class="conn-name">&#128248; Instagram</div><div class="conn-status"><span class="dot red"></span><span>Non configure</span></div></div><div class="conn-info">Necessite META_ACCESS_TOKEN dans Railway</div><button class="btn-connect">Configurer Meta API</button></div>
-        <div class="conn-card"><div class="conn-header"><div class="conn-name">&#9992; Telegram</div><div class="conn-status"><span class="dot red"></span><span>Non configure</span></div></div><div class="conn-info">Necessite TELEGRAM_BOT_TOKEN dans Railway</div><button class="btn-connect">Configurer Bot</button></div>
-        <div class="conn-card"><div class="conn-header"><div class="conn-name">&#128139; Email</div><div class="conn-status"><span class="dot red"></span><span>Non configure</span></div></div><div class="conn-info">Necessite EMAIL_USER et EMAIL_PASS dans Railway</div><button class="btn-connect">Configurer Email</button></div>
+        <div class="conn-card">
+          <div class="conn-header">
+            <div class="conn-name">&#128241; WhatsApp</div>
+            <div class="conn-status">
+              <span class="dot yellow"></span>
+              <span id="wa-status">Non connecte</span>
+            </div>
+          </div>
+          <div class="conn-info">Scanner le QR Code pour connecter votre numero WhatsApp</div>
+          <div id="wa-qr" style="display:none;margin:1rem 0;text-align:center">
+            <img id="wa-qr-img" src="" alt="QR Code" style="width:200px;height:200px;border-radius:10px">
+          </div>
+          <button class="btn-connect" onclick="connectWhatsApp()">Connecter WhatsApp</button>
+        </div>
+        <div class="conn-card">
+          <div class="conn-header">
+            <div class="conn-name">&#128248; Instagram</div>
+            <div class="conn-status">
+              <span class="dot red"></span>
+              <span>Non configure</span>
+            </div>
+          </div>
+          <div class="conn-info">Necessite META_ACCESS_TOKEN dans les variables Railway</div>
+          <button class="btn-connect">Configurer Meta API</button>
+        </div>
+        <div class="conn-card">
+          <div class="conn-header">
+            <div class="conn-name">&#9992; Telegram</div>
+            <div class="conn-status">
+              <span class="dot red"></span>
+              <span>Non configure</span>
+            </div>
+          </div>
+          <div class="conn-info">Necessite TELEGRAM_BOT_TOKEN dans les variables Railway</div>
+          <button class="btn-connect">Configurer Bot</button>
+        </div>
+        <div class="conn-card">
+          <div class="conn-header">
+            <div class="conn-name">&#128139; Email</div>
+            <div class="conn-status">
+              <span class="dot red"></span>
+              <span>Non configure</span>
+            </div>
+          </div>
+          <div class="conn-info">Necessite EMAIL_USER et EMAIL_PASS dans les variables Railway</div>
+          <button class="btn-connect">Configurer Email</button>
+        </div>
       </div>
     </div>
-    <!-- ADMIN -->
+
+    <!-- ===== ADMIN ===== -->
     <div class="page" id="page-admin">
       <div class="admin-grid">
-        <div class="card"><div class="card-header"><div class="card-title">Configuration Systeme</div></div><div style="padding:1.25rem"><div id="statusJson" style="font-size:.78rem;color:var(--muted);line-height:1.8;font-family:monospace;white-space:pre-wrap;background:#0a0e1a;padding:1rem;border-radius:8px">Chargement...</div></div></div>
-        <div class="card"><div class="card-header"><div class="card-title">Statistiques Systeme</div></div><div style="padding:1.25rem"><table><tbody id="sysStatsBody"><tr class="loading-row"><td colspan="2">Chargement...</td></tr></tbody></table></div></div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Configuration Systeme</div>
+          </div>
+          <div style="padding:1.25rem">
+            <div id="statusJson" style="font-size:.78rem;color:var(--muted);line-height:1.8;font-family:monospace;white-space:pre-wrap;background:#0a0e1a;padding:1rem;border-radius:8px">Chargement...</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Statistiques Systeme</div>
+          </div>
+          <div style="padding:1.25rem">
+            <table>
+              <tbody id="sysStatsBody">
+                <tr class="loading-row"><td colspan="2">Chargement...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
+
   </div>
 </main>
+
 <script>
-const pages={'dashboard':'Dashboard','leads':'Leads','rendez-vous':'Rendez-vous','appels':'Appels IA','connexions':'Connexions','admin':'Admin'};
-let allLeadsData=[];
-function showPage(id){
+const pages = {
+  'dashboard':'Dashboard',
+  'leads':'Leads',
+  'rendez-vous':'Rendez-vous',
+  'appels':'Appels IA',
+  'connexions':'Connexions',
+  'admin':'Admin'
+};
+
+let allLeadsData = [];
+let currentLang = 'fr';
+
+function showPage(id) {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
-  document.getElementById('pageTitle').textContent=pages[id]||id;
+  document.getElementById('pageTitle').textContent = pages[id] || id;
+  // Mark nav active
   document.querySelectorAll('.nav-item').forEach(n=>{
-    if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+id+"'"))n.classList.add('active');
+    if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+id+"'"))
+      n.classList.add('active');
   });
-  if(id==='leads')loadLeads();
-  if(id==='rendez-vous')loadRdv();
-  if(id==='admin')loadAdmin();
-  if(id==='connexions')loadConnections();
+  if(id==='leads') loadLeads();
+  if(id==='rendez-vous') loadRdv();
+  if(id==='admin') loadAdmin();
+  if(id==='connexions') loadConnections();
 }
-function toggleLang(){
-  const l=document.getElementById('langBtn').textContent==='FR'?'AR':'FR';
-  document.getElementById('langBtn').textContent=l;
-  document.documentElement.setAttribute('dir',l==='AR'?'rtl':'ltr');
+
+function toggleLang() {
+  currentLang = currentLang === 'fr' ? 'ar' : 'fr';
+  document.getElementById('langBtn').textContent = currentLang.toUpperCase();
+  document.documentElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
 }
-function statusBadge(s){
-  const map={new:'new',nouveau:'new',qualified:'qualified',qualifie:'qualified',booked:'booked',rdv:'booked',client:'client',lost:'lost',perdu:'lost'};
-  const cls=map[s?.toLowerCase()]||'new';
-  const labels={new:'Nouveau',qualified:'Qualifie',booked:'RDV pris',client:'Client',lost:'Perdu'};
-  return '<span class="badge '+cls+'">'+( labels[cls]||s||'Nouveau')+'</span>';
+
+function statusBadge(s) {
+  const map = {
+    'new':'new','nouveau':'new',
+    'qualified':'qualified','qualifie':'qualified',
+    'booked':'booked','rdv':'booked',
+    'client':'client',
+    'lost':'lost','perdu':'lost'
+  };
+  const cls = map[s?.toLowerCase()] || 'new';
+  const labels = {
+    'new':'Nouveau','qualified':'Qualifie',
+    'booked':'RDV pris','client':'Client','lost':'Perdu'
+  };
+  return `<span class="badge ${cls}">${labels[cls]||s||'Nouveau'}</span>`;
 }
-function channelIcon(c){
-  const icons={whatsapp:'&#128241;',instagram:'&#128248;',telegram:'&#9992;',email:'&#128139;',web:'&#127760;'};
-  return '<span class="channel-icon">'+(icons[c]||'&#127760;')+' '+(c||'')+'</span>';
+
+function channelIcon(c) {
+  const icons = {whatsapp:'&#128241;',instagram:'&#128248;',telegram:'&#9992;',email:'&#128139;',web:'&#127760;'};
+  return `<span class="channel-icon">${icons[c]||'&#127760;'} ${c||''}</span>`;
 }
-function fmtDate(d){
-  if(!d)return '-';
-  try{return new Date(d).toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});}catch(e){return d}
+
+function fmtDate(d) {
+  if(!d) return '-';
+  try {
+    return new Date(d).toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  } catch(e){return d}
 }
-async function loadDashboard(){
-  try{
-    const[statsRes,leadsRes]=await Promise.all([fetch('/api/status').catch(()=>null),fetch('/api/leads?limit=10').catch(()=>null)]);
-    if(statsRes&&statsRes.ok){
-      const stats=await statsRes.json();
-      const s=stats.stats||{};
-      document.getElementById('statTotal').textContent=s.total||0;
-      document.getElementById('statNew').textContent=s.byStatus?.new||0;
-      document.getElementById('statRdv').textContent=s.byStatus?.booked||0;
-      document.getElementById('statClients').textContent=s.byStatus?.client||0;
-      document.getElementById('statToday').textContent=s.today||0;
+
+async function loadDashboard() {
+  try {
+    const [statsRes, leadsRes] = await Promise.all([
+      fetch('/api/stats').catch(()=>null),
+      fetch('/api/leads?limit=10').catch(()=>null)
+    ]);
+    if(statsRes && statsRes.ok) {
+      const s = await statsRes.json();
+      document.getElementById('statTotal').textContent = s.total || 0;
+      document.getElementById('statNew').textContent = s.new || 0;
+      document.getElementById('statRdv').textContent = s.rdv || 0;
+      document.getElementById('statClients').textContent = s.clients || 0;
+      document.getElementById('statToday').textContent = s.todayNew || 0;
     }
-    if(leadsRes&&leadsRes.ok){
-      const data=await leadsRes.json();
-      const leads=data.leads||data||[];
-      const tbody=document.getElementById('recentLeadsBody');
-      if(!leads.length){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--muted)">Aucun lead</td></tr>';return;}
-      tbody.innerHTML=leads.slice(0,10).map(l=>'<tr><td style="font-weight:500">'+( l.name||'-')+'</td><td style="color:var(--muted)">'+( l.phone||l.identifier||'-')+'</td><td>'+statusBadge(l.status)+'</td><td>'+channelIcon(l.channel)+'</td><td style="color:var(--muted);font-size:.78rem">'+fmtDate(l.lastContact||l.createdAt)+'</td></tr>').join('');
+    if(leadsRes && leadsRes.ok) {
+      const data = await leadsRes.json();
+      const leads = data.leads || data || [];
+      const tbody = document.getElementById('recentLeadsBody');
+      if(!leads.length) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--muted)">Aucun lead pour le moment</td></tr>';
+        return;
+      }
+      tbody.innerHTML = leads.slice(0,10).map(l=>`
+        <tr>
+          <td style="font-weight:500">${l.name||'-'}</td>
+          <td style="color:var(--muted)">${l.phone||l.identifier||'-'}</td>
+          <td>${statusBadge(l.status)}</td>
+          <td>${channelIcon(l.channel)}</td>
+          <td style="color:var(--muted);font-size:.78rem">${fmtDate(l.lastContact||l.createdAt)}</td>
+        </tr>`).join('');
     }
-  }catch(e){console.error(e);}
+  } catch(e) {
+    console.error('loadDashboard error:',e);
+  }
 }
-async function loadLeads(){
-  try{
-    const res=await fetch('/api/leads');
-    if(!res.ok)throw new Error('Failed');
-    const data=await res.json();
-    allLeadsData=data.leads||data||[];
+
+async function loadLeads() {
+  try {
+    const res = await fetch('/api/leads');
+    if(!res.ok) throw new Error('Failed');
+    const data = await res.json();
+    allLeadsData = data.leads || data || [];
     renderLeads(allLeadsData);
-  }catch(e){document.getElementById('allLeadsBody').innerHTML='<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--muted)">Erreur</td></tr>';}
+  } catch(e) {
+    document.getElementById('allLeadsBody').innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--muted)">Erreur de chargement</td></tr>';
+  }
 }
-function renderLeads(leads){
-  document.getElementById('leadsCount').textContent=leads.length+' leads';
-  const tbody=document.getElementById('allLeadsBody');
-  if(!leads.length){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--muted)">Aucun lead</td></tr>';return;}
-  tbody.innerHTML=leads.map(l=>'<tr><td style="font-weight:500">'+( l.name||'-')+'</td><td style="color:var(--muted)">'+( l.phone||l.identifier||'-')+'</td><td>'+statusBadge(l.status)+'</td><td><div style="display:flex;align-items:center;gap:.4rem"><div style="width:50px;height:4px;background:var(--border);border-radius:2px"><div style="width:'+Math.min(100,(l.score||0)*10)+'%;height:100%;background:var(--accent);border-radius:2px"></div></div><span style="font-size:.75rem;color:var(--muted)">'+( l.score||0)+'/10</span></div></td><td>'+channelIcon(l.channel)+'</td><td style="color:var(--muted);font-size:.78rem">'+fmtDate(l.lastContact||l.createdAt)+'</td></tr>').join('');
+
+function renderLeads(leads) {
+  document.getElementById('leadsCount').textContent = leads.length + ' leads';
+  const tbody = document.getElementById('allLeadsBody');
+  if(!leads.length) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--muted)">Aucun lead</td></tr>';
+    return;
+  }
+  tbody.innerHTML = leads.map(l=>`
+    <tr>
+      <td style="font-weight:500">${l.name||'-'}</td>
+      <td style="color:var(--muted)">${l.phone||l.identifier||'-'}</td>
+      <td>${statusBadge(l.status)}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:.4rem">
+          <div style="width:50px;height:4px;background:var(--border);border-radius:2px">
+            <div style="width:${Math.min(100,(l.score||0)*10)}%;height:100%;background:var(--accent);border-radius:2px"></div>
+          </div>
+          <span style="font-size:.75rem;color:var(--muted)">${l.score||0}/10</span>
+        </div>
+      </td>
+      <td>${channelIcon(l.channel)}</td>
+      <td style="color:var(--muted);font-size:.78rem">${fmtDate(l.lastContact||l.createdAt)}</td>
+    </tr>`).join('');
 }
-function filterLeads(status,el){
+
+function filterLeads(status, el) {
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   el.classList.add('active');
-  if(status==='all')renderLeads(allLeadsData);
+  if(status==='all') renderLeads(allLeadsData);
   else renderLeads(allLeadsData.filter(l=>(l.status||'new')===status));
 }
-async function loadRdv(){
-  try{
-    const res=await fetch('/api/bookings');
-    if(!res.ok)throw new Error('Failed');
-    const data=await res.json();
-    const bookings=data.bookings||data||[];
-    const grid=document.getElementById('rdvGrid');
-    const upcoming=bookings.filter(b=>b.status==='confirmed'&&new Date(b.date)>new Date()).slice(0,4);
-    grid.innerHTML=upcoming.length?upcoming.map(b=>'<div class="rdv-card"><div class="rdv-time">'+( b.time||'--:--')+'</div><div class="rdv-name">'+( b.clientName||'-')+'</div><div class="rdv-details">'+fmtDate(b.date)+'</div><span class="rdv-badge rdv-confirmed">Confirme</span></div>').join(''):'<div style="color:var(--muted);font-size:.85rem;padding:1rem">Aucun RDV a venir</div>';
-    const tbody=document.getElementById('rdvBody');
-    if(!bookings.length){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--muted)">Aucun RDV</td></tr>';return;}
-    tbody.innerHTML=bookings.map(b=>'<tr><td style="font-weight:500">'+( b.clientName||'-')+'</td><td>'+fmtDate(b.date)+'</td><td>'+( b.time||'-')+'</td><td><span class="rdv-badge '+(b.status==='confirmed'?'rdv-confirmed':'rdv-pending')+'">'+( b.status||'-')+'</span></td><td>'+channelIcon(b.channel)+'</td></tr>').join('');
-  }catch(e){document.getElementById('rdvBody').innerHTML='<tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--muted)">Erreur</td></tr>';}
-}
-async function loadAdmin(){
-  try{
-    const res=await fetch('/api/status');
-    if(!res.ok)throw new Error('Failed');
-    const data=await res.json();
-    document.getElementById('statusJson').textContent=JSON.stringify(data,null,2);
-    const sys=data.systemStats||{};
-    document.getElementById('sysStatsBody').innerHTML=[['Messages traites',sys.messagesProcessed||0],['Reponses envoyees',sys.responsesSent||0],['Appels declenches',sys.callsTriggered||0],['Relances envoyees',sys.followupsSent||0],['Uptime (s)',Math.round(data.uptime||0)]].map(([k,v])=>'<tr><td style="color:var(--muted);font-size:.82rem">'+k+'</td><td style="font-weight:600;text-align:right">'+v+'</td></tr>').join('');
-  }catch(e){document.getElementById('statusJson').textContent='Erreur';}
-}
-async function loadConnections(){
-  try{
-    const res=await fetch('/api/status');
-    if(!res.ok)return;
-    const data=await res.json();
-    const agents=data.agents||{};
-    const waStatus=document.getElementById('wa-status');
-    if(agents.whatsapp){waStatus.textContent='Connecte';waStatus.parentElement.querySelector('.dot').className='dot green';}
-  }catch(e){}
-}
-async function connectWhatsApp(){
-  try{
-    const res=await fetch('/api/whatsapp/qr');
-    if(res.ok){
-      const data=await res.json();
-      if(data.qr){document.getElementById('wa-qr').style.display='block';document.getElementById('wa-qr-img').src=data.qr;document.getElementById('wa-status').textContent='Scanner le QR Code';}
+
+async function loadRdv() {
+  try {
+    const res = await fetch('/api/bookings');
+    if(!res.ok) throw new Error('Failed');
+    const data = await res.json();
+    const bookings = data.bookings || data || [];
+    const grid = document.getElementById('rdvGrid');
+    const upcoming = bookings.filter(b=>b.status==='confirmed'&&new Date(b.date)>new Date()).slice(0,4);
+    if(upcoming.length) {
+      grid.innerHTML = upcoming.map(b=>`
+        <div class="rdv-card">
+          <div class="rdv-time">${b.time||'--:--'}</div>
+          <div class="rdv-name">${b.clientName||'-'}</div>
+          <div class="rdv-details">${fmtDate(b.date)}</div>
+          <span class="rdv-badge rdv-confirmed">Confirme</span>
+        </div>`).join('');
+    } else {
+      grid.innerHTML = '<div style="color:var(--muted);font-size:.85rem;padding:1rem">Aucun RDV a venir</div>';
     }
-  }catch(e){alert('Demarrez le service WhatsApp');}
+    const tbody = document.getElementById('rdvBody');
+    if(!bookings.length) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--muted)">Aucun rendez-vous</td></tr>';
+      return;
+    }
+    tbody.innerHTML = bookings.map(b=>`
+      <tr>
+        <td style="font-weight:500">${b.clientName||'-'}</td>
+        <td>${fmtDate(b.date)}</td>
+        <td>${b.time||'-'}</td>
+        <td><span class="rdv-badge ${b.status==='confirmed'?'rdv-confirmed':'rdv-pending'}">${b.status||'-'}</span></td>
+        <td>${channelIcon(b.channel)}</td>
+      </tr>`).join('');
+  } catch(e) {
+    document.getElementById('rdvBody').innerHTML = '<tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--muted)">Erreur de chargement</td></tr>';
+  }
 }
-async function logout(){try{await fetch('/api/auth/logout',{method:'POST'});}catch(e){}window.location.href='/';}
-async function init(){
-  try{
-    const res=await fetch('/api/auth/me');
-    if(!res.ok){window.location.href='/';return;}
-    const data=await res.json();
-    if(data.username){document.getElementById('userName').textContent=data.username;document.getElementById('userRole').textContent=data.role||'USER';document.getElementById('userAvatar').textContent=data.username[0].toUpperCase();}
-  }catch(e){window.location.href='/';return;}
+
+async function loadAdmin() {
+  try {
+    const res = await fetch('/api/stats');
+    if(!res.ok) throw new Error('Failed');
+    const data = await res.json();
+    document.getElementById('statusJson').textContent = JSON.stringify(data, null, 2);
+    const sys = data.systemStats || {};
+    document.getElementById('sysStatsBody').innerHTML = [
+      ['Messages traites', sys.messagesProcessed||0],
+      ['Reponses envoyees', sys.responsesSent||0],
+      ['Appels declenches', sys.callsTriggered||0],
+      ['Relances envoyees', sys.followupsSent||0],
+      ['Uptime (s)', Math.round(data.uptime||0)],
+    ].map(([k,v])=>`<tr><td style="color:var(--muted);font-size:.82rem">${k}</td><td style="font-weight:600;text-align:right">${v}</td></tr>`).join('');
+  } catch(e) {
+    document.getElementById('statusJson').textContent = 'Erreur de chargement';
+  }
+}
+
+async function loadConnections() {
+  try {
+    const res = await fetch('/api/stats');
+    if(!res.ok) return;
+    const data = await res.json();
+    const agents = data.agents || {};
+    const waStatus = document.getElementById('wa-status');
+    if(agents.whatsapp) {
+      waStatus.textContent = 'Connecte';
+      waStatus.parentElement.querySelector('.dot').className = 'dot green';
+    }
+  } catch(e){}
+}
+
+async function connectWhatsApp() {
+  try {
+    const res = await fetch('/api/whatsapp/qr');
+    if(res.ok) {
+      const data = await res.json();
+      if(data.qr) {
+        document.getElementById('wa-qr').style.display='block';
+        document.getElementById('wa-qr-img').src=data.qr;
+        document.getElementById('wa-status').textContent='Scanner le QR Code';
+      }
+    }
+  } catch(e) {
+    alert('Demarrez le service WhatsApp sur le serveur');
+  }
+}
+
+async function logout() {
+  try {
+    await fetch('/auth/logout', {method:'POST'});
+  } catch(e){}
+  window.location.href = '/login';
+}
+
+async function init() {
+  try {
+    const res = await fetch('/auth/me');
+    if(!res.ok) { window.location.href='/login'; return; }
+    const data = await res.json();
+    if(data.username) {
+      document.getElementById('userName').textContent = data.username;
+      document.getElementById('userRole').textContent = data.role||'USER';
+      document.getElementById('userAvatar').textContent = data.username[0].toUpperCase();
+    }
+  } catch(e) { window.location.href='/login'; return; }
   loadDashboard();
-  setInterval(loadDashboard,30000);
+  setInterval(loadDashboard, 30000);
 }
+
 init();
 </script>
 </body>
