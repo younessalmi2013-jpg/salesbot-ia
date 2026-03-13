@@ -1,290 +1,121 @@
-// ============================================================
-// FICHIER: src/agents/crm/index.js
-// ROLE: Gestion de tous les leads (stockage en memoire + Airtable optionnel)
-//       Au debut, tout est stocke en memoire (RAM)
-//       Quand tu auras Airtable, ca syncronise automatiquement
-// ============================================================
+'use strict';
+const fs = require('fs');
+const path = require('path');
+const crypto = require('crypto');
 
-require('dotenv').config();
-const { v4: uuidv4 } = require('uuid');
-const { scoreLead } = require('../../llm/openai');
+const DB_PATH = path.join(process.cwd(), 'data', 'leads.json');
 
-// ---- BASE DE DONNEES EN MEMOIRE ----
-// Tous les leads sont stockes ici pendant que le serveur tourne
-// En production, utilise une vraie base de donnees (PostgreSQL, Airtable)
-const leadsDB = new Map();
+function ensureDB() {
+  const dir = path.dirname(DB_PATH);
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  if (!fs.existsSync(DB_PATH)) fs.writeFileSync(DB_PATH, JSON.stringify({ leads: [] }, null, 2));
+}
 
-// Statuts possibles d'un lead
-const LEAD_STATUS = {
-  NEW: 'nouveau',
-  CONTACTED: 'contacte',
-  QUALIFYING: 'en_qualification',
-  QUALIFIED: 'qualifie',
-  SCHEDULED: 'rdv_planifie',
-  CALLED: 'appele',
-  CONVERTED: 'converti',
-  LOST: 'perdu',
-  FOLLOWUP_1: 'relance_1',
-  FOLLOWUP_2: 'relance_2',
-  FOLLOWUP_3: 'relance_3',
-};
+function readDB() {
+  ensureDB();
+  try { return JSON.parse(fs.readFileSync(DB_PATH, 'utf8')); }
+  catch (e) { return { leads: [] }; }
+}
 
-/**
- * Cree ou recupere un lead existant
- * @param {string} contactId - ID unique du contact (numero whatsapp ou ID instagram)
- * @param {string} channel - 'whatsapp' ou 'instagram'
- * @param {Object} extraInfo - Infos supplementaires (nom, etc.)
- */
-function getOrCreateLead(contactId, channel, extraInfo = {}) {
-  // Si le lead existe deja, on le retourne
-  if (leadsDB.has(contactId)) {
-    return leadsDB.get(contactId);
+function writeDB(data) {
+  ensureDB();
+  fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2));
+}
+
+async function getAllLeads(filters = {}) {
+  const db = readDB();
+  let leads = db.leads || [];
+  if (filters.status && filters.status !== 'all') leads = leads.filter(l => l.status === filters.status);
+  if (filters.channel) leads = leads.filter(l => l.channel === filters.channel);
+  if (filters.search) {
+    const q = filters.search.toLowerCase();
+    leads = leads.filter(l => (l.name || '').toLowerCase().includes(q) || (l.phone || '').includes(q) || (l.email || '').toLowerCase().includes(q));
   }
+  leads.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  return leads;
+}
 
-  // Sinon, creation d'un nouveau lead
-  const newLead = {
-    id: uuidv4(),
-    contactId: contactId,
-    channel: channel,
-    status: LEAD_STATUS.NEW,
-    score: 0,
-    firstName: extraInfo.firstName || 'Prospect',
-    lastName: extraInfo.lastName || '',
-    phone: extraInfo.phone || '',
-    email: extraInfo.email || '',
-    // Historique de TOUTES les conversations
-    conversationHistory: [],
-    // Nombre de messages echanges
-    messageCount: 0,
-    // Reponses aux questions de qualification
-    answers: {},
-    // Dates importantes
-    createdAt: new Date().toISOString(),
-    lastMessageAt: new Date().toISOString(),
-    lastFollowupAt: null,
-    // Suivi des relances
-    followupCount: 0,
-    // Notes importantes sur le lead
-    notes: [],
-    // Si l'humain doit intervenir
-    needsHuman: false,
-    // ID de l'appel Vapi si appel passe
-    callId: null,
+async function getLeadById(id) {
+  const db = readDB();
+  return (db.leads || []).find(l => l._id === id || l.id === id) || null;
+}
+
+as function findLeadByPhone(phone) {
+  const db = readDB();
+  const clean = (phone || '').replace(/\D/g, '');
+  return (db.leads || []).find(l => (l.phone || '').replace(/\D/g, '') === clean) || null;
+}
+
+as function findLeadByEmail(email) {
+  const db = readDB();
+  return (db.leads || []).find(l => l.email === email) || null;
+}
+
+async function createLead(data) {
+  const db = readDB();
+  const id = crypto.randomBytes(8).toString('hex');
+  const now = new Date().toISOString();
+  const lead = {
+    _id: id, name: data.name || 'Inconnu', phone: data.phone || '',
+    email: data.email || '', channel: data.channel || 'web',
+    status: data.status || 'new', score: data.score || 0,
+    notes: data.notes || '', lastMessage: data.lastMessage || '',
+    lastContact: now, createdAt: now, messages: [], tags: data.tags || [],
+    source: data.source || data.channel || 'web',
+    identifier: data.identifier || data.phone || data.email || ''
   };
-
-  leadsDB.set(contactId, newLead);
-  console.log(`✅ Nouveau lead cree: ${contactId} (${channel})`);
-
-  // Synchronisation Airtable si configure
-  syncToAirtable(newLead).catch(err => console.log('Info: Airtable non configure'));
-
-  return newLead;
+  db.leads = db.leads || [];
+  db.leads.push(lead);
+  writeDB(db);
+  console.log('[CRM] Lead cree:', lead.name);
+  return lead;
 }
 
-/**
- * Met a jour les infos d'un lead
- */
-function updateLead(contactId, updates) {
-  const lead = leadsDB.get(contactId);
-  if (!lead) return null;
-
-  const updatedLead = {
-    ...lead,
-    ...updates,
-    lastMessageAt: new Date().toISOString(),
-  };
-
-  leadsDB.set(contactId, updatedLead);
-
-  // Sync Airtable
-  syncToAirtable(updatedLead).catch(() => {});
-
-  return updatedLead;
+as function updateLead(id, updates) {
+  const db = readDB();
+  const idx = (db.leads || []).findIndex(l => l._id === id || l.id === id);
+  if (idx === -1) return null;
+  db.leads[idx] = { ...db.leads[idx], ...updates, _id: db.leads[idx]._id, updatedAt: new Date().toISOString() };
+  writeDB(db);
+  return db.leads[idx];
 }
 
-/**
- * Ajoute un message a l'historique de conversation
- * @param {string} contactId
- * @param {string} role - 'user' ou 'assistant'
- * @param {string} content - Contenu du message
- */
-function addMessage(contactId, role, content) {
-  const lead = leadsDB.get(contactId);
-  if (!lead) return;
-
-  lead.conversationHistory.push({
-    role: role,
-    content: content,
-    timestamp: new Date().toISOString(),
-  });
-
-  lead.messageCount++;
-  lead.lastMessageAt = new Date().toISOString();
-
-  // Garde seulement les 20 derniers messages pour eviter trop de tokens OpenAI
-  if (lead.conversationHistory.length > 20) {
-    lead.conversationHistory = lead.conversationHistory.slice(-20);
-  }
-
-  leadsDB.set(contactId, lead);
+as function deleteLead(id) {
+  const db = readDB();
+  const before = (db.leads || []).length;
+  db.leads = (db.leads || []).filter(l => l._id !== id && l.id !== id);
+  writeDB(db);
+  return before !== db.leads.length;
 }
 
-/**
- * Calcule et met a jour le score d'un lead
- */
-async function updateLeadScore(contactId) {
-  const lead = leadsDB.get(contactId);
-  if (!lead) return;
-
-  try {
-    const scoreData = await scoreLead(lead);
-    updateLead(contactId, {
-      score: scoreData.score,
-      nextAction: scoreData.nextAction,
-      notes: [...lead.notes, `Score: ${scoreData.score}/100 - ${scoreData.reason}`]
-    });
-    return scoreData;
-  } catch (error) {
-    console.error('Erreur calcul score:', error.message);
-    return { score: lead.score, nextAction: 'nurture' };
-  }
+as function addMessage(leadId, message) {
+  const db = readDB();
+  const idx = (db.leads || []).findIndex(l => l._id === leadId || l.id === leadId);
+  if (idx === -1) return null;
+  if (!db.leads[idx].messages) db.leads[idx].messages = [];
+  db.leads[idx].messages.push({ ...message, timestamp: message.timestamp || new Date().toISOString() });
+  if (db.leads[idx].messages.length > 50) db.leads[idx].messages = db.leads[idx].messages.slice(-50);
+  db.leads[idx].lastContact = new Date().toISOString();
+  writeDB(db);
+  return db.leads[idx];
 }
 
-/**
- * Recupere tous les leads qui ont besoin de relance
- * (leads qui n'ont pas repondu depuis X jours)
- */
-function getLeadsNeedingFollowup() {
+as function updateLeadStatus(id, status) { return updateLead(id, { status }); }
+as function updateLeadScore(id, score) { return updateLead(id, { score: Math.min(10, Math.max(0, score)) }); }
+
+as function getStats() {
+  const leads = getAllLeads();
   const now = new Date();
-  const followupsNeeded = [];
-
-  for (const [contactId, lead] of leadsDB.entries()) {
-    // Skip si deja converti ou perdu
-    if ([LEAD_STATUS.CONVERTED, LEAD_STATUS.LOST, LEAD_STATUS.SCHEDULED].includes(lead.status)) {
-      continue;
-    }
-
-    // Skip si lead a besoin d'un humain (deja notifie)
-    if (lead.needsHuman) continue;
-
-    const lastMessage = new Date(lead.lastMessageAt);
-    const daysSince = (now - lastMessage) / (1000 * 60 * 60 * 24);
-
-    const day1 = parseInt(process.env.FOLLOWUP_DAY_1) || 1;
-    const day2 = parseInt(process.env.FOLLOWUP_DAY_2) || 3;
-    const day3 = parseInt(process.env.FOLLOWUP_DAY_3) || 7;
-
-    if (lead.followupCount === 0 && daysSince >= day1) {
-      followupsNeeded.push({ lead, followupNumber: 1 });
-    } else if (lead.followupCount === 1 && daysSince >= day2) {
-      followupsNeeded.push({ lead, followupNumber: 2 });
-    } else if (lead.followupCount === 2 && daysSince >= day3) {
-      followupsNeeded.push({ lead, followupNumber: 3 });
-    }
-  }
-
-  return followupsNeeded;
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const byStatus = {};
+  leads.forEach(l => { byStatus[l.status] = (byStatus[l.status] || 0) + 1; });
+  const todayNew = leads.filter(l => new Date(l.createdAt) >= today).length;
+  const byChannel = {};
+  leads.forEach(l => { byChannel[l.channel] = (byChannel[l.channel] || 0) + 1; });
+  return { total: leads.length, new: byStatus.new || 0, qualified: byStatus.qualified || 0,
+    rdv: byStatus.booked || 0, clients: byStatus.client || 0, lost: byStatus.lost || 0,
+    todayNew, byStatus, byChannel };
 }
 
-/**
- * Affiche un resume de tous les leads (pour le monitoring)
- */
-function getDashboardStats() {
-  const stats = {
-    total: leadsDB.size,
-    byStatus: {},
-    byChannel: { whatsapp: 0, instagram: 0 },
-    averageScore: 0,
-    needsHuman: 0,
-  };
-
-  let totalScore = 0;
-
-  for (const lead of leadsDB.values()) {
-    // Stats par statut
-    stats.byStatus[lead.status] = (stats.byStatus[lead.status] || 0) + 1;
-
-    // Stats par canal
-    if (lead.channel in stats.byChannel) {
-      stats.byChannel[lead.channel]++;
-    }
-
-    // Score moyen
-    totalScore += lead.score || 0;
-
-    // Leads qui attendent intervention humaine
-    if (lead.needsHuman) stats.needsHuman++;
-  }
-
-  stats.averageScore = leadsDB.size > 0 ? Math.round(totalScore / leadsDB.size) : 0;
-
-  return stats;
-}
-
-/**
- * Synchronisation avec Airtable (optionnel)
- * Si AIRTABLE_API_KEY n'est pas configure, cette fonction ne fait rien
- */
-async function syncToAirtable(lead) {
-  if (!process.env.AIRTABLE_API_KEY || !process.env.AIRTABLE_BASE_ID) {
-    return; // Airtable non configure, on ignore
-  }
-
-  const axios = require('axios');
-
-  try {
-    const fields = {
-      'ID Contact': lead.contactId,
-      'Prenom': lead.firstName,
-      'Nom': lead.lastName,
-      'Canal': lead.channel,
-      'Statut': lead.status,
-      'Score': lead.score,
-      'Messages': lead.messageCount,
-      'Telephone': lead.phone,
-      'Cree le': lead.createdAt,
-      'Dernier message': lead.lastMessageAt,
-      'Notes': lead.notes.join('\n'),
-    };
-
-    // Recherche si le lead existe deja dans Airtable
-    const searchResp = await axios.get(
-      `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE_ID}/${process.env.AIRTABLE_TABLE_NAME}`,
-      {
-        headers: { 'Authorization': `Bearer ${process.env.AIRTABLE_API_KEY}` },
-        params: { filterByFormula: `{ID Contact} = '${lead.contactId}'` }
-      }
-    );
-
-    if (searchResp.data.records.length > 0) {
-      // Mise a jour du record existant
-      const recordId = searchResp.data.records[0].id;
-      await axios.patch(
-        `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE_ID}/${process.env.AIRTABLE_TABLE_NAME}/${recordId}`,
-        { fields },
-        { headers: { 'Authorization': `Bearer ${process.env.AIRTABLE_API_KEY}`, 'Content-Type': 'application/json' } }
-      );
-    } else {
-      // Creation d'un nouveau record
-      await axios.post(
-        `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE_ID}/${process.env.AIRTABLE_TABLE_NAME}`,
-        { fields },
-        { headers: { 'Authorization': `Bearer ${process.env.AIRTABLE_API_KEY}`, 'Content-Type': 'application/json' } }
-      );
-    }
-  } catch (error) {
-    // On ne bloque pas l'application si Airtable a une erreur
-    console.log('⚠️  Airtable sync failed (non critique):', error.message);
-  }
-}
-
-module.exports = {
-  LEAD_STATUS,
-  getOrCreateLead,
-  updateLead,
-  addMessage,
-  updateLeadScore,
-  getLeadsNeedingFollowup,
-  getDashboardStats,
-  leadsDB,
-};
+module.exports = { getAllLeads, getLeadById, findLeadByPhone, findLeadByEmail,
+  createLead, updateLead, deleteLead, addMessage, updateLeadStatus, updateLeadScore, getStats };
