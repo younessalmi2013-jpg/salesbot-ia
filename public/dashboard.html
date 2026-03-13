@@ -731,6 +731,8 @@ async function loadAdmin() {
 
 let waPollingInterval = null;
 
+let waPollingInterval = null;
+
 async function loadConnections() {
   try {
     const res = await fetch('/api/whatsapp/status');
@@ -752,7 +754,6 @@ async function loadConnections() {
     }
   } catch(e){}
 }
-
 async function connectWhatsApp() {
   const btn = document.querySelector('#page-connexions button[onclick="connectWhatsApp()"]');
   if(btn) { btn.textContent = 'Connexion...'; btn.disabled = true; }
@@ -796,7 +797,6 @@ async function connectWhatsApp() {
     } catch(e){}
   }, 3000);
 }
-
 async function logout() {
   try {
     await fetch('/auth/logout', {method:'POST'});
