@@ -1,3 +1,230 @@
+'use strict';
+require('dotenv').config();
+const express = require('express');
+const path = require('path');
+const fs = require('fs');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+const startTime = Date.now();
+
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, '../public')));
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') return res.sendStatus(200);
+  next();
+});
+
+const { requireAuth, requireAdmin } = require('./middleware/auth');
+app.use('/auth', require('./routes/auth'));
+
+app.get('/', requireAuth, (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/dashboard.html'));
+});
+
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/login.html'));
+});
+
+let crmAgent, whatsappAgent, bookingAgent;
+
+function loadAgents() {
+  try {
+    crmAgent = require('./agents/crm');
+    console.log('[Server] CRM agent charge');
+  } catch (e) { console.error('[Server] CRM agent erreur:', e.message); }
+
+  try {
+    bookingAgent = require('./booking');
+    console.log('[Server] Booking agent charge');
+  } catch (e) { console.error('[Server] Booking agent erreur:', e.message); }
+
+  try {
+    whatsappAgent = require('./agents/whatsapp');
+    if (process.env.WHATSAPP_ENABLED === 'true') {
+      whatsappAgent.initialize().catch(e => console.error('[WhatsApp] Erreur init:', e.message));
+    }
+    console.log('[Server] WhatsApp agent charge');
+  } catch (e) { console.error('[Server] WhatsApp agent erreur:', e.message); }
+}
+
+app.get('/api/stats', requireAuth, async (req, res) => {
+  try {
+    const stats = crmAgent ? await crmAgent.getStats() : {
+      total: 0, new: 0, qualified: 0, rdv: 0, clients: 0, lost: 0, todayNew: 0
+    };
+    res.json({
+      ...stats,
+      uptime: Math.floor((Date.now() - startTime) / 1000),
+      agents: { whatsapp: whatsappAgent ? whatsappAgent.isReady : false, crm: !!crmAgent, booking: !!bookingAgent },
+      systemStats: { messagesProcessed: global._msgCount || 0, responsesSent: global._responseCount || 0, callsTriggered: global._callCount || 0, followupsSent: global._followupCount || 0 }
+    });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.get('/api/leads', requireAuth, async (req, res) => {
+  try {
+    if (!crmAgent) return res.json({ leads: [], total: 0 });
+    const filters = { status: req.query.status, channel: req.query.channel, search: req.query.search };
+    const leads = await crmAgent.getAllLeads(filters);
+    const limit = parseInt(req.query.limit) || 0;
+    res.json({ leads: limit ? leads.slice(0, limit) : leads, total: leads.length });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.post('/api/leads', requireAuth, async (req, res) => {
+  try {
+    if (!crmAgent) return res.status(503).json({ error: 'CRM non disponible' });
+    const { name, phone, email, channel, status, notes, score } = req.body;
+    if (!name) return res.status(400).json({ error: 'Le nom est requis' });
+    const lead = await crmAgent.createLead({
+      name, phone, email,
+      channel: channel || 'web',
+      status: status || 'new',
+      notes, score: score || 0
+    });
+    res.status(201).json({ success: true, lead });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.get('/api/leads/:id', requireAuth, async (req, res) => {
+  try {
+    if (!crmAgent) return res.status(503).json({ error: 'CRM non disponible' });
+    const lead = await crmAgent.getLeadById(req.params.id);
+    if (!lead) return res.status(404).json({ error: 'Lead non trouve' });
+    res.json(lead);
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.put('/api/leads/:id', requireAuth, async (req, res) => {
+  try {
+    if (!crmAgent) return res.status(503).json({ error: 'CRM non disponible' });
+    const lead = await crmAgent.updateLead(req.params.id, req.body);
+    if (!lead) return res.status(404).json({ error: 'Lead non trouve' });
+    res.json({ success: true, lead });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.delete('/api/leads/:id', requireAuth, async (req, res) => {
+  try {
+    if (!crmAgent) return res.status(503).json({ error: 'CRM non disponible' });
+    const deleted = await crmAgent.deleteLead(req.params.id);
+    if (!deleted) return res.status(404).json({ error: 'Lead non trouve' });
+    res.json({ success: true });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.post('/api/leads/:id/message', requireAuth, async (req, res) => {
+  try {
+    const { text, channel } = req.body;
+    if (!text) return res.status(400).json({ error: 'Message requis' });
+    const lead = await crmAgent.getLeadById(req.params.id);
+    if (!lead) return res.status(404).json({ error: 'Lead non trouve' });
+    const ch = channel || lead.channel;
+    let sent = false;
+    if (ch === 'whatsapp' && whatsappAgent && whatsappAgent.isReady) {
+      await whatsappAgent.sendMessage(lead.phone, text);
+      sent = true;
+    }
+    await crmAgent.addMessage(req.params.id, { from: 'agent', text, channel: ch });
+    res.json({ success: true, sent, channel: ch });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.get('/api/whatsapp/status', requireAuth, (req, res) => {
+  if (!whatsappAgent) return res.json({ connected: false, available: false, message: 'Agent non charge' });
+  const status = whatsappAgent.getStatus();
+  res.json({ ...status, available: true });
+});
+
+app.get('/api/whatsapp/qr', requireAuth, (req, res) => {
+  if (!whatsappAgent) return res.status(503).json({ error: 'WhatsApp non disponible' });
+  const status = whatsappAgent.getStatus();
+  if (status.connected) return res.json({ connected: true, phone: status.phone });
+  const qr = whatsappAgent.getQR();
+  if (qr) return res.json({ qr, connected: false });
+  if (!status.initializing) whatsappAgent.initialize().catch(e => console.error(e.message));
+  res.json({ connected: false, initializing: true, message: 'Initialisation en cours...' });
+});
+
+app.post('/api/whatsapp/start', requireAuth, async (req, res) => {
+  try {
+    if (!whatsappAgent) return res.status(503).json({ error: 'Agent non disponible' });
+    const status = whatsappAgent.getStatus();
+    if (status.connected) return res.json({ success: true, message: 'Deja connecte' });
+    if (status.initializing) return res.json({ success: true, message: 'Deja en cours...' });
+    whatsappAgent.initialize().catch(console.error);
+    res.json({ success: true, message: 'Initialisation demarree' });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.post('/api/whatsapp/logout', requireAuth, async (req, res) => {
+  try {
+    if (!whatsappAgent) return res.status(503).json({ error: 'Agent non disponible' });
+    await whatsappAgent.logout();
+    res.json({ success: true });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.post('/api/whatsapp/send', requireAuth, async (req, res) => {
+  try {
+    const { phone, message } = req.body;
+    if (!phone || !message) return res.status(400).json({ error: 'phone et message requis' });
+    if (!whatsappAgent || !whatsappAgent.isReady) return res.status(503).json({ error: 'WhatsApp non connecte' });
+    await whatsappAgent.sendMessage(phone, message);
+    res.json({ success: true });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.get('/api/bookings', requireAuth, async (req, res) => {
+  try {
+    if (!bookingAgent) return res.json({ bookings: [] });
+    const bookings = await bookingAgent.getBookings();
+    res.json({ bookings: bookings || [] });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.post('/api/bookings', requireAuth, async (req, res) => {
+  try {
+    if (!bookingAgent) return res.status(503).json({ error: 'Booking non disponible' });
+    const booking = await bookingAgent.createBooking(req.body);
+    res.status(201).json({ success: true, booking });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.put('/api/bookings/:id', requireAuth, async (req, res) => {
+  try {
+    if (!bookingAgent) return res.status(503).json({ error: 'Booking non disponible' });
+    const booking = await bookingAgent.updateBookingStatus(req.params.id, req.body.status);
+    res.json({ success: true, booking });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+const callsLog = [];
+app.get('/api/calls', requireAuth, (req, res) => {
+  res.json({ calls: callsLog.slice(-50) });
+});
+
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', uptime: Math.floor((Date.now() - startTime) / 1000), timestamp: new Date().toISOString() });
+});
+
+app.use((req, res) => {
+  if (req.path.startsWith('/api/')) return res.status(404).json({ error: 'Route non trouvee: ' + req.path });
+  res.redirect('/login');
+});
+
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`[Server] SalesBot IA demarre sur le port ${PORT}`);
+  loadAgents();
+});
+
+module.exports = app;
 require('dotenv').config();
 const express = require('express');
 const path    = require('path');
