@@ -1,178 +1,60 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head>
+<html lang="fr"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SalesBot IA - Connexion</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --bg:#0a0e1a;
-  --card:#111827;
-  --border:#1f2937;
-  --accent:#6366f1;
-  --accent2:#8b5cf6;
-  --text:#f9fafb;
-  --muted:#9ca3af;
-  --error:#ef4444;
-  --success:#10b981;
-}
-body{
-  font-family:'Inter',sans-serif;
-  background:var(--bg);
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-  position:relative;
-}
-.bg-glow{
-  position:fixed;border-radius:50%;filter:blur(80px);opacity:0.12;
-  animation:float 8s ease-in-out infinite;pointer-events:none;
-}
-.bg-glow:nth-child(1){width:500px;height:500px;background:#6366f1;top:-100px;left:-100px;animation-delay:0s}
-.bg-glow:nth-child(2){width:400px;height:400px;background:#8b5cf6;bottom:-100px;right:-50px;animation-delay:-3s}
-.bg-glow:nth-child(3){width:300px;height:300px;background:#06b6d4;top:50%;left:50%;animation-delay:-6s}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
-.container{
-  position:relative;z-index:10;
-  width:100%;max-width:420px;
-  padding:2rem;
-}
-.card{
-  background:rgba(17,24,39,0.9);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:2.5rem;
-  backdrop-filter:blur(20px);
-  box-shadow:0 25px 50px rgba(0,0,0,0.5);
-}
-.logo{
-  text-align:center;
-  margin-bottom:2rem;
-}
-.logo-icon{
-  width:60px;height:60px;
-  background:linear-gradient(135deg,#6366f1,#8b5cf6);
-  border-radius:16px;
-  display:inline-flex;align-items:center;justify-content:center;
-  font-size:28px;margin-bottom:1rem;
-  box-shadow:0 8px 24px rgba(99,102,241,0.4);
-}
+:root{--bg:#0a0e1a;--card:#111827;--border:#1f2937;--accent:#6366f1;--text:#f9fafb;--muted:#9ca3af;}
+body{font-family:'Inter',sans-serif;background:var(--bg);min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
+.glow{position:fixed;border-radius:50%;filter:blur(80px);opacity:0.12;animation:fl 8s ease-in-out infinite;pointer-events:none;}
+.glow:nth-child(1){width:500px;height:500px;background:#6366f1;top:-100px;left:-100px;}
+.glow:nth-child(2){width:400px;height:400px;background:#8b5cf6;bottom:-100px;right:-50px;animation-delay:-3s}
+.glow:nth-child(3){width:300px;height:300px;background:#06b6d4;top:50%;left:50%;animation-delay:-6s}
+@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+.wrap{position:relative;z-index:10;width:100%;max-width:420px;padding:2rem;}
+.card{background:rgba(17,24,39,0.9);border:1px solid var(--border);border-radius:20px;padding:2.5rem;backdrop-filter:blur(20px);box-shadow:0 25px 50px rgba(0,0,0,0.5);}
+.logo{text-align:center;margin-bottom:2rem;}
+.logo-icon{width:60px;height:60px;background:linear-gradient(135deg,#6366f1,#8b5cf6);border-radius:16px;display:inline-flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:1rem;box-shadow:0 8px 24px rgba(99,102,241,0.4);}
 .logo h1{font-size:1.5rem;font-weight:700;color:var(--text)}
-.logo p{font-size:0.85rem;color:var(--muted);margin-top:.25rem}
-.form-group{margin-bottom:1.25rem}
-.form-label{
-  display:block;font-size:.8rem;font-weight:500;
-  color:var(--muted);margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.05em;
-}
-.form-input{
-  width:100%;padding:.75rem 1rem;
-  background:rgba(255,255,255,.05);
-  border:1px solid var(--border);
-  border-radius:10px;color:var(--text);
-  font-size:.9rem;font-family:'Inter',sans-serif;
-  transition:all .2s;outline:none;
-}
-.form-input:focus{border-color:var(--accent);background:rgba(99,102,241,.08)}
-.form-input::placeholder{color:#4b5563}
-.btn-submit{
-  width:100%;padding:.875rem;
-  background:linear-gradient(135deg,#6366f1,#8b5cf6);
-  border:none;border-radius:10px;
-  color:#fff;font-size:.95rem;font-weight:600;
-  cursor:pointer;transition:all .2s;
-  font-family:'Inter',sans-serif;
-  box-shadow:0 4px 15px rgba(99,102,241,0.4);
-  margin-top:.5rem;
-}
-.btn-submit:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(99,102,241,.5)}
-.btn-submit:active{transform:translateY(0)}
-.btn-submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
-.alert{
-  padding:.75rem 1rem;border-radius:10px;
-  font-size:.85rem;margin-bottom:1rem;display:none;
-}
-.alert-error{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#fca5a5}
-.alert-success{background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);color:#6ee7b7}
-.footer-note{
-  text-align:center;margin-top:1.5rem;
-  font-size:.75rem;color:#4b5563;
-}
-.badge-version{
-  display:inline-flex;align-items:center;gap:.4rem;
-  background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.3);
-  color:#a5b4fc;padding:.2rem .6rem;border-radius:20px;font-size:.7rem;font-weight:600;
-}
-</style>
-</head>
-<body>
-<div class="bg-glow"></div>
-<div class="bg-glow"></div>
-<div class="bg-glow"></div>
-<div class="container">
-  <div class="card">
-    <div class="logo">
-      <div class="logo-icon">&#128200;</div>
-      <h1>SalesBot IA</h1>
-      <p>Plateforme Multi-Agent de Vente</p>
-    </div>
-    <div class="alert alert-error" id="alertError">Identifiant ou mot de passe incorrect</div>
-    <div class="alert alert-success" id="alertSuccess">Connexion en cours...</div>
-    <form id="loginForm">
-      <div class="form-group">
-        <label class="form-label" for="username">Identifiant</label>
-        <input class="form-input" type="text" id="username" placeholder="admin" autocomplete="username" required>
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="password">Mot de passe</label>
-        <input class="form-input" type="password" id="password" placeholder="&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;" autocomplete="current-password" required>
-      </div>
-      <button class="btn-submit" type="submit" id="submitBtn">Se connecter</button>
-    </form>
-    <div class="footer-note">
-      <span class="badge-version">v2.0 &bull; SaaS</span>
-    </div>
-  </div>
-</div>
+.logo p{font-size:.85rem;color:var(--muted);margin-top:.25rem}
+.fg{margin-bottom:1.25rem}
+.lbl{display:block;font-size:.8rem;font-weight:500;color:var(--muted);margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.05em;}
+.inp{width:100%;padding:.75rem 1rem;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:.9rem;font-family:'Inter',sans-serif;transition:all .2s;outline:none;}
+.inp:focus{border-color:var(--accent);background:rgba(99,102,241,.08)}
+.inp::placeholder{color:#4b5563}
+.btn{width:100%;padding:.875rem;background:linear-gradient(135deg,#6366f1,#8b5cf6);border:none;border-radius:10px;color:#fff;font-size:.95rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;box-shadow:0 4px 15px rgba(99,102,241,0.4);margin-top:.5rem;transition:all .2s;}
+.btn:hover{transform:translateY(-1px)}
+.btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.alert{padding:.75rem 1rem;border-radius:10px;font-size:.85rem;margin-bottom:1rem;display:none;}
+.ae{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#fca5a5}
+.as{background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);color:#6ee7b7}
+.note{text-align:center;margin-top:1.5rem;font-size:.75rem;color:#4b5563;}
+.ver{display:inline-flex;align-items:center;gap:.4rem;background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.3);color:#a5b4fc;padding:.2rem .6rem;border-radius:20px;font-size:.7rem;font-weight:600;}
+</style></head><body>
+<div class="glow"></div><div class="glow"></div><div class="glow"></div>
+<div class="wrap"><div class="card">
+  <div class="logo"><div class="logo-icon">&#128200;</div><h1>SalesBot IA</h1><p>Plateforme Multi-Agent de Vente</p></div>
+  <div class="alert ae" id="e">Identifiant ou mot de passe incorrect</div>
+  <div class="alert as" id="s">Connexion en cours...</div>
+  <form id="f">
+    <div class="fg"><label class="lbl">Identifiant</label><input class="inp" type="text" id="u" placeholder="admin" required></div>
+    <div class="fg"><label class="lbl">Mot de passe</label><input class="inp" type="password" id="p" placeholder="••••••••" required></div>
+    <button class="btn" type="submit" id="b">Se connecter</button>
+  </form>
+  <div class="note"><span class="ver">v2.0 &bull; SaaS</span></div>
+</div></div>
 <script>
-const form = document.getElementById('loginForm');
-const alertError = document.getElementById('alertError');
-const alertSuccess = document.getElementById('alertSuccess');
-const submitBtn = document.getElementById('submitBtn');
-form.addEventListener('submit', async(e) => {
-  e.preventDefault();
-  alertError.style.display = 'none';
-  alertSuccess.style.display = 'none';
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Connexion...';
-  const username = document.getElementById('username').value.trim();
-  const password = document.getElementById('password').value;
-  try {
-    const res = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({username, password})
-    });
-    const data = await res.json();
-    if (res.ok && data.success) {
-      alertSuccess.style.display = 'block';
-      setTimeout(() => { window.location.href = '/dashboard'; }, 500);
-    } else {
-      alertError.textContent = data.error || 'Identifiant ou mot de passe incorrect';
-      alertError.style.display = 'block';
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Se connecter';
-    }
-  } catch(err) {
-    alertError.textContent = 'Erreur de connexion. Veuillez reessayer.';
-    alertError.style.display = 'block';
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Se connecter';
-  }
+document.getElementById('f').addEventListener('submit',async ev=>{
+  ev.preventDefault();
+  const e=document.getElementById('e'),s=document.getElementById('s'),b=document.getElementById('b');
+  e.style.display='none';s.style.display='none';b.disabled=true;b.textContent='Connexion...';
+  try{
+    const r=await fetch('/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:document.getElementById('u').value.trim(),password:document.getElementById('p').value})});
+    const d=await r.json();
+    if(r.ok&&d.success){s.style.display='block';setTimeout(()=>window.location.href='/',600);}
+    else{e.textContent=d.error||'Identifiant ou mot de passe incorrect';e.style.display='block';b.disabled=false;b.textContent='Se connecter';}
+  }catch(ex){e.textContent='Erreur de connexion.';e.style.display='block';b.disabled=false;b.textContent='Se connecter';}
 });
-</script>
-</body>
-</html>
+</script></body></html>
