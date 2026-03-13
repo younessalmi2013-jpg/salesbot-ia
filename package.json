@@ -1,7 +1,7 @@
 {
   "name": "salesbot-ia",
   "version": "2.0.0",
-  "description": "SalesBot IA — Plateforme SaaS de vente automatisée (FR + AR)",
+  "description": "SalesBot IA — Plateforme SaaS de vente automatisee (FR + AR)",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
@@ -22,8 +22,8 @@
     "mailparser": "^3.7.1",
     "node-telegram-bot-api": "^0.66.0",
     "whatsapp-web.js": "^1.23.0",
-    "qrcode-terminal": "^0.12.0",
-    "puppeteer": "^22.8.2"
+    "qrcode": "^1.5.3",
+    "qrcode-terminal": "^0.12.0"
   },
   "engines": {
     "node": ">=18.0.0"
