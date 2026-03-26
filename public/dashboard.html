@@ -609,7 +609,7 @@ async function loadDashboard() {
     }
     if(leadsRes && leadsRes.ok) {
       const data = await leadsRes.json();
-      const leads = data.leads || data || [];
+      const leads = (Array.isArray(data) ? data : (data.leads || [])) || data || [];
       const tbody = document.getElementById('recentLeadsBody');
       if(!leads.length) {
         tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--muted)">Aucun lead pour le moment</td></tr>';
@@ -634,7 +634,7 @@ async function loadLeads() {
     const res = await fetch('/api/leads');
     if(!res.ok) throw new Error('Failed');
     const data = await res.json();
-    allLeadsData = data.leads || data || [];
+    allLeadsData = (Array.isArray(data) ? data : (data.leads || [])) || data || [];
     renderLeads(allLeadsData);
   } catch(e) {
     document.getElementById('allLeadsBody').innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--muted)">Erreur de chargement</td></tr>';
