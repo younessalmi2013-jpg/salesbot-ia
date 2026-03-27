@@ -7,15 +7,24 @@ const { execSync } = require('child_process');
 
 function getChromiumPath() {
   if (process.env.PUPPETEER_EXECUTABLE_PATH) {
+    console.log('[WhatsApp] PUPPETEER_EXECUTABLE_PATH:', process.env.PUPPETEER_EXECUTABLE_PATH);
     return process.env.PUPPETEER_EXECUTABLE_PATH;
   }
   const candidates = ['chromium', 'chromium-browser', 'google-chrome', 'google-chrome-stable'];
   for (const bin of candidates) {
     try {
-      const p = execSync('which ' + bin, { encoding: 'utf8', stdio: ['pipe', 'pipe', 'ignore'] }).trim();
-      if (p) return p;
+      const p = execSync('which ' + bin, { encoding: 'utf8', shell: '/bin/sh', timeout: 5000 }).trim();
+      if (p) { console.log('[WhatsApp] Chromium trouve:', p); return p; }
     } catch (e) {}
   }
+  try {
+    const nixPath = execSync(
+      'find /nix/store -maxdepth 6 -name "chromium" -type f 2>/dev/null | grep "bin/chromium$" | head -1',
+      { encoding: 'utf8', shell: '/bin/sh', timeout: 10000 }
+    ).trim();
+    if (nixPath) { console.log('[WhatsApp] Chromium Nix:', nixPath); return nixPath; }
+  } catch (e) {}
+  console.log('[WhatsApp] Chromium non trouve, fallback puppeteer');
   return undefined;
 }
 
