@@ -2,7 +2,7 @@
 nixPkgs = ["nodejs_20", "chromium"]
 
 [phases.install]
-cmds = ["npm ci --only=production"]
+cmds = ["npm install --omit=dev"]
 
 [phases.build]
 cmds = []
