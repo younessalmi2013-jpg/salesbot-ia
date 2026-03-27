@@ -6,25 +6,52 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 function getChromiumPath() {
+  const fs = require('fs');
+
   if (process.env.PUPPETEER_EXECUTABLE_PATH) {
-    console.log('[WhatsApp] PUPPETEER_EXECUTABLE_PATH:', process.env.PUPPETEER_EXECUTABLE_PATH);
-    return process.env.PUPPETEER_EXECUTABLE_PATH;
+    const p = process.env.PUPPETEER_EXECUTABLE_PATH;
+    console.log('[WhatsApp] PUPPETEER_EXECUTABLE_PATH env:', p);
+    if (fs.existsSync(p)) return p;
+    console.log('[WhatsApp] Path from env does not exist:', p);
   }
+
+  // Known Nix profile paths
+  const knownPaths = [
+    '/root/.nix-profile/bin/chromium',
+    '/nix/var/nix/profiles/default/bin/chromium',
+    '/usr/bin/chromium',
+    '/usr/bin/chromium-browser',
+    '/usr/bin/google-chrome'
+  ];
+  for (const p of knownPaths) {
+    if (fs.existsSync(p)) {
+      console.log('[WhatsApp] Chromium found at known path:', p);
+      return p;
+    }
+  }
+
+  // Try which via PATH inherited from Node process (no shell restriction)
   const candidates = ['chromium', 'chromium-browser', 'google-chrome', 'google-chrome-stable'];
   for (const bin of candidates) {
     try {
-      const p = execSync('which ' + bin, { encoding: 'utf8', shell: '/bin/sh', timeout: 5000 }).trim();
-      if (p) { console.log('[WhatsApp] Chromium trouve:', p); return p; }
+      const p = execSync('which ' + bin, { encoding: 'utf8', env: process.env, timeout: 5000 }).trim();
+      if (p && fs.existsSync(p)) { console.log('[WhatsApp] which found:', p); return p; }
     } catch (e) {}
   }
+
+  // Deep Nix store search
   try {
     const nixPath = execSync(
       'find /nix/store -maxdepth 6 -name "chromium" -type f 2>/dev/null | grep "bin/chromium$" | head -1',
-      { encoding: 'utf8', shell: '/bin/sh', timeout: 10000 }
+      { encoding: 'utf8', shell: true, timeout: 15000 }
     ).trim();
-    if (nixPath) { console.log('[WhatsApp] Chromium Nix:', nixPath); return nixPath; }
+    if (nixPath && fs.existsSync(nixPath)) {
+      console.log('[WhatsApp] Chromium in Nix store:', nixPath);
+      return nixPath;
+    }
   } catch (e) {}
-  console.log('[WhatsApp] Chromium non trouve, fallback puppeteer');
+
+  console.log('[WhatsApp] Chromium non trouve, PATH:', process.env.PATH);
   return undefined;
 }
 
