@@ -1,414 +1,343 @@
-'use strict';
 require('dotenv').config();
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const path = require('path');
-const fs = require('fs');
+
+const db = require('./db');
+const { auth, role, createToken, hashPassword, checkPassword } = require('./middleware/auth');
+const waManager = require('./agents/whatsapp/manager');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const startTime = Date.now();
 
-// =====================
-// Config IA (persistee dans data/config.json)
-// =====================
-const CONFIG_PATH = path.join(process.cwd(), 'data', 'config.json');
-
-function getConfig() {
-  try {
-    if (fs.existsSync(CONFIG_PATH)) return JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
-  } catch (e) {}
-  return {
-    botName: process.env.BOT_NAME || 'Sophie',
-    productName: process.env.PRODUCT_NAME || 'notre programme',
-    language: 'fr',
-    systemPrompt: 'Tu es {botName}, une conseillere commerciale sympathique.\nTu travailles pour: {productName}.\nRegles: messages courts (3-4 lignes), termine par une question, ne revele pas que tu es une IA, propose un appel avant les prix.\nTa mission: qualifier les leads et les amener a prendre un rendez-vous.',
-    autoCallEnabled: false,
-    followupEnabled: true,
-    followupDays: [1, 3, 7]
-  };
-}
-
-function saveConfig(cfg) {
-  const dir = path.dirname(CONFIG_PATH);
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(CONFIG_PATH, JSON.stringify(cfg, null, 2));
-}
-
-// =====================
-// Middleware
-// =====================
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../public')));
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  if (req.method === 'OPTIONS') return res.sendStatus(200);
-  next();
+// ============================================================
+// AUTH ROUTES
+// ============================================================
+app.post('/auth/login', (req, res) => {
+  const { username, password } = req.body;
+  const user = db.users.findOne(u => u.username === username.trim());
+  if (!user || !user.active || !checkPassword(password, user.password))
+    return res.status(401).json({ error: 'Identifiants incorrects' });
+  const token = createToken(user);
+  res.cookie('token', token, { httpOnly: true, maxAge: 7 * 24 * 3600 * 1000, sameSite: 'strict' });
+  res.json({ success: true, role: user.role, username: user.username });
 });
 
-// =====================
-// Auth
-// =====================
-const { requireAuth, requireAdmin } = require('./middleware/auth');
-app.use('/auth', require('./routes/auth'));
-
-// =====================
-// Pages HTML
-// =====================
-app.get('/', requireAuth, (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/dashboard.html'));
-});
-app.get('/login', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/login.html'));
+app.post('/auth/logout', (req, res) => {
+  res.clearCookie('token');
+  res.json({ success: true });
 });
 
-// =====================
-// Agents (chargement differe)
-// =====================
-let crmAgent, whatsappAgent, bookingAgent, telegramAgent, emailAgent;
-
-function loadAgents() {
-  try { crmAgent = require('./agents/crm'); console.log('[Server] CRM OK'); }
-  catch (e) { console.error('[Server] CRM erreur:', e.message); }
-
-  try { bookingAgent = require('./booking'); console.log('[Server] Booking OK'); }
-  catch (e) { console.error('[Server] Booking erreur:', e.message); }
-
-  try {
-    whatsappAgent = require('./agents/whatsapp');
-    if (process.env.WHATSAPP_ENABLED === 'true') {
-      whatsappAgent.initialize().catch(e => console.error('[WA] Init erreur:', e.message));
-    }
-    console.log('[Server] WhatsApp OK');
-  } catch (e) { console.error('[Server] WhatsApp erreur:', e.message); }
-
-  // Telegram (optionnel)
-  if (process.env.TELEGRAM_BOT_TOKEN) {
-    try {
-      telegramAgent = require('./agents/telegram');
-      telegramAgent.startBot();
-      console.log('[Server] Telegram OK');
-    } catch (e) { console.error('[Server] Telegram erreur:', e.message); }
-  } else {
-    console.log('[Server] Telegram: TELEGRAM_BOT_TOKEN non defini');
-  }
-
-  // Email (optionnel)
-  if (process.env.EMAIL_USER && process.env.EMAIL_PASSWORD) {
-    try {
-      emailAgent = require('./agents/email');
-      emailAgent.startEmailPolling();
-      console.log('[Server] Email OK');
-    } catch (e) { console.error('[Server] Email erreur:', e.message); }
-  } else {
-    console.log('[Server] Email: EMAIL_USER/EMAIL_PASSWORD non definis');
-  }
-}
-
-// =====================
-// API - Config IA
-// =====================
-app.get('/api/config', requireAuth, (req, res) => {
-  res.json(getConfig());
+app.get('/auth/me', auth, (req, res) => {
+  res.json({ id: req.user.id, username: req.user.username, role: req.user.role, email: req.user.email });
 });
 
-app.put('/api/config', requireAuth, (req, res) => {
-  try {
-    const updated = { ...getConfig(), ...req.body };
-    saveConfig(updated);
-    res.json({ success: true, config: updated });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
+// ============================================================
+// USER MANAGEMENT (superadmin only)
+// ============================================================
+app.get('/api/users', auth, role('superadmin'), (req, res) => {
+  const users = db.users.findAll().map(u => {
+    const agents = db.agents.countWhere(a => a.userId === u.id);
+    const leads = db.leads.countWhere(l => l.userId === u.id);
+    return { ...u, password: undefined, agentsCount: agents, leadsCount: leads };
+  });
+  res.json(users);
 });
 
-// =====================
-// API - Stats
-// =====================
-app.get('/api/stats', requireAuth, async (req, res) => {
-  try {
-    const stats = crmAgent ? await crmAgent.getStats() : {
-      total: 0, new: 0, qualified: 0, rdv: 0, clients: 0, lost: 0, todayNew: 0,
-      byStatus: {}, byChannel: {}
-    };
-    res.json({
-      ...stats,
-      uptime: Math.floor((Date.now() - startTime) / 1000),
-      agents: {
-        whatsapp: whatsappAgent ? whatsappAgent.isReady : false,
-        telegram: telegramAgent ? telegramAgent.isRunning() : false,
-        email: !!(emailAgent && process.env.EMAIL_USER),
-        instagram: !!process.env.META_ACCESS_TOKEN,
-        crm: !!crmAgent,
-        booking: !!bookingAgent
-      },
-      systemStats: {
-        messagesProcessed: global._msgCount || 0,
-        responsesSent: global._responseCount || 0,
-        callsTriggered: global._callCount || 0,
-        followupsSent: global._followupCount || 0
-      }
-    });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
+app.post('/api/users', auth, role('superadmin'), (req, res) => {
+  const { username, password, email, role: userRole } = req.body;
+  if (!username || !password) return res.status(400).json({ error: 'Username et password requis' });
+  if (db.users.findOne(u => u.username === username))
+    return res.status(400).json({ error: 'Username deja utilise' });
+  const user = db.users.insert({
+    username: username.trim(),
+    password: hashPassword(password),
+    email: email || '',
+    role: userRole || 'client',
+    active: true,
+  });
+  res.json({ ...user, password: undefined });
 });
 
-// =====================
-// API - Integrations (statut en direct)
-// =====================
-app.get('/api/integrations', requireAuth, (req, res) => {
-  const waStatus = whatsappAgent ? whatsappAgent.getStatus() : null;
+app.put('/api/users/:id', auth, role('superadmin'), (req, res) => {
+  const { password, email, role: userRole, active, username } = req.body;
+  const updates = {};
+  if (username !== undefined) updates.username = username;
+  if (email !== undefined) updates.email = email;
+  if (userRole !== undefined) updates.role = userRole;
+  if (active !== undefined) updates.active = active;
+  if (password) updates.password = hashPassword(password);
+  const user = db.users.update(req.params.id, updates);
+  if (!user) return res.status(404).json({ error: 'Utilisateur non trouve' });
+  res.json({ ...user, password: undefined });
+});
+
+app.delete('/api/users/:id', auth, role('superadmin'), (req, res) => {
+  if (req.params.id === 'superadmin') return res.status(400).json({ error: 'Impossible de supprimer le super admin' });
+  // Cleanup user data
+  db.agents.findWhere(a => a.userId === req.params.id).forEach(a => {
+    waManager.deleteAgent(a.id).catch(() => {});
+  });
+  db.configs.deleteWhere(c => c.userId === req.params.id);
+  db.users.delete(req.params.id);
+  res.json({ success: true });
+});
+
+// Reset user password
+app.post('/api/users/:id/reset-password', auth, role('superadmin'), (req, res) => {
+  const { password } = req.body;
+  if (!password) return res.status(400).json({ error: 'Nouveau mot de passe requis' });
+  const user = db.users.update(req.params.id, { password: hashPassword(password) });
+  if (!user) return res.status(404).json({ error: 'Utilisateur non trouve' });
+  res.json({ success: true });
+});
+
+// ============================================================
+// WHATSAPP AGENTS
+// ============================================================
+app.get('/api/agents', auth, (req, res) => {
+  const userId = req.user.role === 'superadmin' && req.query.userId
+    ? req.query.userId : req.user.id;
+  const agents = db.agents.findWhere(a => a.userId === userId).map(a => ({
+    ...a,
+    liveStatus: waManager.getStatus(a.id),
+    livePhone: waManager.getPhone(a.id) || a.phone,
+    hasQR: !!waManager.getQR(a.id),
+  }));
+  res.json(agents);
+});
+
+app.post('/api/agents', auth, (req, res) => {
+  const { name } = req.body;
+  if (!name?.trim()) return res.status(400).json({ error: 'Nom de l agent requis' });
+  const count = db.agents.countWhere(a => a.userId === req.user.id);
+  if (count >= 10) return res.status(400).json({ error: 'Maximum 10 agents par compte' });
+  waManager.createAgent(req.user.id, name.trim())
+    .then(agent => res.json(agent))
+    .catch(err => res.status(500).json({ error: err.message }));
+});
+
+app.get('/api/agents/:id/qr', auth, (req, res) => {
+  const agent = db.agents.findById(req.params.id);
+  if (!agent || (agent.userId !== req.user.id && req.user.role !== 'superadmin'))
+    return res.status(404).json({ error: 'Agent non trouve' });
   res.json({
-    whatsapp: {
-      enabled: !!whatsappAgent,
-      connected: waStatus ? waStatus.connected : false,
-      initializing: waStatus ? waStatus.initializing : false,
-      phone: waStatus ? (waStatus.phone || null) : null,
-      status: waStatus ? (waStatus.connected ? 'connected' : waStatus.initializing ? 'initializing' : 'disconnected') : 'unavailable'
-    },
-    telegram: {
-      enabled: !!process.env.TELEGRAM_BOT_TOKEN,
-      connected: telegramAgent ? telegramAgent.isRunning() : false,
-      status: !process.env.TELEGRAM_BOT_TOKEN ? 'missing_token' : (telegramAgent && telegramAgent.isRunning() ? 'connected' : 'error')
-    },
-    instagram: {
-      enabled: !!process.env.META_ACCESS_TOKEN,
-      connected: !!process.env.META_ACCESS_TOKEN,
-      webhookUrl: process.env.RAILWAY_PUBLIC_DOMAIN ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}/webhook/instagram` : null,
-      status: process.env.META_ACCESS_TOKEN ? 'configured' : 'missing_token'
-    },
-    email: {
-      enabled: !!(process.env.EMAIL_USER && process.env.EMAIL_PASSWORD),
-      connected: !!(emailAgent && process.env.EMAIL_USER),
-      user: process.env.EMAIL_USER || null,
-      status: (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD) ? 'missing_credentials' : (emailAgent ? 'connected' : 'error')
-    }
+    qr: waManager.getQR(req.params.id),
+    status: waManager.getStatus(req.params.id),
+    phone: waManager.getPhone(req.params.id),
   });
 });
 
-// =====================
-// API - Leads CRUD
-// =====================
-app.get('/api/leads', requireAuth, async (req, res) => {
+app.post('/api/agents/:id/restart', auth, async (req, res) => {
+  const agent = db.agents.findById(req.params.id);
+  if (!agent || (agent.userId !== req.user.id && req.user.role !== 'superadmin'))
+    return res.status(404).json({ error: 'Agent non trouve' });
   try {
-    if (!crmAgent) return res.json({ leads: [], total: 0 });
-    const leads = await crmAgent.getAllLeads({
-      status: req.query.status,
-      channel: req.query.channel,
-      search: req.query.search
-    });
-    const limit = parseInt(req.query.limit) || 0;
-    res.json({ leads: limit ? leads.slice(0, limit) : leads, total: leads.length });
-  } catch (e) { res.status(500).json({ error: e.message }); }
-});
-
-app.post('/api/leads', requireAuth, async (req, res) => {
-  try {
-    if (!crmAgent) return res.status(503).json({ error: 'CRM non disponible' });
-    const { name, phone, email, channel, status, notes, score } = req.body;
-    if (!name) return res.status(400).json({ error: 'Le nom est requis' });
-    const lead = await crmAgent.createLead({ name, phone, email, channel: channel || 'web', status: status || 'new', notes, score: score || 0 });
-    res.status(201).json({ success: true, lead });
-  } catch (e) { res.status(500).json({ error: e.message }); }
-});
-
-app.get('/api/leads/:id', requireAuth, async (req, res) => {
-  try {
-    if (!crmAgent) return res.status(503).json({ error: 'CRM non disponible' });
-    const lead = await crmAgent.getLeadById(req.params.id);
-    if (!lead) return res.status(404).json({ error: 'Lead non trouve' });
-    res.json(lead);
-  } catch (e) { res.status(500).json({ error: e.message }); }
-});
-
-app.put('/api/leads/:id', requireAuth, async (req, res) => {
-  try {
-    if (!crmAgent) return res.status(503).json({ error: 'CRM non disponible' });
-    const lead = await crmAgent.updateLead(req.params.id, req.body);
-    if (!lead) return res.status(404).json({ error: 'Lead non trouve' });
-    res.json({ success: true, lead });
-  } catch (e) { res.status(500).json({ error: e.message }); }
-});
-
-app.delete('/api/leads/:id', requireAuth, async (req, res) => {
-  try {
-    if (!crmAgent) return res.status(503).json({ error: 'CRM non disponible' });
-    await crmAgent.deleteLead(req.params.id);
+    await waManager.restartAgent(req.params.id);
     res.json({ success: true });
-  } catch (e) { res.status(500).json({ error: e.message }); }
-});
-
-// Envoyer un message manuel a un lead
-app.post('/api/leads/:id/message', requireAuth, async (req, res) => {
-  try {
-    const { text, channel } = req.body;
-    if (!text) return res.status(400).json({ error: 'Message requis' });
-    if (!crmAgent) return res.status(503).json({ error: 'CRM non disponible' });
-    const lead = await crmAgent.getLeadById(req.params.id);
-    if (!lead) return res.status(404).json({ error: 'Lead non trouve' });
-    const ch = channel || lead.channel;
-    let sent = false;
-    if (ch === 'whatsapp' && whatsappAgent && whatsappAgent.isReady) {
-      await whatsappAgent.sendMessage(lead.phone, text); sent = true;
-    } else if (ch === 'telegram' && telegramAgent && telegramAgent.isRunning()) {
-      await telegramAgent.sendMessage(lead.identifier || lead.phone, text); sent = true;
-    }
-    res.json({ success: true, sent, channel: ch });
-  } catch (e) { res.status(500).json({ error: e.message }); }
-});
-
-// =====================
-// API - WhatsApp
-// =====================
-app.get('/api/whatsapp/status', requireAuth, (req, res) => {
-  if (!whatsappAgent) return res.json({ connected: false, available: false });
-  res.json({ ...whatsappAgent.getStatus(), available: true });
-});
-
-app.get('/api/whatsapp/qr', requireAuth, (req, res) => {
-  if (!whatsappAgent) return res.status(503).json({ error: 'WhatsApp non disponible' });
-  const status = whatsappAgent.getStatus();
-  if (status.connected) return res.json({ connected: true, phone: status.phone });
-  const qr = whatsappAgent.getQR();
-  if (qr) return res.json({ qr, connected: false });
-  if (!status.initializing) whatsappAgent.initialize().catch(e => console.error(e.message));
-  res.json({ connected: false, initializing: true, message: 'QR en cours de generation...' });
-});
-
-app.post('/api/whatsapp/start', requireAuth, async (req, res) => {
-  try {
-    if (!whatsappAgent) return res.status(503).json({ error: 'Agent non disponible' });
-    const s = whatsappAgent.getStatus();
-    if (s.connected) return res.json({ success: true, message: 'Deja connecte' });
-    if (s.initializing) return res.json({ success: true, message: 'Deja en cours...' });
-    whatsappAgent.initialize().catch(console.error);
-    res.json({ success: true, message: 'Initialisation demarree' });
-  } catch (e) { res.status(500).json({ error: e.message }); }
-});
-
-app.post('/api/whatsapp/logout', requireAuth, async (req, res) => {
-  try {
-    if (!whatsappAgent) return res.status(503).json({ error: 'Agent non disponible' });
-    await whatsappAgent.logout();
-    res.json({ success: true });
-  } catch (e) { res.status(500).json({ error: e.message }); }
-});
-
-app.post('/api/whatsapp/send', requireAuth, async (req, res) => {
-  try {
-    const { phone, message } = req.body;
-    if (!phone || !message) return res.status(400).json({ error: 'phone et message requis' });
-    if (!whatsappAgent || !whatsappAgent.isReady) return res.status(503).json({ error: 'WhatsApp non connecte' });
-    await whatsappAgent.sendMessage(phone, message);
-    res.json({ success: true });
-  } catch (e) { res.status(500).json({ error: e.message }); }
-});
-
-// =====================
-// API - Telegram
-// =====================
-app.post('/api/telegram/send', requireAuth, async (req, res) => {
-  try {
-    const { chatId, message } = req.body;
-    if (!chatId || !message) return res.status(400).json({ error: 'chatId et message requis' });
-    if (!telegramAgent || !telegramAgent.isRunning()) return res.status(503).json({ error: 'Telegram non connecte' });
-    await telegramAgent.sendMessage(chatId, message);
-    res.json({ success: true });
-  } catch (e) { res.status(500).json({ error: e.message }); }
-});
-
-// =====================
-// Webhook Instagram
-// =====================
-app.get('/webhook/instagram', (req, res) => {
-  const { 'hub.mode': mode, 'hub.verify_token': token, 'hub.challenge': challenge } = req.query;
-  if (mode === 'subscribe' && token === (process.env.META_VERIFY_TOKEN || 'salesbot_verify_2024')) {
-    res.send(challenge);
-  } else {
-    res.sendStatus(403);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
   }
 });
 
-app.post('/webhook/instagram', (req, res) => {
-  res.sendStatus(200);
+app.post('/api/agents/:id/send', auth, async (req, res) => {
+  const agent = db.agents.findById(req.params.id);
+  if (!agent || (agent.userId !== req.user.id && req.user.role !== 'superadmin'))
+    return res.status(404).json({ error: 'Agent non trouve' });
   try {
-    const body = req.body;
-    if (body.object !== 'instagram') return;
-    for (const entry of body.entry || []) {
-      for (const event of entry.messaging || []) {
-        if (event.message?.is_echo || !event.message?.text) continue;
-        const from = event.sender?.id;
-        const text = event.message.text;
-        console.log(`[Instagram] Message de ${from}: ${text.substring(0, 50)}`);
-      }
-    }
-  } catch (e) { console.error('[Instagram] Webhook error:', e.message); }
-});
-
-// =====================
-// API - Bookings
-// =====================
-app.get('/api/bookings', requireAuth, async (req, res) => {
-  try {
-    if (!bookingAgent) return res.json({ bookings: [] });
-    const bookings = await bookingAgent.getBookings();
-    res.json({ bookings: bookings || [] });
-  } catch (e) { res.status(500).json({ error: e.message }); }
-});
-
-app.post('/api/bookings', requireAuth, async (req, res) => {
-  try {
-    if (!bookingAgent) return res.status(503).json({ error: 'Booking non disponible' });
-    const booking = await bookingAgent.createBooking(req.body);
-    res.status(201).json({ success: true, booking });
-  } catch (e) { res.status(500).json({ error: e.message }); }
-});
-
-app.put('/api/bookings/:id', requireAuth, async (req, res) => {
-  try {
-    if (!bookingAgent) return res.status(503).json({ error: 'Booking non disponible' });
-    const booking = await bookingAgent.updateBookingStatus(req.params.id, req.body.status);
-    res.json({ success: true, booking });
-  } catch (e) { res.status(500).json({ error: e.message }); }
-});
-
-// =====================
-// API - Calls
-// =====================
-const callsLog = [];
-app.get('/api/calls', requireAuth, (req, res) => {
-  res.json({ calls: callsLog.slice(-50) });
-});
-
-// =====================
-// Health
-// =====================
-app.get('/health', (req, res) => {
-  res.json({ status: 'ok', uptime: Math.floor((Date.now() - startTime) / 1000), timestamp: new Date().toISOString() });
-});
-
-// =====================
-// 404
-// =====================
-app.use((req, res) => {
-  if (req.path.startsWith('/api/') || req.path.startsWith('/webhook/')) {
-    return res.status(404).json({ error: 'Route non trouvee: ' + req.path });
+    await waManager.sendMessage(req.params.id, req.body.phone, req.body.message);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
   }
-  res.redirect('/login');
 });
 
-// =====================
-// Demarrage
-// =====================
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`[Server] SalesBot IA demarre sur le port ${PORT}`);
-  loadAgents();
+app.delete('/api/agents/:id', auth, async (req, res) => {
+  const agent = db.agents.findById(req.params.id);
+  if (!agent || (agent.userId !== req.user.id && req.user.role !== 'superadmin'))
+    return res.status(404).json({ error: 'Agent non trouve' });
+  await waManager.deleteAgent(req.params.id).catch(() => {});
+  res.json({ success: true });
+});
+
+// ============================================================
+// DASHBOARD DATA
+// ============================================================
+app.get('/api/dashboard', auth, (req, res) => {
+  const uid = req.user.id;
+  const leads = db.leads.findWhere(l => l.userId === uid);
+  const today = new Date().toDateString();
+  res.json({
+    total: leads.length,
+    new: leads.filter(l => l.status === 'new').length,
+    qualified: leads.filter(l => l.status === 'qualified').length,
+    booked: leads.filter(l => l.status === 'booked').length,
+    clients: leads.filter(l => l.status === 'client').length,
+    today: leads.filter(l => new Date(l.createdAt).toDateString() === today).length,
+    recentLeads: leads
+      .sort((a, b) => new Date(b.lastContact || b.createdAt) - new Date(a.lastContact || a.createdAt))
+      .slice(0, 10),
+  });
+});
+
+app.get('/api/leads', auth, (req, res) => {
+  const leads = db.leads
+    .findWhere(l => l.userId === req.user.id)
+    .sort((a, b) => new Date(b.lastContact || b.createdAt) - new Date(a.lastContact || a.createdAt));
+  res.json(leads);
+});
+
+app.put('/api/leads/:id/status', auth, (req, res) => {
+  const lead = db.leads.findById(req.params.id);
+  if (!lead || lead.userId !== req.user.id) return res.status(404).json({ error: 'Lead non trouve' });
+  res.json(db.leads.update(req.params.id, { status: req.body.status }));
+});
+
+app.put('/api/leads/:id', auth, (req, res) => {
+  const lead = db.leads.findById(req.params.id);
+  if (!lead || lead.userId !== req.user.id) return res.status(404).json({ error: 'Lead non trouve' });
+  const { name, status, score, notes } = req.body;
+  const updates = {};
+  if (name !== undefined) updates.name = name;
+  if (status !== undefined) updates.status = status;
+  if (score !== undefined) updates.score = score;
+  if (notes !== undefined) updates.notes = notes;
+  res.json(db.leads.update(req.params.id, updates));
+});
+
+app.delete('/api/leads/:id', auth, (req, res) => {
+  const lead = db.leads.findById(req.params.id);
+  if (!lead || lead.userId !== req.user.id) return res.status(404).json({ error: 'Lead non trouve' });
+  db.leads.delete(req.params.id);
+  res.json({ success: true });
+});
+
+app.get('/api/leads/:id/messages', auth, (req, res) => {
+  const lead = db.leads.findById(req.params.id);
+  if (!lead || lead.userId !== req.user.id) return res.status(404).json({ error: 'Lead non trouve' });
+  res.json(lead.messages || []);
+});
+
+// ============================================================
+// BOOKINGS
+// ============================================================
+app.get('/api/bookings', auth, (req, res) => {
+  const bookings = db.bookings
+    .findWhere(b => b.userId === req.user.id)
+    .sort((a, b) => new Date(b.date) - new Date(a.date));
+  res.json(bookings);
+});
+
+app.post('/api/bookings', auth, (req, res) => {
+  const booking = db.bookings.insert({ ...req.body, userId: req.user.id });
+  res.json(booking);
+});
+
+app.put('/api/bookings/:id', auth, (req, res) => {
+  const b = db.bookings.findById(req.params.id);
+  if (!b || b.userId !== req.user.id) return res.status(404).json({ error: 'RDV non trouve' });
+  res.json(db.bookings.update(req.params.id, req.body));
+});
+
+app.delete('/api/bookings/:id', auth, (req, res) => {
+  const b = db.bookings.findById(req.params.id);
+  if (!b || b.userId !== req.user.id) return res.status(404).json({ error: 'RDV non trouve' });
+  db.bookings.delete(req.params.id);
+  res.json({ success: true });
+});
+
+// ============================================================
+// CONFIG
+// ============================================================
+app.get('/api/config', auth, (req, res) => {
+  res.json(db.configs.findOne(c => c.userId === req.user.id) || {});
+});
+
+app.put('/api/config', auth, (req, res) => {
+  const existing = db.configs.findOne(c => c.userId === req.user.id);
+  const data = { ...req.body, userId: req.user.id };
+  const result = existing
+    ? db.configs.update(existing.id, data)
+    : db.configs.insert(data);
+  res.json(result);
+});
+
+// ============================================================
+// INTEGRATIONS & STATUS
+// ============================================================
+app.get('/api/integrations', auth, (req, res) => {
+  const agents = db.agents.findWhere(a => a.userId === req.user.id).map(a => ({
+    ...a,
+    liveStatus: waManager.getStatus(a.id),
+    hasQR: !!waManager.getQR(a.id),
+  }));
+  res.json({
+    whatsapp: { agents },
+    telegram: { configured: !!process.env.TELEGRAM_BOT_TOKEN },
+    instagram: {
+      configured: !!process.env.META_ACCESS_TOKEN,
+      webhookUrl: `${process.env.APP_URL || ''}/webhook/instagram`,
+    },
+    email: { connected: !!process.env.EMAIL_USER, email: process.env.EMAIL_USER || '' },
+  });
+});
+
+app.get('/api/status', auth, (req, res) => {
+  const uid = req.user.id;
+  const agents = db.agents.findWhere(a => a.userId === uid);
+  const config = db.configs.findOne(c => c.userId === uid) || {};
+  res.json({
+    agents: agents.length,
+    connectedAgents: agents.filter(a => waManager.getStatus(a.id) === 'connected').length,
+    leadsTotal: db.leads.countWhere(l => l.userId === uid),
+    openaiConfigured: !!process.env.OPENAI_API_KEY,
+    botName: config.botName || 'SalesBot',
+    uptime: Math.floor(process.uptime()),
+    version: '3.0.0',
+    role: req.user.role,
+    ...(req.user.role === 'superadmin' ? {
+      totalUsers: db.users.count(),
+      totalLeads: db.leads.count(),
+      totalAgents: db.agents.count(),
+    } : {}),
+  });
+});
+
+// ============================================================
+// WHATSAPP WEBHOOK (incoming messages from Meta Cloud API)
+// ============================================================
+app.get('/webhook/whatsapp', (req, res) => {
+  if (req.query['hub.verify_token'] === process.env.META_VERIFY_TOKEN)
+    return res.send(req.query['hub.challenge']);
+  res.status(403).send('Forbidden');
+});
+
+// ============================================================
+// PAGES
+// ============================================================
+app.get('/', (req, res) => res.redirect('/login'));
+app.get('/login', (req, res) => res.sendFile(path.join(__dirname, '../public/login.html')));
+app.get('/dashboard', (req, res) => res.sendFile(path.join(__dirname, '../public/dashboard.html')));
+
+// ============================================================
+// START
+// ============================================================
+const server = app.listen(PORT, async () => {
+  console.log(`\x1b[35m\n╔══════════════════════════════════╗`);
+  console.log(`║  🤖 SalesBot IA v3.0 — Port ${PORT}  ║`);
+  console.log(`╚══════════════════════════════════╝\x1b[0m`);
+  console.log(`\x1b[36m📂 Data: ${require('path').join(__dirname, '../data')}\x1b[0m`);
+  console.log(`\x1b[36m🔑 OpenAI: ${process.env.OPENAI_API_KEY ? '✅' : '❌ Non configure'}\x1b[0m`);
+
+  // Init saved WA agents after a short delay
+  setTimeout(() => {
+    waManager.initAllAgents().catch(e => console.error('WA init error:', e.message));
+  }, 3000);
 });
 
 module.exports = app;
