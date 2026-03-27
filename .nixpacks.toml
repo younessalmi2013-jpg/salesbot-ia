@@ -8,4 +8,4 @@ cmds = ["npm ci --only=production"]
 cmds = []
 
 [start]
-cmd = "node src/server.js"
+cmd = "export PUPPETEER_EXECUTABLE_PATH=$(which chromium 2>/dev/null || find /nix/store -maxdepth 6 -name chromium -type f 2>/dev/null | grep bin/chromium | head -1) && echo [nixpacks] CHROMIUM=$PUPPETEER_EXECUTABLE_PATH && node src/server.js"
