@@ -169,6 +169,14 @@ tbody tr:last-child td{border-bottom:none}
 .badge.client{background:rgba(99,102,241,.15);color:#a5b4fc;border:1px solid rgba(99,102,241,.25)}
 .badge.lost{background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.25)}
 
+.tag{
+  display:inline-flex;align-items:center;
+  padding:.2rem .5rem;border-radius:6px;font-size:.7rem;
+  background:rgba(99,102,241,.1);color:#a5b4fc;
+  border:1px solid rgba(99,102,241,.2);
+  font-family:monospace;
+}
+
 .channel-icon{
   display:inline-flex;align-items:center;gap:.4rem;
   font-size:.82rem;color:var(--muted);
@@ -223,6 +231,95 @@ tbody tr:last-child td{border-bottom:none}
 .btn-connect:hover{border-color:var(--accent);color:var(--accent)}
 .btn-connect.active{background:var(--accent);border-color:var(--accent);color:#fff}
 
+.setup-instructions{
+  font-size:.75rem;color:var(--muted);line-height:1.6;
+  background:rgba(99,102,241,.05);padding:.75rem;border-radius:8px;
+  border-left:2px solid var(--accent);
+}
+.setup-instructions ol{margin-left:1.5rem;margin-top:.5rem}
+.setup-instructions li{margin-top:.3rem}
+
+.quick-send-form{
+  background:rgba(99,102,241,.05);padding:1rem;
+  border-radius:8px;border:1px solid var(--border);
+  display:flex;flex-direction:column;gap:.75rem;
+}
+.quick-send-form input,
+.quick-send-form textarea{
+  background:var(--card);border:1px solid var(--border);
+  color:var(--text);padding:.6rem;border-radius:8px;
+  font-family:'Inter',sans-serif;font-size:.82rem;
+}
+.quick-send-form input::placeholder,
+.quick-send-form textarea::placeholder{color:var(--muted)}
+.quick-send-form button{
+  padding:.5rem 1rem;background:var(--green);color:#fff;
+  border:none;border-radius:8px;font-size:.82rem;font-weight:500;
+  cursor:pointer;transition:all .2s;
+}
+.quick-send-form button:hover{opacity:.85}
+
+/* Config Form */
+.config-form{
+  display:flex;flex-direction:column;gap:1.25rem;
+  padding:1.5rem;
+}
+.form-group{display:flex;flex-direction:column;gap:.5rem}
+.form-group label{
+  font-size:.82rem;font-weight:600;color:var(--text);
+}
+.form-group input,
+.form-group textarea,
+.form-group select{
+  background:var(--card);border:1px solid var(--border);
+  color:var(--text);padding:.75rem;border-radius:8px;
+  font-family:'Inter',sans-serif;font-size:.82rem;
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder{color:var(--muted)}
+.form-group textarea{min-height:180px;resize:vertical;font-family:monospace}
+.form-group .form-hint{
+  font-size:.75rem;color:var(--muted);margin-top:.25rem;
+}
+
+.toggle-group{display:flex;align-items:center;gap:1rem}
+.toggle-switch{
+  position:relative;width:48px;height:24px;
+  background:rgba(99,102,241,.2);border:1px solid var(--border);
+  border-radius:12px;cursor:pointer;transition:all .2s;
+}
+.toggle-switch.on{background:var(--green);border-color:var(--green)}
+.toggle-knob{
+  position:absolute;top:2px;left:2px;width:20px;height:20px;
+  background:#fff;border-radius:50%;transition:left .2s;
+}
+.toggle-switch.on .toggle-knob{left:26px}
+
+.form-actions{
+  display:flex;gap:.75rem;margin-top:1rem;
+}
+.btn-save{
+  padding:.6rem 1.5rem;background:var(--accent);color:#fff;
+  border:none;border-radius:8px;font-size:.85rem;font-weight:600;
+  cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif;
+}
+.btn-save:hover{opacity:.85}
+
+/* Toast */
+.toast{
+  position:fixed;bottom:1.5rem;right:1.5rem;
+  background:var(--card);border:1px solid var(--border);
+  padding:1rem 1.5rem;border-radius:10px;
+  font-size:.85rem;color:var(--text);
+  z-index:1000;animation:slideIn .3s ease-out;
+}
+.toast.success{border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.1)}
+.toast.error{border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.1)}
+@keyframes slideIn{
+  from{transform:translateX(400px);opacity:0}
+  to{transform:translateX(0);opacity:1}
+}
+
 /* Empty state */
 .empty{
   text-align:center;padding:3rem 1rem;color:var(--muted);font-size:.85rem;
@@ -268,6 +365,9 @@ tbody tr:last-child td{border-bottom:none}
     <div class="nav-section">Configuration</div>
     <div class="nav-item" onclick="showPage('connexions')">
       <span class="nav-icon">&#128279;</span> Connexions
+    </div>
+    <div class="nav-item" onclick="showPage('config')">
+      <span class="nav-icon">&#9881;</span> Config IA
     </div>
     <div class="nav-item" onclick="showPage('admin')">
       <span class="nav-icon">&#9881;</span> Admin
@@ -451,52 +551,167 @@ tbody tr:last-child td{border-bottom:none}
     <!-- ===== CONNEXIONS ===== -->
     <div class="page" id="page-connexions">
       <div class="connections-grid">
+        <!-- WhatsApp Card -->
         <div class="conn-card">
           <div class="conn-header">
             <div class="conn-name">&#128241; WhatsApp</div>
             <div class="conn-status">
-              <span class="dot yellow"></span>
+              <span class="dot yellow" id="wa-dot"></span>
               <span id="wa-status">Non connecte</span>
             </div>
           </div>
-          <div class="conn-info">Scanner le QR Code pour connecter votre numero WhatsApp</div>
+          <div class="conn-info" id="wa-info">Scanner le QR Code pour connecter votre numero WhatsApp</div>
           <div id="wa-qr" style="display:none;margin:1rem 0;text-align:center">
             <img id="wa-qr-img" src="" alt="QR Code" style="width:200px;height:200px;border-radius:10px">
           </div>
-          <button class="btn-connect" onclick="connectWhatsApp()">Connecter WhatsApp</button>
+          <div id="wa-number" style="display:none;font-size:.82rem;color:var(--accent);font-weight:500;margin:.5rem 0"></div>
+          <button class="btn-connect" id="wa-btn" onclick="connectWhatsApp()">Connecter WhatsApp</button>
         </div>
-        <div class="conn-card">
-          <div class="conn-header">
-            <div class="conn-name">&#128248; Instagram</div>
-            <div class="conn-status">
-              <span class="dot red"></span>
-              <span>Non configure</span>
-            </div>
-          </div>
-          <div class="conn-info">Necessite META_ACCESS_TOKEN dans les variables Railway</div>
-          <button class="btn-connect">Configurer Meta API</button>
-        </div>
+
+        <!-- Telegram Card -->
         <div class="conn-card">
           <div class="conn-header">
             <div class="conn-name">&#9992; Telegram</div>
             <div class="conn-status">
-              <span class="dot red"></span>
-              <span>Non configure</span>
+              <span class="dot red" id="tg-dot"></span>
+              <span id="tg-status">Non configure</span>
             </div>
           </div>
-          <div class="conn-info">Necessite TELEGRAM_BOT_TOKEN dans les variables Railway</div>
-          <button class="btn-connect">Configurer Bot</button>
+          <div class="conn-info" id="tg-info">
+            <div id="tg-setup" class="setup-instructions" style="display:none">
+              <strong>Instructions de configuration:</strong>
+              <ol>
+                <li>Creez un bot sur <strong>@BotFather</strong></li>
+                <li>Obtenez le token API</li>
+                <li>Ajoutez <strong>TELEGRAM_BOT_TOKEN</strong> dans vos variables Railway</li>
+                <li>Redemarrez le service</li>
+              </ol>
+            </div>
+            <div id="tg-connected" style="display:none;color:var(--muted)">Bot Telegram connecte et operationnel</div>
+          </div>
         </div>
+
+        <!-- Instagram Card -->
+        <div class="conn-card">
+          <div class="conn-header">
+            <div class="conn-name">&#128248; Instagram</div>
+            <div class="conn-status">
+              <span class="dot red" id="ig-dot"></span>
+              <span id="ig-status">Non configure</span>
+            </div>
+          </div>
+          <div class="conn-info">
+            <div id="ig-setup" class="setup-instructions" style="display:none">
+              <strong>Instructions de configuration:</strong>
+              <ol>
+                <li>Obtenez <strong>META_ACCESS_TOKEN</strong> depuis Meta App</li>
+                <li>Configurez <strong>META_VERIFY_TOKEN</strong> = <span class="tag">salesbot_verify_2024</span></li>
+                <li>Ajoutez vos tokens dans les variables Railway</li>
+                <li>Le webhook sera: <span class="tag" id="ig-webhook" style="display:none"></span></li>
+              </ol>
+            </div>
+            <div id="ig-connected" style="display:none;color:var(--muted)">Meta API connecte avec webhook configure</div>
+          </div>
+        </div>
+
+        <!-- Email Card -->
         <div class="conn-card">
           <div class="conn-header">
             <div class="conn-name">&#128139; Email</div>
             <div class="conn-status">
-              <span class="dot red"></span>
-              <span>Non configure</span>
+              <span class="dot red" id="email-dot"></span>
+              <span id="email-status">Non configure</span>
             </div>
           </div>
-          <div class="conn-info">Necessite EMAIL_USER et EMAIL_PASS dans les variables Railway</div>
-          <button class="btn-connect">Configurer Email</button>
+          <div class="conn-info">
+            <div id="email-setup" class="setup-instructions" style="display:none">
+              <strong>Instructions de configuration:</strong>
+              <ol>
+                <li>Configurez <strong>EMAIL_USER</strong> (votre adresse e-mail)</li>
+                <li>Configurez <strong>EMAIL_PASS</strong> (mot de passe ou token)</li>
+                <li>Ajoutez ces variables dans Railway</li>
+                <li>Redemarrez le service</li>
+              </ol>
+            </div>
+            <div id="email-connected" style="display:none">
+              <div style="color:var(--text);font-weight:500;margin-bottom:.5rem" id="email-addr"></div>
+              <div style="color:var(--muted);font-size:.75rem">Configuration reussie</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WhatsApp Quick Send Form -->
+      <div class="card" style="margin-top:1.5rem">
+        <div class="card-header">
+          <div class="card-title">Tester WhatsApp</div>
+          <div class="card-subtitle">Envoyez un message de test</div>
+        </div>
+        <div class="quick-send-form">
+          <input type="text" id="wa-phone" placeholder="Numero de telephone (+33...)" />
+          <textarea id="wa-message" placeholder="Votre message de test..."></textarea>
+          <button onclick="sendWhatsApp()">Envoyer</button>
+        </div>
+        <div id="wa-send-status" style="display:none;margin-top:1rem;padding:1rem;border-radius:8px;font-size:.82rem"></div>
+      </div>
+    </div>
+
+    <!-- ===== CONFIG IA ===== -->
+    <div class="page" id="page-config">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Configuration de l'IA</div>
+          <div class="card-subtitle">Personnalisez le comportement du bot</div>
+        </div>
+        <div class="config-form">
+          <div class="form-group">
+            <label>Nom du bot</label>
+            <input type="text" id="botName" placeholder="Ex: Assistant commercial" />
+          </div>
+
+          <div class="form-group">
+            <label>Votre produit/service</label>
+            <input type="text" id="productName" placeholder="Ex: Logiciel CRM SaaS" />
+          </div>
+
+          <div class="form-group">
+            <label>Langue</label>
+            <select id="language">
+              <option value="fr">Francais (FR)</option>
+              <option value="en">English (EN)</option>
+              <option value="ar">العربية (AR)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Prompt systeme</label>
+            <textarea id="systemPrompt" placeholder="Ex: Tu es {botName}, une conseillere commerciale..."></textarea>
+            <div class="form-hint">Utilisez {botName} et {productName} comme variables</div>
+          </div>
+
+          <div class="form-group toggle-group">
+            <label>Relances automatiques</label>
+            <div class="toggle-switch" id="followupToggle" onclick="toggleFollowup()">
+              <div class="toggle-knob"></div>
+            </div>
+          </div>
+
+          <div class="form-group" id="followupDaysGroup" style="display:none">
+            <label>Jours de relance (separés par une virgule)</label>
+            <input type="text" id="followupDays" placeholder="Ex: 1,3,7" />
+            <div class="form-hint">Nombre de jours apres le premier contact</div>
+          </div>
+
+          <div class="form-group toggle-group">
+            <label>Appel IA automatique</label>
+            <div class="toggle-switch" id="autoCallToggle" onclick="toggleAutoCall()">
+              <div class="toggle-knob"></div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn-save" onclick="saveConfig()">Sauvegarder la configuration</button>
+          </div>
         </div>
       </div>
     </div>
@@ -537,11 +752,13 @@ const pages = {
   'rendez-vous':'Rendez-vous',
   'appels':'Appels IA',
   'connexions':'Connexions',
+  'config':'Configuration IA',
   'admin':'Admin'
 };
 
 let allLeadsData = [];
 let currentLang = 'fr';
+let currentConfig = {};
 
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -557,6 +774,7 @@ function showPage(id) {
   if(id==='rendez-vous') loadRdv();
   if(id==='admin') loadAdmin();
   if(id==='connexions') loadConnections();
+  if(id==='config') loadConfig();
 }
 
 function toggleLang() {
@@ -593,6 +811,14 @@ function fmtDate(d) {
   } catch(e){return d}
 }
 
+function showToast(message, type='success') {
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+
 async function loadDashboard() {
   try {
     const [statsRes, leadsRes] = await Promise.all([
@@ -609,7 +835,7 @@ async function loadDashboard() {
     }
     if(leadsRes && leadsRes.ok) {
       const data = await leadsRes.json();
-      const leads = (Array.isArray(data) ? data : (data.leads || [])) || data || [];
+      const leads = data.leads || data || [];
       const tbody = document.getElementById('recentLeadsBody');
       if(!leads.length) {
         tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--muted)">Aucun lead pour le moment</td></tr>';
@@ -634,7 +860,7 @@ async function loadLeads() {
     const res = await fetch('/api/leads');
     if(!res.ok) throw new Error('Failed');
     const data = await res.json();
-    allLeadsData = (Array.isArray(data) ? data : (data.leads || [])) || data || [];
+    allLeadsData = data.leads || data || [];
     renderLeads(allLeadsData);
   } catch(e) {
     document.getElementById('allLeadsBody').innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--muted)">Erreur de chargement</td></tr>';
@@ -729,32 +955,121 @@ async function loadAdmin() {
   }
 }
 
-let waPollingInterval = null;
-
 async function loadConnections() {
   try {
-    const res = await fetch('/api/whatsapp/status');
-    if(!res.ok) return;
-    const data = await res.json();
-    const waStatus = document.getElementById('wa-status');
-    const dot = waStatus.parentElement.querySelector('.dot');
-    if(data.connected) {
-      waStatus.textContent = 'Connecte' + (data.phone ? ' - ' + data.phone : '');
-      dot.className = 'dot green';
-      document.getElementById('wa-qr').style.display = 'none';
-      if(waPollingInterval) { clearInterval(waPollingInterval); waPollingInterval = null; }
-    } else if(data.initializing) {
-      waStatus.textContent = 'Initialisation...';
-      dot.className = 'dot yellow';
-    } else {
-      waStatus.textContent = 'Non connecte';
-      dot.className = 'dot red';
+    const res = await fetch('/api/integrations');
+    if(!res.ok) {
+      // Fallback to stats if integrations endpoint not available
+      const statsRes = await fetch('/api/stats');
+      if(statsRes.ok) {
+        const data = await statsRes.json();
+        updateConnectionsFromStats(data);
+      }
+      return;
     }
-  } catch(e){}
+    const integrations = await res.json();
+    updateConnectionsUI(integrations);
+  } catch(e) {
+    console.error('loadConnections error:', e);
+  }
 }
+
+function updateConnectionsFromStats(data) {
+  const agents = data.agents || {};
+
+  // WhatsApp
+  const waStatus = document.getElementById('wa-status');
+  if(agents.whatsapp) {
+    waStatus.textContent = 'Connecte';
+    document.getElementById('wa-dot').className = 'dot green';
+  }
+}
+
+function updateConnectionsUI(integrations) {
+  // WhatsApp
+  if(integrations.whatsapp) {
+    const wa = integrations.whatsapp;
+    const waStatus = document.getElementById('wa-status');
+    const waDot = document.getElementById('wa-dot');
+    if(wa.connected) {
+      waStatus.textContent = 'Connecte';
+      waDot.className = 'dot green';
+      if(wa.phoneNumber) {
+        const numberEl = document.getElementById('wa-number');
+        numberEl.textContent = '📱 ' + wa.phoneNumber;
+        numberEl.style.display = 'block';
+      }
+      document.getElementById('wa-btn').textContent = 'Reconnecter';
+    }
+  }
+
+  // Telegram
+  if(integrations.telegram) {
+    const tg = integrations.telegram;
+    const tgStatus = document.getElementById('tg-status');
+    const tgDot = document.getElementById('tg-dot');
+    const tgSetup = document.getElementById('tg-setup');
+    const tgConnected = document.getElementById('tg-connected');
+
+    if(tg.connected) {
+      tgStatus.textContent = 'Connecte';
+      tgDot.className = 'dot green';
+      tgSetup.style.display = 'none';
+      tgConnected.style.display = 'block';
+    } else if(tg.missing_token) {
+      tgSetup.style.display = 'block';
+      tgConnected.style.display = 'none';
+    }
+  }
+
+  // Instagram
+  if(integrations.instagram) {
+    const ig = integrations.instagram;
+    const igStatus = document.getElementById('ig-status');
+    const igDot = document.getElementById('ig-dot');
+    const igSetup = document.getElementById('ig-setup');
+    const igConnected = document.getElementById('ig-connected');
+
+    if(ig.configured) {
+      igStatus.textContent = 'Configure';
+      igDot.className = 'dot green';
+      igSetup.style.display = 'none';
+      igConnected.style.display = 'block';
+      if(ig.webhookUrl) {
+        const webhookEl = document.getElementById('ig-webhook');
+        webhookEl.textContent = ig.webhookUrl;
+        webhookEl.style.display = 'inline-flex';
+      }
+    } else {
+      igSetup.style.display = 'block';
+      igConnected.style.display = 'none';
+    }
+  }
+
+  // Email
+  if(integrations.email) {
+    const email = integrations.email;
+    const emailStatus = document.getElementById('email-status');
+    const emailDot = document.getElementById('email-dot');
+    const emailSetup = document.getElementById('email-setup');
+    const emailConnected = document.getElementById('email-connected');
+
+    if(email.connected) {
+      emailStatus.textContent = 'Configure';
+      emailDot.className = 'dot green';
+      emailSetup.style.display = 'none';
+      emailConnected.style.display = 'block';
+      if(email.email) {
+        document.getElementById('email-addr').textContent = email.email;
+      }
+    } else {
+      emailSetup.style.display = 'block';
+      emailConnected.style.display = 'none';
+    }
+  }
+}
+
 async function connectWhatsApp() {
-  const btn = document.querySelector('#page-connexions button[onclick="connectWhatsApp()"]');
-  if(btn) { btn.textContent = 'Connexion...'; btn.disabled = true; }
   try {
     const res = await fetch('/api/whatsapp/qr');
     if(res.ok) {
@@ -763,38 +1078,127 @@ async function connectWhatsApp() {
         document.getElementById('wa-qr').style.display='block';
         document.getElementById('wa-qr-img').src=data.qr;
         document.getElementById('wa-status').textContent='Scanner le QR Code';
-        document.getElementById('wa-status').parentElement.querySelector('.dot').className='dot yellow';
-      } else if(data.connected) {
-        document.getElementById('wa-status').textContent='Connecte'+(data.phone?' - '+data.phone:'');
-        document.getElementById('wa-status').parentElement.querySelector('.dot').className='dot green';
-        if(btn) { btn.textContent='Connecte'; }
-        return;
-      } else {
-        document.getElementById('wa-status').textContent='Initialisation en cours...';
       }
     }
-  } catch(e) { alert('Erreur connexion WhatsApp'); }
-  if(btn) { btn.textContent='Connecter WhatsApp'; btn.disabled=false; }
-  if(waPollingInterval) clearInterval(waPollingInterval);
-  waPollingInterval = setInterval(async () => {
-    try {
-      const r = await fetch('/api/whatsapp/qr');
-      if(!r.ok) return;
-      const d = await r.json();
-      if(d.qr) {
-        document.getElementById('wa-qr').style.display='block';
-        document.getElementById('wa-qr-img').src=d.qr;
-        document.getElementById('wa-status').textContent='Scanner le QR Code';
-        document.getElementById('wa-status').parentElement.querySelector('.dot').className='dot yellow';
-      } else if(d.connected) {
-        document.getElementById('wa-qr').style.display='none';
-        document.getElementById('wa-status').textContent='Connecte'+(d.phone?' - '+d.phone:'');
-        document.getElementById('wa-status').parentElement.querySelector('.dot').className='dot green';
-        clearInterval(waPollingInterval); waPollingInterval=null;
-      }
-    } catch(e){}
-  }, 3000);
+  } catch(e) {
+    showToast('Erreur: demarrez le service WhatsApp', 'error');
+  }
 }
+
+async function sendWhatsApp() {
+  const phone = document.getElementById('wa-phone').value.trim();
+  const message = document.getElementById('wa-message').value.trim();
+
+  if(!phone || !message) {
+    showToast('Remplissez le numero et le message', 'error');
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/whatsapp/send', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({phone, message})
+    });
+
+    const statusEl = document.getElementById('wa-send-status');
+    if(res.ok) {
+      statusEl.style.display = 'block';
+      statusEl.style.background = 'rgba(16,185,129,.1)';
+      statusEl.style.borderLeft = '2px solid var(--green)';
+      statusEl.style.color = '#6ee7b7';
+      statusEl.textContent = '✓ Message envoye avec succes';
+      document.getElementById('wa-phone').value = '';
+      document.getElementById('wa-message').value = '';
+      setTimeout(() => statusEl.style.display = 'none', 4000);
+    } else {
+      const error = await res.json();
+      statusEl.style.display = 'block';
+      statusEl.style.background = 'rgba(239,68,68,.1)';
+      statusEl.style.borderLeft = '2px solid var(--red)';
+      statusEl.style.color = '#fca5a5';
+      statusEl.textContent = '✗ Erreur: ' + (error.error || 'impossible d\'envoyer');
+    }
+  } catch(e) {
+    document.getElementById('wa-send-status').style.display = 'block';
+    document.getElementById('wa-send-status').textContent = '✗ Erreur: ' + e.message;
+  }
+}
+
+function toggleFollowup() {
+  const toggle = document.getElementById('followupToggle');
+  toggle.classList.toggle('on');
+  const group = document.getElementById('followupDaysGroup');
+  group.style.display = toggle.classList.contains('on') ? 'flex' : 'none';
+  currentConfig.followupEnabled = toggle.classList.contains('on');
+}
+
+function toggleAutoCall() {
+  const toggle = document.getElementById('autoCallToggle');
+  toggle.classList.toggle('on');
+  currentConfig.autoCallEnabled = toggle.classList.contains('on');
+}
+
+async function loadConfig() {
+  try {
+    const res = await fetch('/api/config');
+    if(!res.ok) {
+      showToast('Erreur de chargement de la configuration', 'error');
+      return;
+    }
+    const config = await res.json();
+    currentConfig = config;
+
+    document.getElementById('botName').value = config.botName || '';
+    document.getElementById('productName').value = config.productName || '';
+    document.getElementById('language').value = config.language || 'fr';
+    document.getElementById('systemPrompt').value = config.systemPrompt || '';
+
+    const followupToggle = document.getElementById('followupToggle');
+    if(config.followupEnabled) {
+      followupToggle.classList.add('on');
+      document.getElementById('followupDaysGroup').style.display = 'flex';
+    }
+    document.getElementById('followupDays').value = (config.followupDays || []).join(',');
+
+    const autoCallToggle = document.getElementById('autoCallToggle');
+    if(config.autoCallEnabled) {
+      autoCallToggle.classList.add('on');
+    }
+  } catch(e) {
+    console.error('loadConfig error:', e);
+  }
+}
+
+async function saveConfig() {
+  const config = {
+    botName: document.getElementById('botName').value,
+    productName: document.getElementById('productName').value,
+    language: document.getElementById('language').value,
+    systemPrompt: document.getElementById('systemPrompt').value,
+    followupEnabled: document.getElementById('followupToggle').classList.contains('on'),
+    followupDays: document.getElementById('followupDays').value.split(',').map(d=>parseInt(d.trim())).filter(d=>!isNaN(d)),
+    autoCallEnabled: document.getElementById('autoCallToggle').classList.contains('on')
+  };
+
+  try {
+    const res = await fetch('/api/config', {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(config)
+    });
+
+    if(res.ok) {
+      showToast('Configuration sauvegardee ✅');
+      currentConfig = config;
+    } else {
+      showToast('Erreur lors de la sauvegarde', 'error');
+    }
+  } catch(e) {
+    showToast('Erreur: ' + e.message, 'error');
+  }
+}
+
 async function logout() {
   try {
     await fetch('/auth/logout', {method:'POST'});
