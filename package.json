@@ -1,7 +1,7 @@
 {
   "name": "salesbot-ia",
-  "version": "2.0.0",
-  "description": "SalesBot IA — Plateforme SaaS de vente automatisee (FR + AR)",
+  "version": "3.0.0",
+  "description": "SalesBot IA v3 — Plateforme SaaS multi-tenant de vente automatisee",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
