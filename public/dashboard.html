@@ -264,6 +264,27 @@ tbody tr:last-child td{border-bottom:none}
   display:flex;flex-direction:column;gap:1.25rem;
   padding:1.5rem;
 }
+.config-section{
+  border:1px solid var(--border);border-radius:10px;
+  overflow:hidden;margin-bottom:.5rem;
+}
+.config-section-header{
+  display:flex;align-items:center;gap:.6rem;
+  padding:.75rem 1rem;background:rgba(99,102,241,.07);
+  font-size:.83rem;font-weight:700;color:var(--accent);
+  cursor:pointer;user-select:none;
+  border-bottom:1px solid var(--border);
+}
+.config-section-header .sec-arrow{
+  margin-left:auto;font-size:.7rem;transition:transform .2s;
+}
+.config-section-header.collapsed .sec-arrow{transform:rotate(-90deg)}
+.config-section-body{
+  padding:1rem;display:flex;flex-direction:column;gap:1rem;
+}
+.config-section-body.hidden{display:none}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:600px){.form-row{grid-template-columns:1fr}}
 .form-group{display:flex;flex-direction:column;gap:.5rem}
 .form-group label{
   font-size:.82rem;font-weight:600;color:var(--text);
@@ -275,12 +296,61 @@ tbody tr:last-child td{border-bottom:none}
   color:var(--text);padding:.75rem;border-radius:8px;
   font-family:'Inter',sans-serif;font-size:.82rem;
 }
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+  outline:none;border-color:var(--accent);
+  box-shadow:0 0 0 2px rgba(99,102,241,.15);
+}
 .form-group input::placeholder,
 .form-group textarea::placeholder{color:var(--muted)}
-.form-group textarea{min-height:180px;resize:vertical;font-family:monospace}
+.form-group textarea{min-height:120px;resize:vertical;line-height:1.5}
+.form-group textarea.mono{font-family:monospace;font-size:.78rem}
+.form-group textarea.tall{min-height:200px}
 .form-group .form-hint{
-  font-size:.75rem;color:var(--muted);margin-top:.25rem;
+  font-size:.73rem;color:var(--muted);margin-top:.25rem;line-height:1.4;
 }
+.form-group .form-hint a{color:var(--accent);text-decoration:none}
+.form-group .form-hint a:hover{text-decoration:underline}
+.objection-row{
+  display:grid;grid-template-columns:1fr 1fr;gap:.5rem;
+  align-items:start;margin-bottom:.4rem;
+}
+.objection-row input{
+  background:var(--card);border:1px solid var(--border);
+  color:var(--text);padding:.55rem .75rem;border-radius:6px;
+  font-family:'Inter',sans-serif;font-size:.78rem;
+}
+.objection-row .del-obj{
+  grid-column:span 2;text-align:right;
+}
+.btn-add-obj{
+  background:rgba(99,102,241,.1);color:var(--accent);border:1px dashed var(--accent);
+  padding:.45rem 1rem;border-radius:6px;font-size:.78rem;cursor:pointer;
+  font-family:'Inter',sans-serif;transition:all .2s;
+}
+.btn-add-obj:hover{background:rgba(99,102,241,.2)}
+.qual-question-row{
+  display:flex;gap:.5rem;align-items:center;margin-bottom:.35rem;
+}
+.qual-question-row input{
+  flex:1;background:var(--card);border:1px solid var(--border);
+  color:var(--text);padding:.55rem .75rem;border-radius:6px;
+  font-family:'Inter',sans-serif;font-size:.78rem;
+}
+.btn-del-item{
+  background:rgba(239,68,68,.1);color:#ef4444;border:none;
+  border-radius:6px;padding:.4rem .6rem;cursor:pointer;font-size:.8rem;
+  transition:all .2s;flex-shrink:0;
+}
+.btn-del-item:hover{background:rgba(239,68,68,.25)}
+.time-range{display:flex;align-items:center;gap:.75rem}
+.time-range input[type=time]{
+  background:var(--card);border:1px solid var(--border);
+  color:var(--text);padding:.55rem .75rem;border-radius:6px;
+  font-family:'Inter',sans-serif;font-size:.82rem;flex:1;
+}
+.time-range span{color:var(--muted);font-size:.82rem}
 
 .toggle-group{display:flex;align-items:center;gap:1rem}
 .toggle-switch{
@@ -583,7 +653,7 @@ tbody tr:last-child td{border-bottom:none}
               <ol>
                 <li>Creez un bot sur <strong>@BotFather</strong></li>
                 <li>Obtenez le token API</li>
-                <li>Ajoutez <strong>TELEGRAM_BOT_TOKEN</strong> dans vos variables Railway</li>
+                <li>Ajoutez <strong>TELEBRAM_BOT_TOKEN</strong> dans vos variables Railway</li>
                 <li>Redemarrez le service</li>
               </ol>
             </div>
@@ -660,57 +730,124 @@ tbody tr:last-child td{border-bottom:none}
     <div class="page" id="page-config">
       <div class="card">
         <div class="card-header">
-          <div class="card-title">Configuration de l'IA</div>
-          <div class="card-subtitle">Personnalisez le comportement du bot</div>
+          <div class="card-title">&#9881; Configuration de l'IA</div>
+          <div class="card-subtitle">Personnalisez le comportement, le style et les reponses du bot</div>
         </div>
         <div class="config-form">
-          <div class="form-group">
-            <label>Nom du bot</label>
-            <input type="text" id="botName" placeholder="Ex: Assistant commercial" />
-          </div>
 
-          <div class="form-group">
-            <label>Votre produit/service</label>
-            <input type="text" id="productName" placeholder="Ex: Logiciel CRM SaaS" />
-          </div>
-
-          <div class="form-group">
-            <label>Langue</label>
-            <select id="language">
-              <option value="fr">Francais (FR)</option>
-              <option value="en">English (EN)</option>
-              <option value="ar">العربية (AR)</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label>Prompt systeme</label>
-            <textarea id="systemPrompt" placeholder="Ex: Tu es {botName}, une conseillere commerciale..."></textarea>
-            <div class="form-hint">Utilisez {botName} et {productName} comme variables</div>
-          </div>
-
-          <div class="form-group toggle-group">
-            <label>Relances automatiques</label>
-            <div class="toggle-switch" id="followupToggle" onclick="toggleFollowup()">
-              <div class="toggle-knob"></div>
+          <!-- SECTION 1: IDENTITE -->
+          <div class="config-section">
+            <div class="config-section-header" onclick="toggleSection('sec-identity')">
+              &#129302; e prix sans qualifier d'abord</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Description detaillee du produit/service</label>
+                <textarea id="productDescription" class="tall" placeholder="Decrivez votre offre en detail : ce que vous proposez, pour qui, comment ca marche, les resultats attendus...&#10;&#10;Ex: Notre formation &quot;Accel Coach&quot; est un programme de 8 semaines qui aide les coachs independants a recruter 3 a 5 nouveaux clients par mois via les reseaux sociaux, sans publicite payante."></textarea>
+                <div class="form-hint">Le bot s'appuie sur cette description pour repondre aux questions sur le produit. Soyez precis.</div>
+              </div>
+              <div class="form-group">
+                <label>Avantages cles (un par ligne)</label>
+                <textarea id="productBenefits" placeholder="Ex:&#10;✓ Resultats en moins de 30 jours&#10;✓ Accompagnement personnalise&#10;✓ Acces a vie aux ressources&#10;✓ Communaute privee de +500 membres"></textarea>
+                <div class="form-hint">Le bot utilisera ces arguments pour convaincre les leads</div>
+              </div>
             </div>
           </div>
 
-          <div class="form-group" id="followupDaysGroup" style="display:none">
-            <label>Jours de relance (separés par une virgule)</label>
-            <input type="text" id="followupDays" placeholder="Ex: 1,3,7" />
-            <div class="form-hint">Nombre de jours apres le premier contact</div>
+          <!-- SECTION 3: PROCESSUS DE VENTE -->
+          <div class="config-section">
+            <div class="config-section-header" onclick="toggleSection('sec-sales')">
+              &#128279; Processus de Vente <span class="sec-arrow">&#9660;</span>
+            </div>
+            <div class="config-section-body" id="sec-sales">
+              <div class="form-group">
+                <label>Lien de prise de RDV</label>
+                <input type="url" id="rdvLink" placeholder="Ex: https://calendly.com/votre-nom/30min" />
+                <div class="form-hint">Le bot partage ce lien quand un lead est qualifie et pret a prendre un RDV</div>
+              </div>
+              <div class="form-group">
+                <label>Questions de qualification</label>
+                <div id="qualQuestions"></div>
+                <button class="btn-add-obj" onclick="addQualQuestion()">+ Ajouter une question</button>
+                <div class="form-hint">Questions que le bot doit poser pour qualifier un lead (budget, besoin, delai...)</div>
+              </div>
+              <div class="form-group">
+                <label>Message de bienvenue</label>
+                <textarea id="welcomeMessage" class="tall" placeholder="Ex: Bonjour {name} ! &#128075;&#127995; Je suis {botName}, conseillere pour {productName}.&#10;&#10;J'ai vu que vous vous etes interesse(e) a notre programme. Je voudrais mieux comprendre votre situation pour voir si on peut vous aider.&#10;&#10;Vous avez quelques minutes pour qu'on en parle ? &#128522;"></textarea>
+                <div class="form-hint">Premier message envoye automatiquement a un nouveau lead. Variables : {name}, {botName}, {productName}</div>
+              </div>
+              <div class="form-group">
+                <label>Prompt systeme principal</label>
+                <textarea id="systemPrompt" class="mono tall" placeholder="Tu es {botName}, une conseillere commerciale...&#10;&#10;Variables disponibles: {botName}, {productName}, {rdvLink}"></textarea>
+                <div class="form-hint">Instructions principales de l'IA. Variables : {botName}, {productName}, {rdvLink}, {rdvPhone}, {productPrice}</div>
+              </div>
+            </div>
           </div>
 
-          <div class="form-group toggle-group">
-            <label>Appel IA automatique</label>
-            <div class="toggle-switch" id="autoCallToggle" onclick="toggleAutoCall()">
-              <div class="toggle-knob"></div>
+          <!-- SECTION 4: OBJECTIONS -->
+          <div class="config-section">
+            <div class="config-section-header" onclick="toggleSection('sec-objections')">
+              &#128226; Gestion des Objections <span class="sec-arrow">&#9660;</span>
+            </div>
+            <div class="config-section-body" id="sec-objections">
+              <div class="form-group">
+                <label>Objections &amp; Reponses preparees</label>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem;margin-bottom:.4rem;padding:.4rem .6rem;background:rgba(99,102,241,.05);border-radius:6px">
+                  <span style="font-size:.72rem;font-weight:700;color:var(--muted)">OBJECTION DU LEAD</span>
+                  <span style="font-size:.72rem;font-weight:700;color:var(--muted)">REPONSE DU BOT</span>
+                </div>
+                <div id="objectionsList"></div>
+                <button class="btn-add-obj" onclick="addObjection()">+ Ajouter une objection</button>
+                <div class="form-hint">Quand le lead dit quelque chose qui ressemble a l'objection, le bot utilise la reponse preparee</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SECTION 5: AUTOMATISATION -->
+          <div class="config-section">
+            <div class="config-section-header" onclick="toggleSection('sec-automation')">
+              &#9881; Automatisation &amp; Limites <span class="sec-arrow">&#9660;</span>
+            </div>
+            <div class="config-section-body" id="sec-automation">
+              <div class="form-group toggle-group">
+                <label>Relances automatiques</label>
+                <div class="toggle-switch" id="followupToggle" onclick="toggleFollowup()">
+                  <div class="toggle-knob"></div>
+                </div>
+              </div>
+              <div class="form-group" id="followupDaysGroup" style="display:none">
+                <label>Jours de relance (separes par une virgule)</label>
+                <input type="text" id="followupDays" placeholder="Ex: 1,3,7" />
+                <div class="form-hint">Nombre de jours apres le premier contact sans reponse</div>
+              </div>
+              <div class="form-group toggle-group">
+                <label>Appel IA automatique</label>
+                <div class="toggle-switch" id="autoCallToggle" onclick="toggleAutoCall()">
+                  <div class="toggle-knob"></div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Heures d'activite du bot</label>
+                  <div class="time-range">
+                    <input type="time" id="activeStart" value="08:00" />
+                    <span>&#8594;</span>
+                    <input type="time" id="activeEnd" value="22:00" />
+                  </div>
+                  <div class="form-hint">Le bot repond uniquement pendant ces heures</div>
+                </div>
+                <div class="form-group">
+                  <label>Limite avant transfert humain</label>
+                  <input type="number" id="maxMessages" min="3" max="50" placeholder="Ex: 10" />
+                  <div class="form-hint">Nombre de messages max avant de notifier un humain</div>
+                </div>
+              </div>
             </div>
           </div>
 
           <div class="form-actions">
-            <button class="btn-save" onclick="saveConfig()">Sauvegarder la configuration</button>
+            <button class="btn-save" onclick="saveConfig()">&#10003; Sauvegarder la configuration</button>
+            <button style="padding:.6rem 1.2rem;background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:8px;font-size:.82rem;cursor:pointer;font-family:'Inter',sans-serif" onclick="loadConfig()">&#8635; Recharger</button>
           </div>
         </div>
       </div>
@@ -1112,6 +1249,100 @@ async function sendWhatsApp() {
       document.getElementById('wa-message').value = '';
       setTimeout(() => statusEl.style.display = 'none', 4000);
     } else {
+      const e  tgConnected.style.display = 'none';
+    }
+  }
+
+  // Instagram
+  if(integrations.instagram) {
+    const ig = integrations.instagram;
+    const igStatus = document.getElementById('ig-status');
+    const igDot = document.getElementById('ig-dot');
+    const igSetup = document.getElementById('ig-setup');
+    const igConnected = document.getElementById('ig-connected');
+
+    if(ig.configured) {
+      igStatus.textContent = 'Configure';
+      igDot.className = 'dot green';
+      igSetup.style.display = 'none';
+      igConnected.style.display = 'block';
+      if(ig.webhookUrl) {
+        const webhookEl = document.getElementById('ig-webhook');
+        webhookEl.textContent = ig.webhookUrl;
+        webhookEl.style.display = 'inline-flex';
+      }
+    } else {
+      igSetup.style.display = 'block';
+      igConnected.style.display = 'none';
+    }
+  }
+
+  // Email
+  if(integrations.email) {
+    const email = integrations.email;
+    const emailStatus = document.getElementById('email-status');
+    const emailDot = document.getElementById('email-dot');
+    const emailSetup = document.getElementById('email-setup');
+    const emailConnected = document.getElementById('email-connected');
+
+    if(email.connected) {
+      emailStatus.textContent = 'Configure';
+      emailDot.className = 'dot green';
+      emailSetup.style.display = 'none';
+      emailConnected.style.display = 'block';
+      if(email.email) {
+        document.getElementById('email-addr').textContent = email.email;
+      }
+    } else {
+      emailSetup.style.display = 'block';
+      emailConnected.style.display = 'none';
+    }
+  }
+}
+
+async function connectWhatsApp() {
+  try {
+    const res = await fetch('/api/whatsapp/qr');
+    if(res.ok) {
+      const data = await res.json();
+      if(data.qr) {
+        document.getElementById('wa-qr').style.display='block';
+        document.getElementById('wa-qr-img').src=data.qr;
+        document.getElementById('wa-status').textContent='Scanner le QR Code';
+      }
+    }
+  } catch(e) {
+    showToast('Erreur: demarrez le service WhatsApp', 'error');
+  }
+}
+
+async function sendWhatsApp() {
+  const phone = document.getElementById('wa-phone').value.trim();
+  const message = document.getElementById('wa-message').value.trim();
+
+  if(!phone || !message) {
+    showToast('Remplissez le numero et le message', 'error');
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/whatsapp/send', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({phone, message})
+    });
+
+    const statusEl = document.getElementById('wa-send-status');
+    if(res.ok) {
+      statusEl.style.display = 'block';
+      statusEl.style.background = 'rgba(16,185,129,.1)';
+      statusEl.style.borderLeft = '2px solid var(--green)';
+      statusEl.style.color = '#6ee7b7';
+      statusEl.textContent = '✓ Message envoye avec succes';
+      document.getElementById('wa-phone').value = '';
+      document.getElementById('wa-message').value = '';
+      setTimeout(() => statusEl.style.display = 'none', 4000);
+    } else {
       const error = await res.json();
       statusEl.style.display = 'block';
       statusEl.style.background = 'rgba(239,68,68,.1)';
@@ -1139,6 +1370,57 @@ function toggleAutoCall() {
   currentConfig.autoCallEnabled = toggle.classList.contains('on');
 }
 
+// ========= Config IA: sections toggle =========
+function toggleSection(id) {
+  const body = document.getElementById(id);
+  const header = body.previousElementSibling;
+  body.classList.toggle('hidden');
+  header.classList.toggle('collapsed');
+}
+
+// ========= Objections =========
+function addObjection(obj='', resp='') {
+  const container = document.getElementById('objectionsList');
+  const row = document.createElement('div');
+  row.className = 'objection-row';
+  row.innerHTML = `
+    <input type="text" placeholder="Ex: C'est trop cher" value="${obj.replace(/"/g,'&quot;')}" />
+    <input type="text" placeholder="Ex: Je comprends, voici pourquoi ca vaut..." value="${resp.replace(/"/g,'&quot;')}" />
+    <div class="del-obj"><button class="btn-del-item" onclick="this.closest('.objection-row').remove()">✕</button></div>
+  `;
+  container.appendChild(row);
+}
+
+function getObjections() {
+  const rows = document.querySelectorAll('.objection-row');
+  const result = [];
+  rows.forEach(row => {
+    const inputs = row.querySelectorAll('input');
+    const obj = inputs[0].value.trim();
+    const resp = inputs[1].value.trim();
+    if(obj || resp) result.push({ objection: obj, response: resp });
+  });
+  return result;
+}
+
+// ========= Questions de qualification =========
+function addQualQuestion(q='') {
+  const container = document.getElementById('qualQuestions');
+  const row = document.createElement('div');
+  row.className = 'qual-question-row';
+  row.innerHTML = `
+    <input type="text" placeholder="Ex: Quel est votre budget mensuel ?" value="${q.replace(/"/g,'&quot;')}" />
+    <button class="btn-del-item" onclick="this.closest('.qual-question-row').remove()">✕</button>
+  `;
+  container.appendChild(row);
+}
+
+function getQualQuestions() {
+  const inputs = document.querySelectorAll('.qual-question-row input');
+  return Array.from(inputs).map(i => i.value.trim()).filter(v => v);
+}
+
+// ========= Load Config =========
 async function loadConfig() {
   try {
     const res = await fetch('/api/config');
@@ -1149,36 +1431,96 @@ async function loadConfig() {
     const config = await res.json();
     currentConfig = config;
 
+    // Section 1: Identite
     document.getElementById('botName').value = config.botName || '';
-    document.getElementById('productName').value = config.productName || '';
+    document.getElementById('botTone').value = config.botTone || 'professional';
     document.getElementById('language').value = config.language || 'fr';
+    document.getElementById('rdvPhone').value = config.rdvPhone || '';
+    document.getElementById('botSignature').value = config.botSignature || '';
+
+    // Section 2: Produit
+    document.getElementById('productName').value = config.productName || '';
+    document.getElementById('productPrice').value = config.productPrice || '';
+    document.getElementById('productDescription').value = config.productDescription || '';
+    document.getElementById('productBenefits').value = config.productBenefits || '';
+
+    // Section 3: Vente
+    document.getElementById('rdvLink').value = config.rdvLink || '';
+    document.getElementById('welcomeMessage').value = config.welcomeMessage || '';
     document.getElementById('systemPrompt').value = config.systemPrompt || '';
 
+    // Qual questions
+    const qContainer = document.getElementById('qualQuestions');
+    qContainer.innerHTML = '';
+    (config.qualQuestions || []).forEach(q => addQualQuestion(q));
+    if(!config.qualQuestions || config.qualQuestions.length === 0) {
+      addQualQuestion('Quel est votre objectif principal ?');
+      addQualQuestion('Quel est votre budget approximatif ?');
+      addQualQuestion('Dans quel delai souhaitez-vous demarrer ?');
+    }
+
+    // Section 4: Objections
+    const oContainer = document.getElementById('objectionsList');
+    oContainer.innerHTML = '';
+    (config.objections || []).forEach(o => addObjection(o.objection, o.response));
+    if(!config.objections || config.objections.length === 0) {
+      addObjection("C'est trop cher", "Je comprends votre hesitation. Beaucoup de nos clients pensaient la meme chose avant de voir les resultats. Quelle partie vous semble disproportionnee par rapport a ce que vous attendez ?");
+      addObjection("Je dois y reflechir", "Bien sur ! Pour vous aider a reflechir, qu'est-ce qui vous retient exactement ? Est-ce une question de timing, de budget ou de confiance dans le programme ?");
+      addObjection("Je n'ai pas le temps", "C'est justement pour ca qu'on a concu le programme - il s'adapte a votre emploi du temps. Combien de temps avez-vous par semaine ?");
+    }
+
+    // Section 5: Automatisation
     const followupToggle = document.getElementById('followupToggle');
     if(config.followupEnabled) {
       followupToggle.classList.add('on');
       document.getElementById('followupDaysGroup').style.display = 'flex';
+    } else {
+      followupToggle.classList.remove('on');
     }
-    document.getElementById('followupDays').value = (config.followupDays || []).join(',');
+    document.getElementById('followupDays').value = (config.followupDays || [1,3,7]).join(',');
 
     const autoCallToggle = document.getElementById('autoCallToggle');
-    if(config.autoCallEnabled) {
-      autoCallToggle.classList.add('on');
-    }
+    if(config.autoCallEnabled) autoCallToggle.classList.add('on');
+    else autoCallToggle.classList.remove('on');
+
+    document.getElementById('activeStart').value = config.activeStart || '08:00';
+    document.getElementById('activeEnd').value = config.activeEnd || '22:00';
+    document.getElementById('maxMessages').value = config.maxMessages || 10;
+
   } catch(e) {
     console.error('loadConfig error:', e);
+    showToast('Erreur de chargement', 'error');
   }
 }
 
+// ========= Save Config =========
 async function saveConfig() {
   const config = {
-    botName: document.getElementById('botName').value,
-    productName: document.getElementById('productName').value,
+    // Section 1
+    botName: document.getElementById('botName').value.trim(),
+    botTone: document.getElementById('botTone').value,
     language: document.getElementById('language').value,
-    systemPrompt: document.getElementById('systemPrompt').value,
+    rdvPhone: document.getElementById('rdvPhone').value.trim(),
+    botSignature: document.getElementById('botSignature').value.trim(),
+    // Section 2
+    productName: document.getElementById('productName').value.trim(),
+    productPrice: document.getElementById('productPrice').value.trim(),
+    productDescription: document.getElementById('productDescription').value.trim(),
+    productBenefits: document.getElementById('productBenefits').value.trim(),
+    // Section 3
+    rdvLink: document.getElementById('rdvLink').value.trim(),
+    welcomeMessage: document.getElementById('welcomeMessage').value.trim(),
+    systemPrompt: document.getElementById('systemPrompt').value.trim(),
+    qualQuestions: getQualQuestions(),
+    // Section 4
+    objections: getObjections(),
+    // Section 5
     followupEnabled: document.getElementById('followupToggle').classList.contains('on'),
     followupDays: document.getElementById('followupDays').value.split(',').map(d=>parseInt(d.trim())).filter(d=>!isNaN(d)),
-    autoCallEnabled: document.getElementById('autoCallToggle').classList.contains('on')
+    autoCallEnabled: document.getElementById('autoCallToggle').classList.contains('on'),
+    activeStart: document.getElementById('activeStart').value,
+    activeEnd: document.getElementById('activeEnd').value,
+    maxMessages: parseInt(document.getElementById('maxMessages').value) || 10
   };
 
   try {
