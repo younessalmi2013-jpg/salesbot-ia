@@ -937,6 +937,136 @@
                 font-size: 20px;
             }
         }
+
+        /* ============================================================================ */
+        /* RENDEZ-VOUS PAGE - Calendly Style */
+        /* ============================================================================ */
+        .rdv-container { display: flex; flex-direction: column; height: 100%; gap: 1.5rem; }
+        .rdv-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border-color); background-color: var(--bg-secondary); }
+        .rdv-tab-button { padding: 1rem 1.5rem; background: none; border: none; color: var(--text-secondary); font-size: 0.95rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+        .rdv-tab-button:hover { color: var(--text-primary); }
+        .rdv-tab-button.active { color: var(--accent-primary); border-bottom-color: var(--accent-primary); }
+        .rdv-tab-content { display: none; flex: 1; overflow-y: auto; }
+        .rdv-tab-content.active { display: flex; flex-direction: column; }
+        .rdv-header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+        .rdv-title { font-size: 1.75rem; font-weight: 600; color: var(--text-primary); margin: 0; }
+        .rdv-kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+        .rdv-kpi-card { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 1.25rem; transition: all 0.3s ease; }
+        .rdv-kpi-card:hover { border-color: var(--accent-primary); box-shadow: 0 0 12px rgba(124, 58, 237, 0.1); }
+        .rdv-kpi-value { font-size: 2rem; font-weight: 700; color: var(--accent-primary); margin: 0.5rem 0; }
+        .rdv-kpi-label { font-size: 0.875rem; color: var(--text-secondary); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+        .rdv-filters { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; margin-bottom: 1.5rem; }
+        .rdv-filter-group { flex: 1; min-width: 200px; }
+        .rdv-search-box { position: relative; }
+        .rdv-search-box input { width: 100%; padding: 0.75rem 1rem 0.75rem 2.5rem; background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 0.5rem; color: var(--text-primary); font-size: 0.95rem; }
+        .rdv-search-box::before { content: ""; position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); }
+        .rdv-search-box input::placeholder { color: var(--text-secondary); }
+        .rdv-select { width: 100%; padding: 0.75rem 1rem; background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 0.5rem; color: var(--text-primary); font-size: 0.95rem; cursor: pointer; }
+        .rdv-select:focus { outline: none; border-color: var(--accent-primary); box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1); }
+        .rdv-two-column { display: grid; grid-template-columns: 300px 1fr; gap: 1.5rem; flex: 1; overflow: hidden; }
+        .rdv-sidebar { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 1rem; overflow-y: auto; }
+        .rdv-mini-calendar { width: 100%; }
+        .rdv-calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
+        .rdv-calendar-title { font-size: 1rem; font-weight: 600; color: var(--text-primary); margin: 0; }
+        .rdv-calendar-nav { display: flex; gap: 0.5rem; }
+        .rdv-calendar-nav button { background: none; border: none; color: var(--text-secondary); cursor: pointer; font-size: 1.2rem; padding: 0.25rem 0.5rem; transition: color 0.2s; }
+        .rdv-calendar-nav button:hover { color: var(--accent-primary); }
+        .rdv-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem; margin-bottom: 0.5rem; }
+        .rdv-weekday { text-align: center; font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); padding: 0.5rem 0; text-transform: uppercase; }
+        .rdv-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem; }
+        .rdv-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; background-color: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 0.4rem; cursor: pointer; font-size: 0.875rem; color: var(--text-secondary); transition: all 0.2s; position: relative; }
+        .rdv-day:hover { border-color: var(--accent-primary); color: var(--text-primary); }
+        .rdv-day.other-month { opacity: 0.4; cursor: default; }
+        .rdv-day.today { background-color: var(--accent-secondary); color: #fff; font-weight: 600; }
+        .rdv-day.selected { background-color: var(--accent-primary); color: #fff; border-color: var(--accent-primary); }
+        .rdv-day.has-booking::after { content: ""; position: absolute; width: 4px; height: 4px; background-color: var(--success); border-radius: 50%; bottom: 2px; right: 2px; }
+        .rdv-bookings-container { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 0.5rem; overflow: hidden; display: flex; flex-direction: column; }
+        .rdv-table { width: 100%; border-collapse: collapse; font-size: 0.925rem; }
+        .rdv-table thead { background-color: var(--bg-tertiary); border-bottom: 2px solid var(--border-color); }
+        .rdv-table th { padding: 1rem; text-align: left; color: var(--text-secondary); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .rdv-table tbody tr { border-bottom: 1px solid var(--border-color); transition: background-color 0.2s; }
+        .rdv-table tbody tr:hover { background-color: var(--bg-tertiary); }
+        .rdv-table td { padding: 1rem; color: var(--text-primary); }
+        .rdv-table-status { display: inline-block; padding: 0.375rem 0.75rem; border-radius: 0.25rem; font-size: 0.8rem; font-weight: 600; text-transform: capitalize; }
+        .rdv-status-confirmed { background-color: rgba(16, 185, 129, 0.15); color: var(--success); }
+        .rdv-status-pending { background-color: rgba(245, 158, 11, 0.15); color: var(--warning); }
+        .rdv-status-cancelled { background-color: rgba(239, 68, 68, 0.15); color: var(--danger); }
+        .rdv-status-completed { background-color: rgba(59, 130, 246, 0.15); color: var(--info); }
+        .rdv-status-no-show { background-color: rgba(239, 68, 68, 0.15); color: var(--danger); }
+        .rdv-table-actions { display: flex; gap: 0.5rem; }
+        .rdv-btn-action { padding: 0.4rem 0.8rem; background-color: var(--bg-tertiary); border: 1px solid var(--border-color); color: var(--text-secondary); border-radius: 0.3rem; cursor: pointer; font-size: 0.8rem; transition: all 0.2s; }
+        .rdv-btn-action:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+        .rdv-empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3rem; text-align: center; color: var(--text-secondary); }
+        .rdv-empty-state-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.5; }
+        .rdv-empty-state-text { font-size: 1rem; margin-bottom: 1.5rem; }
+        .rdv-event-types-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+        .rdv-event-type-card { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 1.5rem; transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .rdv-event-type-card::before { content: ""; position: absolute; left: 0; top: 0; width: 4px; height: 100%; background-color: var(--accent-primary); }
+        .rdv-event-type-card:hover { border-color: var(--accent-primary); box-shadow: 0 0 16px rgba(124, 58, 237, 0.15); }
+        .rdv-event-type-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+        .rdv-event-type-icon { font-size: 2rem; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background-color: var(--bg-tertiary); border-radius: 0.5rem; }
+        .rdv-event-type-toggle { width: 44px; height: 24px; background-color: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 12px; cursor: pointer; position: relative; transition: all 0.3s; }
+        .rdv-event-type-toggle.active { background-color: var(--success); border-color: var(--success); }
+        .rdv-event-type-toggle::after { content: ""; position: absolute; width: 18px; height: 18px; background-color: white; border-radius: 50%; top: 2px; left: 2px; transition: left 0.3s; }
+        .rdv-event-type-toggle.active::after { left: 22px; }
+        .rdv-event-type-name { font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem; }
+        .rdv-event-type-duration { font-size: 0.85rem; color: var(--accent-primary); font-weight: 500; margin-bottom: 0.75rem; }
+        .rdv-event-type-description { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.4; }
+        .rdv-event-type-actions { display: flex; gap: 0.75rem; }
+        .rdv-event-type-btn { flex: 1; padding: 0.6rem 0.75rem; background-color: var(--bg-tertiary); border: 1px solid var(--border-color); color: var(--text-secondary); border-radius: 0.3rem; cursor: pointer; font-size: 0.85rem; font-weight: 500; transition: all 0.2s; }
+        .rdv-event-type-btn:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+        .rdv-event-type-btn.share { flex: 0.8; }
+        .rdv-availability-container { display: grid; grid-template-columns: 1fr 300px; gap: 1.5rem; }
+        .rdv-schedule-grid { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 1.5rem; }
+        .rdv-schedule-title { font-size: 1.2rem; font-weight: 600; color: var(--text-primary); margin-bottom: 1.5rem; }
+        .rdv-day-schedule { display: grid; grid-template-columns: 120px 1fr; gap: 1rem; align-items: center; padding: 1rem; border-bottom: 1px solid var(--border-color); }
+        .rdv-day-schedule:last-child { border-bottom: none; }
+        .rdv-day-name { font-weight: 600; color: var(--text-primary); display: flex; align-items: center; gap: 0.75rem; }
+        .rdv-time-slots { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+        .rdv-time-slot { padding: 0.5rem 1rem; background-color: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 0.3rem; color: var(--text-primary); font-size: 0.85rem; }
+        .rdv-settings-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+        .rdv-setting-card { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 1.5rem; }
+        .rdv-setting-label { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.75rem; display: block; }
+        .rdv-setting-input { width: 100%; padding: 0.75rem; background-color: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 0.3rem; color: var(--text-primary); font-size: 0.9rem; }
+        .rdv-setting-input:focus { outline: none; border-color: var(--accent-primary); }
+        .rdv-setting-hint { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem; }
+        .rdv-public-page-container { display: grid; grid-template-columns: 1fr 350px; gap: 1.5rem; }
+        .rdv-preview-card { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 0.5rem; overflow: hidden; display: flex; flex-direction: column; }
+        .rdv-preview-header { background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); padding: 2rem; color: white; text-align: center; }
+        .rdv-preview-title { font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .rdv-preview-subtitle { font-size: 0.95rem; opacity: 0.9; }
+        .rdv-preview-body { padding: 2rem; flex: 1; }
+        .rdv-preview-message { font-size: 1rem; color: var(--text-primary); line-height: 1.6; margin-bottom: 2rem; }
+        .rdv-public-settings { display: flex; flex-direction: column; gap: 1.5rem; }
+        .rdv-settings-group { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 1.5rem; }
+        .rdv-settings-group-title { font-size: 1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 1rem; display: block; }
+        .rdv-form-group { margin-bottom: 1rem; }
+        .rdv-form-group:last-child { margin-bottom: 0; }
+        .rdv-link-box { display: flex; gap: 0.5rem; margin-top: 1rem; }
+        .rdv-link-input { flex: 1; padding: 0.75rem; background-color: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 0.3rem; color: var(--text-secondary); font-size: 0.85rem; }
+        .rdv-copy-btn { padding: 0.75rem 1rem; background-color: var(--accent-primary); border: none; border-radius: 0.3rem; color: white; cursor: pointer; font-weight: 500; transition: all 0.2s; }
+        .rdv-copy-btn:hover { background-color: var(--accent-secondary); }
+        .rdv-qr-code { display: flex; justify-content: center; align-items: center; background-color: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 1rem; margin-top: 1rem; min-height: 200px; color: var(--text-secondary); font-size: 0.9rem; text-align: center; }
+        .rdv-time-picker-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 0.75rem; margin-top: 1rem; }
+        .rdv-time-option { padding: 0.75rem; background-color: var(--bg-tertiary); border: 2px solid var(--border-color); border-radius: 0.4rem; color: var(--text-primary); text-align: center; cursor: pointer; font-size: 0.9rem; font-weight: 500; transition: all 0.2s; }
+        .rdv-time-option:hover { border-color: var(--accent-primary); }
+        .rdv-time-option.selected { background-color: var(--accent-primary); border-color: var(--accent-primary); color: white; }
+        .rdv-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+        .rdv-detail-row { grid-column: 1 / -1; }
+        .rdv-detail-label { font-size: 0.85rem; color: var(--text-secondary); text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 0.5rem; }
+        .rdv-detail-value { font-size: 1rem; color: var(--text-primary); font-weight: 500; }
+        @media (max-width: 1024px) {
+            .rdv-two-column { grid-template-columns: 1fr; }
+            .rdv-availability-container { grid-template-columns: 1fr; }
+            .rdv-public-page-container { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .rdv-filters { flex-direction: column; }
+            .rdv-filter-group { min-width: auto; }
+            .rdv-event-types-grid { grid-template-columns: 1fr; }
+            .rdv-tabs { overflow-x: auto; }
+            .rdv-tab-button { padding: 0.75rem 1rem; font-size: 0.9rem; }
+        }
     </style>
 </head>
 <body>
@@ -1107,43 +1237,129 @@
                     </div>
                 </div>
 
-                <!-- RENDEZ-VOUS PAGE -->
-                <div id="page-rdv" class="page">
-                    <div class="btn-group">
-                        <button class="btn btn-primary" onclick="showCreateRdvModal()">
-                            <i class="fas fa-calendar-plus"></i> Créer RDV
-                        </button>
+                <!-- RENDEZ-VOUS PAGE - Calendly Style -->
+                <div id="page-rdv" class="page rdv-container">
+                  <div class="rdv-tabs">
+                    <button class="rdv-tab-button active" data-tab="bookings">Rendez-vous</button>
+                    <button class="rdv-tab-button" data-tab="event-types">Types d'événements</button>
+                    <button class="rdv-tab-button" data-tab="availability">Disponibilité</button>
+                    <button class="rdv-tab-button" data-tab="public-page">Page publique</button>
+                  </div>
+
+                  <div id="rdv-tab-bookings" class="rdv-tab-content active">
+                    <div class="rdv-header">
+                      <h2 class="rdv-title">Rendez-vous</h2>
+                      <button class="btn btn-primary" onclick="rdvOpenCreateModal()">+ Nouveau RDV</button>
                     </div>
-
-                    <div class="kpi-grid" id="rdv-stats"></div>
-
-                    <div class="chart-container">
-                        <div class="chart-title">Lien de Réservation Public</div>
-                        <div style="display: flex; gap: 10px; align-items: center;">
-                            <input type="text" class="form-input" id="booking-link" readonly style="flex: 1;" value="/book/user-id">
-                            <button class="btn btn-secondary btn-sm" onclick="copyBookingLink()">
-                                <i class="fas fa-copy"></i> Copier
-                            </button>
+                    <div class="rdv-kpi-grid">
+                      <div class="rdv-kpi-card"><div class="rdv-kpi-label">Total RDV</div><div class="rdv-kpi-value" id="rdv-stat-total">0</div></div>
+                      <div class="rdv-kpi-card"><div class="rdv-kpi-label">Aujourd'hui</div><div class="rdv-kpi-value" id="rdv-stat-today">0</div></div>
+                      <div class="rdv-kpi-card"><div class="rdv-kpi-label">À venir</div><div class="rdv-kpi-value" id="rdv-stat-upcoming">0</div></div>
+                      <div class="rdv-kpi-card"><div class="rdv-kpi-label">Confirmés</div><div class="rdv-kpi-value" id="rdv-stat-confirmed">0</div></div>
+                      <div class="rdv-kpi-card"><div class="rdv-kpi-label">Taux présence</div><div class="rdv-kpi-value" id="rdv-stat-attendance">-</div></div>
+                    </div>
+                    <div class="rdv-filters">
+                      <div class="rdv-filter-group rdv-search-box">
+                        <input type="text" id="rdv-search" placeholder="Rechercher un RDV..." onkeyup="rdvFilterBookings()">
+                      </div>
+                      <div class="rdv-filter-group">
+                        <select class="rdv-select" id="rdv-filter-status" onchange="rdvFilterBookings()">
+                          <option value="">Tous les statuts</option>
+                          <option value="pending">En attente</option>
+                          <option value="confirmed">Confirmé</option>
+                          <option value="completed">Complété</option>
+                          <option value="cancelled">Annulé</option>
+                          <option value="no-show">Absent</option>
+                        </select>
+                      </div>
+                      <div class="rdv-filter-group">
+                        <input type="date" class="rdv-select" id="rdv-filter-date" onchange="rdvFilterBookings()">
+                      </div>
+                    </div>
+                    <div class="rdv-two-column">
+                      <div class="rdv-sidebar">
+                        <div class="rdv-mini-calendar">
+                          <div class="rdv-calendar-header">
+                            <h3 class="rdv-calendar-title" id="rdv-calendar-title">Mars 2026</h3>
+                            <div class="rdv-calendar-nav">
+                              <button onclick="rdvPrevMonth()">&larr;</button>
+                              <button onclick="rdvNextMonth()">&rarr;</button>
+                            </div>
+                          </div>
+                          <div class="rdv-weekdays">
+                            <div class="rdv-weekday">Lun</div><div class="rdv-weekday">Mar</div><div class="rdv-weekday">Mer</div><div class="rdv-weekday">Jeu</div><div class="rdv-weekday">Ven</div><div class="rdv-weekday">Sam</div><div class="rdv-weekday">Dim</div>
+                          </div>
+                          <div class="rdv-days" id="rdv-calendar-days"></div>
                         </div>
-                    </div>
-
-                    <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Client</th>
-                                    <th>Email</th>
-                                    <th>Téléphone</th>
-                                    <th>Date</th>
-                                    <th>Heure</th>
-                                    <th>Statut</th>
-                                    <th>Notes</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="rdv-table"></tbody>
+                      </div>
+                      <div class="rdv-bookings-container">
+                        <table class="rdv-table">
+                          <thead><tr><th>Client</th><th>Événement</th><th>Date & Heure</th><th>Statut</th><th>Actions</th></tr></thead>
+                          <tbody id="rdv-bookings-tbody">
+                            <tr><td colspan="5" class="rdv-empty-state"><div class="rdv-empty-state-icon">📅</div><div class="rdv-empty-state-text">Aucun rendez-vous pour le moment</div></td></tr>
+                          </tbody>
                         </table>
+                      </div>
                     </div>
+                  </div>
+
+                  <div id="rdv-tab-event-types" class="rdv-tab-content">
+                    <div class="rdv-header">
+                      <h2 class="rdv-title">Types d'événements</h2>
+                      <button class="btn btn-primary" onclick="rdvOpenEventTypeModal()">+ Créer un type</button>
+                    </div>
+                    <div class="rdv-event-types-grid" id="rdv-event-types-grid"></div>
+                  </div>
+
+                  <div id="rdv-tab-availability" class="rdv-tab-content">
+                    <div class="rdv-header"><h2 class="rdv-title">Disponibilité</h2></div>
+                    <div class="rdv-availability-container">
+                      <div class="rdv-schedule-grid">
+                        <div class="rdv-schedule-title">Horaires de travail</div>
+                        <div class="rdv-day-schedule"><label class="rdv-day-name"><input type="checkbox" data-day="monday" onchange="rdvToggleDay('monday')" checked> Lundi</label><div class="rdv-time-slots"><span class="rdv-time-slot">09:00 - 12:00</span><span class="rdv-time-slot">14:00 - 18:00</span></div></div>
+                        <div class="rdv-day-schedule"><label class="rdv-day-name"><input type="checkbox" data-day="tuesday" onchange="rdvToggleDay('tuesday')" checked> Mardi</label><div class="rdv-time-slots"><span class="rdv-time-slot">09:00 - 12:00</span><span class="rdv-time-slot">14:00 - 18:00</span></div></div>
+                        <div class="rdv-day-schedule"><label class="rdv-day-name"><input type="checkbox" data-day="wednesday" onchange="rdvToggleDay('wednesday')" checked> Mercredi</label><div class="rdv-time-slots"><span class="rdv-time-slot">09:00 - 12:00</span><span class="rdv-time-slot">14:00 - 18:00</span></div></div>
+                        <div class="rdv-day-schedule"><label class="rdv-day-name"><input type="checkbox" data-day="thursday" onchange="rdvToggleDay('thursday')" checked> Jeudi</label><div class="rdv-time-slots"><span class="rdv-time-slot">09:00 - 12:00</span><span class="rdv-time-slot">14:00 - 18:00</span></div></div>
+                        <div class="rdv-day-schedule"><label class="rdv-day-name"><input type="checkbox" data-day="friday" onchange="rdvToggleDay('friday')" checked> Vendredi</label><div class="rdv-time-slots"><span class="rdv-time-slot">09:00 - 12:00</span><span class="rdv-time-slot">14:00 - 18:00</span></div></div>
+                        <div class="rdv-day-schedule"><label class="rdv-day-name"><input type="checkbox" data-day="saturday" onchange="rdvToggleDay('saturday')"> Samedi</label><div class="rdv-time-slots"><span class="rdv-time-slot">Fermé</span></div></div>
+                        <div class="rdv-day-schedule"><label class="rdv-day-name"><input type="checkbox" data-day="sunday" onchange="rdvToggleDay('sunday')"> Dimanche</label><div class="rdv-time-slots"><span class="rdv-time-slot">Fermé</span></div></div>
+                      </div>
+                      <div class="rdv-settings-sidebar">
+                        <div class="rdv-setting-card"><label class="rdv-setting-label">Délai avant réunion</label><input type="number" class="rdv-setting-input" id="rdv-buffer-before" value="0" min="0" max="120"><div class="rdv-setting-hint">minutes (préparation)</div></div>
+                        <div class="rdv-setting-card"><label class="rdv-setting-label">Délai après réunion</label><input type="number" class="rdv-setting-input" id="rdv-buffer-after" value="0" min="0" max="120"><div class="rdv-setting-hint">minutes (nettoyage)</div></div>
+                        <div class="rdv-setting-card"><label class="rdv-setting-label">Préavis minimum</label><select class="rdv-setting-input" id="rdv-min-notice"><option value="0">Immédiat</option><option value="1">1 heure</option><option value="4" selected>4 heures</option><option value="24">1 jour</option><option value="48">2 jours</option></select><div class="rdv-setting-hint">avant le RDV</div></div>
+                        <div class="rdv-setting-card"><label class="rdv-setting-label">Réservation max</label><input type="number" class="rdv-setting-input" id="rdv-max-advance" value="30" min="1" max="365"><div class="rdv-setting-hint">jours à l'avance</div></div>
+                        <button class="btn btn-primary" onclick="rdvSaveAvailability()" style="width: 100%;">Enregistrer</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div id="rdv-tab-public-page" class="rdv-tab-content">
+                    <div class="rdv-header"><h2 class="rdv-title">Page publique</h2></div>
+                    <div class="rdv-public-page-container">
+                      <div class="rdv-preview-card">
+                        <div class="rdv-preview-header"><h3 class="rdv-preview-title" id="rdv-preview-name">SalesBot IA</h3><p class="rdv-preview-subtitle">Planifiez un rendez-vous</p></div>
+                        <div class="rdv-preview-body"><p class="rdv-preview-message" id="rdv-preview-message">Bienvenue sur ma page de réservation.</p><div style="text-align: center; color: var(--text-secondary);">Aperçu de votre page publique</div></div>
+                      </div>
+                      <div class="rdv-public-settings">
+                        <div class="rdv-settings-group">
+                          <label class="rdv-settings-group-title">Informations</label>
+                          <div class="rdv-form-group"><label class="rdv-setting-label">Nom de l'entreprise</label><input type="text" class="rdv-setting-input" id="rdv-company-name" value="SalesBot IA" oninput="rdvUpdatePreview()"></div>
+                          <div class="rdv-form-group"><label class="rdv-setting-label">Logo URL</label><input type="text" class="rdv-setting-input" id="rdv-logo-url" placeholder="https://..." oninput="rdvUpdatePreview()"></div>
+                          <div class="rdv-form-group"><label class="rdv-setting-label">Message d'accueil</label><textarea class="form-textarea" id="rdv-welcome-message" rows="3" oninput="rdvUpdatePreview()">Bienvenue sur ma page de réservation. Sélectionnez une disponibilité qui vous convient.</textarea></div>
+                        </div>
+                        <div class="rdv-settings-group">
+                          <label class="rdv-settings-group-title">Partage</label>
+                          <div class="rdv-form-group"><label class="rdv-setting-label">Lien public</label><div class="rdv-link-box"><input type="text" class="rdv-link-input" id="rdv-public-link" readonly><button class="rdv-copy-btn" onclick="rdvCopyLink()">Copier</button></div></div>
+                          <div class="rdv-form-group"><label class="rdv-setting-label">Code QR</label><div class="rdv-qr-code" id="rdv-qr-code">Bientôt disponible</div></div>
+                        </div>
+                        <div class="rdv-settings-group">
+                          <label class="rdv-settings-group-title">Intégration</label>
+                          <div class="rdv-form-group"><label class="rdv-setting-label">Code d'intégration</label><textarea class="form-textarea" id="rdv-embed-code" rows="4" readonly style="font-family: monospace; font-size: 0.8rem;"></textarea><button class="rdv-copy-btn" onclick="rdvCopyEmbed()" style="width: 100%; margin-top: 0.75rem;">Copier le code</button></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <!-- AGENTS PAGE -->
@@ -1567,44 +1783,61 @@ Analytics avancées</textarea>
         </div>
     </div>
 
-    <!-- Create RDV Modal -->
-    <div class="modal" id="modal-create-rdv">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('modal-create-rdv')">&times;</button>
-            <div class="modal-title">Créer un RDV</div>
-            <form class="modal-form" onsubmit="createBooking(event)">
-                <div class="form-group">
-                    <label class="form-label">Nom du client</label>
-                    <input type="text" class="form-input" id="rdv-name" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Téléphone</label>
-                    <input type="tel" class="form-input" id="rdv-phone" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Email</label>
-                    <input type="email" class="form-input" id="rdv-email" required>
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                    <div class="form-group">
-                        <label class="form-label">Date</label>
-                        <input type="date" class="form-input" id="rdv-date" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Heure</label>
-                        <input type="time" class="form-input" id="rdv-time" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Notes</label>
-                    <textarea class="form-textarea" id="rdv-notes" style="min-height: 80px;"></textarea>
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal('modal-create-rdv')">Annuler</button>
-                    <button type="submit" class="btn btn-primary">Créer RDV</button>
-                </div>
-            </form>
+    <!-- Create RDV Modal - Calendly Style -->
+    <div id="modal-create-rdv" class="modal">
+      <div class="modal-content" style="max-width: 600px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+          <h3 class="modal-title">Nouveau Rendez-vous</h3>
+          <button class="modal-close" onclick="closeModal('modal-create-rdv')">&times;</button>
         </div>
+        <form id="rdv-create-form" onsubmit="rdvHandleCreateSubmit(event)">
+          <div class="form-group"><label class="form-label">Type d'événement</label><select class="form-input rdv-select" id="rdv-form-type" required onchange="rdvUpdateFormDuration()"><option value="">Sélectionner un type...</option></select></div>
+          <div class="form-group"><label class="form-label">Nom du client</label><input type="text" class="form-input" id="rdv-form-name" required placeholder="Jean Dupont"></div>
+          <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" id="rdv-form-email" required placeholder="jean@example.com"></div>
+          <div class="form-group"><label class="form-label">Téléphone</label><input type="tel" class="form-input" id="rdv-form-phone" placeholder="+33 6 12 34 56 78"></div>
+          <div class="form-group"><label class="form-label">Date</label><input type="date" class="form-input rdv-select" id="rdv-form-date" required onchange="rdvLoadAvailableSlots()"></div>
+          <div class="form-group"><label class="form-label">Heure disponible</label><div class="rdv-time-picker-grid" id="rdv-time-picker"></div><input type="hidden" id="rdv-form-time"></div>
+          <div class="form-group"><label class="form-label">Durée</label><div class="rdv-detail-value" id="rdv-form-duration">-</div></div>
+          <div class="form-group"><label class="form-label">Notes (optionnel)</label><textarea class="form-textarea" id="rdv-form-notes" rows="3" placeholder="Ajouter des notes..."></textarea></div>
+          <div class="form-actions"><button type="button" class="btn btn-secondary" onclick="closeModal('modal-create-rdv')">Annuler</button><button type="submit" class="btn btn-primary">Créer le RDV</button></div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Booking Details Modal -->
+    <div id="modal-booking-details" class="modal">
+      <div class="modal-content" style="max-width: 500px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+          <h3 class="modal-title">Détails du Rendez-vous</h3>
+          <button class="modal-close" onclick="closeModal('modal-booking-details')">&times;</button>
+        </div>
+        <div id="rdv-details-content"></div>
+        <div class="form-actions"><button type="button" class="btn btn-secondary" onclick="closeModal('modal-booking-details')">Fermer</button></div>
+      </div>
+    </div>
+
+    <!-- Event Type Modal -->
+    <div id="modal-event-type" class="modal">
+      <div class="modal-content" style="max-width: 500px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+          <h3 class="modal-title">Créer un type d'événement</h3>
+          <button class="modal-close" onclick="closeModal('modal-event-type')">&times;</button>
+        </div>
+        <form id="rdv-event-type-form" onsubmit="rdvHandleEventTypeSubmit(event)">
+          <div class="form-group"><label class="form-label">Nom</label><input type="text" class="form-input" id="rdv-et-name" required placeholder="Appel Découverte"></div>
+          <div class="form-group"><label class="form-label">Durée (minutes)</label><input type="number" class="form-input" id="rdv-et-duration" required value="30" min="5" max="480"></div>
+          <div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" id="rdv-et-description" rows="3" placeholder="Description du type..."></textarea></div>
+          <div class="form-group"><label class="form-label">Couleur</label>
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+              <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;"><input type="radio" name="color" value="#7c3aed" checked><span style="width: 20px; height: 20px; background-color: #7c3aed; border-radius: 50%; display: inline-block;"></span></label>
+              <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;"><input type="radio" name="color" value="#3b82f6"><span style="width: 20px; height: 20px; background-color: #3b82f6; border-radius: 50%; display: inline-block;"></span></label>
+              <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;"><input type="radio" name="color" value="#10b981"><span style="width: 20px; height: 20px; background-color: #10b981; border-radius: 50%; display: inline-block;"></span></label>
+              <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;"><input type="radio" name="color" value="#f59e0b"><span style="width: 20px; height: 20px; background-color: #f59e0b; border-radius: 50%; display: inline-block;"></span></label>
+            </div>
+          </div>
+          <div class="form-actions"><button type="button" class="btn btn-secondary" onclick="closeModal('modal-event-type')">Annuler</button><button type="submit" class="btn btn-primary">Créer</button></div>
+        </form>
+      </div>
     </div>
 
     <!-- Add Agent Modal -->
@@ -1753,7 +1986,7 @@ Analytics avancées</textarea>
             } else if (name === 'leads') {
                 loadLeads();
             } else if (name === 'rdv') {
-                loadBookings();
+                rdvInit();
             } else if (name === 'agents') {
                 loadAgents();
             } else if (name === 'config') {
@@ -2151,109 +2384,449 @@ Analytics avancées</textarea>
         }
 
         // ============================================================================
-        // BOOKINGS FUNCTIONS
+        // RENDEZ-VOUS - Calendly Style Functions
         // ============================================================================
 
-        function loadBookings() {
-            var bookings = [
-                { id: 1, clientName: 'Jean Dupont', email: 'jean@example.com', phone: '+33612345678', date: '2024-03-30', time: '14:00', status: 'confirmed', notes: 'Appel découverte' },
-                { id: 2, clientName: 'Marie Martin', email: 'marie@example.com', phone: '+33698765432', date: '2024-03-31', time: '15:30', status: 'pending', notes: '' },
-                { id: 3, clientName: 'Pierre Bernard', email: 'pierre@example.com', phone: '+33645678901', date: '2024-04-01', time: '10:00', status: 'completed', notes: 'Démo produit' }
-            ];
+        var rdvState = {
+          currentMonth: new Date(),
+          selectedDate: null,
+          bookings: [],
+          eventTypes: [],
+          availability: {},
+          publicSettings: { companyName: 'SalesBot IA', logoUrl: '', welcomeMessage: 'Bienvenue sur ma page de réservation.' }
+        };
 
-            appState.bookings = bookings;
-            generateRDVStats(bookings);
-            renderBookingsTable(bookings);
-        }
-
-        function generateRDVStats(bookings) {
-            var today = new Date();
-            var todayStr = today.toISOString().split('T')[0];
-
-            var stats = [
-                { label: 'Total RDV', value: bookings.length, color: 'info' },
-                { label: 'Aujourd\'hui', value: bookings.filter(function(b) { return b.date === todayStr; }).length, color: 'warning' },
-                { label: 'À venir', value: bookings.filter(function(b) { return b.date >= todayStr; }).length, color: 'success' },
-                { label: 'Confirmés', value: bookings.filter(function(b) { return b.status === 'confirmed'; }).length, color: 'success' },
-                { label: 'Complétés', value: bookings.filter(function(b) { return b.status === 'completed'; }).length, color: 'purple' }
-            ];
-
-            var container = document.getElementById('rdv-stats');
-            container.innerHTML = '';
-
-            stats.forEach(function(stat) {
-                var card = document.createElement('div');
-                card.className = 'kpi-card ' + stat.color;
-                card.innerHTML = '<div class="kpi-label">' + stat.label + '</div><div class="kpi-value">' + stat.value + '</div>';
-                container.appendChild(card);
+        function rdvInitTabs() {
+          var buttons = document.querySelectorAll('.rdv-tab-button');
+          buttons.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+              var tabName = this.getAttribute('data-tab');
+              rdvShowTab(tabName);
             });
+          });
         }
 
-        function renderBookingsTable(bookings) {
-            var tbody = document.getElementById('rdv-table');
-            tbody.innerHTML = '';
-
-            bookings.forEach(function(booking) {
-                var statusColor = booking.status === 'completed' ? 'green' : (booking.status === 'confirmed' ? 'blue' : 'yellow');
-                var row = document.createElement('tr');
-                row.innerHTML = '<td>' + booking.clientName + '</td>' +
-                    '<td>' + booking.email + '</td>' +
-                    '<td>' + booking.phone + '</td>' +
-                    '<td>' + booking.date + '</td>' +
-                    '<td>' + booking.time + '</td>' +
-                    '<td><span class="badge ' + statusColor + '">' + booking.status + '</span></td>' +
-                    '<td>' + booking.notes + '</td>' +
-                    '<td><button class="btn btn-sm btn-secondary" onclick="editBooking(' + booking.id + ')"><i class="fas fa-edit"></i></button> <button class="btn btn-sm btn-danger" onclick="deleteBooking(' + booking.id + ')"><i class="fas fa-trash"></i></button></td>';
-                tbody.appendChild(row);
-            });
+        function rdvShowTab(tabName) {
+          document.querySelectorAll('.rdv-tab-content').forEach(function(c) { c.classList.remove('active'); });
+          document.querySelectorAll('.rdv-tab-button').forEach(function(b) { b.classList.remove('active'); });
+          var sel = document.getElementById('rdv-tab-' + tabName);
+          if (sel) sel.classList.add('active');
+          var btn = document.querySelector('[data-tab="' + tabName + '"]');
+          if (btn) btn.classList.add('active');
+          if (tabName === 'event-types') rdvRenderEventTypes();
+          else if (tabName === 'availability') rdvLoadAvailability();
+          else if (tabName === 'public-page') rdvRenderPublicPage();
+          else if (tabName === 'bookings') { rdvRenderCalendar(); rdvLoadBookings(); }
         }
 
-        function showCreateRdvModal() {
-            document.getElementById('rdv-name').value = '';
-            document.getElementById('rdv-phone').value = '';
-            document.getElementById('rdv-email').value = '';
-            document.getElementById('rdv-date').value = '';
-            document.getElementById('rdv-time').value = '';
-            document.getElementById('rdv-notes').value = '';
-            openModal('modal-create-rdv');
+        function rdvInit() {
+          rdvInitTabs();
+          rdvLoadBookings();
+          rdvLoadEventTypes();
+          rdvLoadAvailability();
+          rdvRenderCalendar();
+          rdvPopulateEventTypeSelect();
+          rdvGeneratePublicLink();
         }
 
-        function createBooking(event) {
-            event.preventDefault();
-            var newBooking = {
-                id: Math.max.apply(null, appState.bookings.map(function(b) { return b.id; })) + 1,
-                clientName: document.getElementById('rdv-name').value,
-                email: document.getElementById('rdv-email').value,
-                phone: document.getElementById('rdv-phone').value,
-                date: document.getElementById('rdv-date').value,
-                time: document.getElementById('rdv-time').value,
-                status: 'pending',
-                notes: document.getElementById('rdv-notes').value
+        function rdvLoadBookings() {
+          var bookings = localStorage.getItem('rdv_bookings');
+          rdvState.bookings = bookings ? JSON.parse(bookings) : [];
+          rdvRenderBookings();
+          rdvUpdateStats();
+        }
+
+        function rdvLoadEventTypes() {
+          var types = localStorage.getItem('rdv_event_types');
+          if (types) { rdvState.eventTypes = JSON.parse(types); }
+          else {
+            rdvState.eventTypes = [
+              { id: '1', name: 'Appel Découverte', duration: 15, description: 'Un appel rapide pour en savoir plus', icon: '📞', color: '#7c3aed', active: true },
+              { id: '2', name: 'Démo Produit', duration: 30, description: 'Démonstration complète de SalesBot IA', icon: '🎯', color: '#3b82f6', active: true },
+              { id: '3', name: 'Consultation', duration: 60, description: 'Consultation approfondie avec notre équipe', icon: '💡', color: '#10b981', active: true }
+            ];
+            localStorage.setItem('rdv_event_types', JSON.stringify(rdvState.eventTypes));
+          }
+        }
+
+        function rdvLoadAvailability() {
+          var avail = localStorage.getItem('rdv_availability');
+          if (avail) { rdvState.availability = JSON.parse(avail); }
+          else {
+            rdvState.availability = {
+              bufferBefore: 0, bufferAfter: 0, minNotice: 4, maxAdvance: 30,
+              schedule: {
+                monday: { enabled: true, slots: ['09:00-12:00', '14:00-18:00'] },
+                tuesday: { enabled: true, slots: ['09:00-12:00', '14:00-18:00'] },
+                wednesday: { enabled: true, slots: ['09:00-12:00', '14:00-18:00'] },
+                thursday: { enabled: true, slots: ['09:00-12:00', '14:00-18:00'] },
+                friday: { enabled: true, slots: ['09:00-12:00', '14:00-18:00'] },
+                saturday: { enabled: false, slots: [] },
+                sunday: { enabled: false, slots: [] }
+              }
             };
-
-            appState.bookings.push(newBooking);
-            toast('RDV créé avec succès', 'success');
-            closeModal('modal-create-rdv');
-            loadBookings();
+            localStorage.setItem('rdv_availability', JSON.stringify(rdvState.availability));
+          }
         }
 
-        function editBooking(id) {
-            toast('Edit booking - Feature coming soon', 'info');
+        function rdvLoadPublicSettings() {
+          var s = localStorage.getItem('rdv_public_settings');
+          if (s) rdvState.publicSettings = JSON.parse(s);
         }
 
-        function deleteBooking(id) {
-            if (confirm('Supprimer ce RDV ?')) {
-                appState.bookings = appState.bookings.filter(function(b) { return b.id !== id; });
-                toast('RDV supprimé', 'success');
-                loadBookings();
+        // Calendar
+        function rdvRenderCalendar() {
+          var year = rdvState.currentMonth.getFullYear();
+          var month = rdvState.currentMonth.getMonth();
+          var monthNames = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+          document.getElementById('rdv-calendar-title').textContent = monthNames[month] + ' ' + year;
+
+          var firstDay = new Date(year, month, 1).getDay();
+          firstDay = firstDay === 0 ? 6 : firstDay - 1;
+          var daysInMonth = new Date(year, month + 1, 0).getDate();
+          var daysInPrevMonth = new Date(year, month, 0).getDate();
+          var container = document.getElementById('rdv-calendar-days');
+          container.innerHTML = '';
+
+          for (var i = firstDay - 1; i >= 0; i--) {
+            var d = document.createElement('div'); d.className = 'rdv-day other-month'; d.textContent = daysInPrevMonth - i; container.appendChild(d);
+          }
+
+          var today = new Date();
+          for (var day = 1; day <= daysInMonth; day++) {
+            var dayEl = document.createElement('div'); dayEl.className = 'rdv-day'; dayEl.textContent = day;
+            var currentDate = new Date(year, month, day);
+            var dateStr = rdvFormatDate(currentDate);
+            if (currentDate.toDateString() === today.toDateString()) dayEl.classList.add('today');
+            var hasBooking = rdvState.bookings.some(function(b) { return rdvFormatDate(new Date(b.date)) === dateStr; });
+            if (hasBooking) dayEl.classList.add('has-booking');
+            (function(cd) { dayEl.addEventListener('click', function() { rdvSelectDate(cd); }); })(currentDate);
+            container.appendChild(dayEl);
+          }
+
+          var totalCells = firstDay + daysInMonth;
+          var cellsNeeded = Math.ceil(totalCells / 7) * 7;
+          for (var d2 = 1; d2 <= cellsNeeded - totalCells; d2++) {
+            var de = document.createElement('div'); de.className = 'rdv-day other-month'; de.textContent = d2; container.appendChild(de);
+          }
+        }
+
+        function rdvSelectDate(date) {
+          rdvState.selectedDate = date;
+          document.querySelectorAll('.rdv-day').forEach(function(d) {
+            d.classList.remove('selected');
+            if (d.textContent === date.getDate().toString() && !d.classList.contains('other-month')) d.classList.add('selected');
+          });
+          rdvFilterBookings();
+        }
+
+        function rdvPrevMonth() { rdvState.currentMonth.setMonth(rdvState.currentMonth.getMonth() - 1); rdvRenderCalendar(); }
+        function rdvNextMonth() { rdvState.currentMonth.setMonth(rdvState.currentMonth.getMonth() + 1); rdvRenderCalendar(); }
+
+        // Bookings
+        function rdvRenderBookings() {
+          var tbody = document.getElementById('rdv-bookings-tbody');
+          tbody.innerHTML = '';
+          var filtered = rdvGetFilteredBookings();
+          if (filtered.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" class="rdv-empty-state"><div class="rdv-empty-state-icon">📅</div><div class="rdv-empty-state-text">Aucun rendez-vous pour le moment</div></td></tr>';
+            return;
+          }
+          filtered.forEach(function(booking) {
+            var row = document.createElement('tr');
+            var dateObj = new Date(booking.date);
+            var dateStr = rdvFormatDate(dateObj) + ' à ' + booking.time;
+            row.innerHTML = '<td>' + rdvEscape(booking.leadName) + '</td>' +
+              '<td>' + rdvEscape(booking.eventType || 'Non spécifié') + '</td>' +
+              '<td>' + dateStr + '</td>' +
+              '<td><span class="rdv-table-status rdv-status-' + booking.status + '">' + rdvGetStatusLabel(booking.status) + '</span></td>' +
+              '<td><div class="rdv-table-actions">' +
+              '<button class="rdv-btn-action" onclick="rdvViewBooking(\'' + rdvEscape(booking.id) + '\')">Détails</button>' +
+              '<button class="rdv-btn-action" onclick="rdvShowStatusOptions(\'' + rdvEscape(booking.id) + '\')">Statut</button>' +
+              '<button class="rdv-btn-action" onclick="rdvDeleteBooking(\'' + rdvEscape(booking.id) + '\')" style="color: var(--danger);">Supprimer</button>' +
+              '</div></td>';
+            tbody.appendChild(row);
+          });
+        }
+
+        function rdvGetFilteredBookings() {
+          var search = document.getElementById('rdv-search').value.toLowerCase();
+          var status = document.getElementById('rdv-filter-status').value;
+          var dateFilter = document.getElementById('rdv-filter-date').value;
+          return rdvState.bookings.filter(function(booking) {
+            var ms = !search || booking.leadName.toLowerCase().includes(search) || booking.email.toLowerCase().includes(search);
+            var mst = !status || booking.status === status;
+            var md = !dateFilter || rdvFormatDate(new Date(booking.date)) === dateFilter;
+            if (rdvState.selectedDate) {
+              var sd = rdvFormatDate(rdvState.selectedDate);
+              return ms && mst && rdvFormatDate(new Date(booking.date)) === sd;
             }
+            return ms && mst && md;
+          });
         }
 
-        function copyBookingLink() {
-            var link = document.getElementById('booking-link').value;
-            navigator.clipboard.writeText(window.location.origin + link).then(function() {
-                toast('Lien copié !', 'success');
+        function rdvFilterBookings() { rdvRenderBookings(); }
+
+        function rdvViewBooking(bookingId) {
+          var booking = rdvState.bookings.find(function(b) { return b.id === bookingId; });
+          if (!booking) return;
+          var dateStr = rdvFormatDate(new Date(booking.date));
+          var html = '<div class="rdv-detail-grid">' +
+            '<div><div class="rdv-detail-label">Nom</div><div class="rdv-detail-value">' + rdvEscape(booking.leadName) + '</div></div>' +
+            '<div><div class="rdv-detail-label">Email</div><div class="rdv-detail-value">' + rdvEscape(booking.email) + '</div></div>' +
+            '<div><div class="rdv-detail-label">Téléphone</div><div class="rdv-detail-value">' + (booking.phone || '-') + '</div></div>' +
+            '<div><div class="rdv-detail-label">Date</div><div class="rdv-detail-value">' + dateStr + ' à ' + booking.time + '</div></div>' +
+            '<div><div class="rdv-detail-label">Événement</div><div class="rdv-detail-value">' + (booking.eventType || '-') + '</div></div>' +
+            '<div><div class="rdv-detail-label">Statut</div><div class="rdv-detail-value"><span class="rdv-table-status rdv-status-' + booking.status + '">' + rdvGetStatusLabel(booking.status) + '</span></div></div>' +
+            '<div class="rdv-detail-row"><div class="rdv-detail-label">Notes</div><div class="rdv-detail-value">' + (booking.notes || 'Aucune note') + '</div></div></div>';
+          document.getElementById('rdv-details-content').innerHTML = html;
+          openModal('modal-booking-details');
+        }
+
+        function rdvShowStatusOptions(bookingId) {
+          var statuses = ['pending','confirmed','completed','cancelled','no-show'];
+          var labels = { 'pending':'En attente','confirmed':'Confirmé','completed':'Complété','cancelled':'Annulé','no-show':'Absent' };
+          var opts = statuses.map(function(s) {
+            return '<button class="btn btn-secondary" style="width:100%;margin-bottom:0.5rem;" onclick="rdvUpdateBookingStatus(\'' + bookingId + '\',\'' + s + '\')">' + labels[s] + '</button>';
+          }).join('');
+          document.getElementById('rdv-details-content').innerHTML = '<div><div class="rdv-detail-label">Changer le statut:</div><div style="margin-top:1rem;">' + opts + '</div></div>';
+          openModal('modal-booking-details');
+        }
+
+        function rdvUpdateBookingStatus(bookingId, status) {
+          var booking = rdvState.bookings.find(function(b) { return b.id === bookingId; });
+          if (booking) {
+            booking.status = status;
+            localStorage.setItem('rdv_bookings', JSON.stringify(rdvState.bookings));
+            rdvRenderBookings(); rdvUpdateStats();
+            closeModal('modal-booking-details');
+            toast('Statut mis à jour', 'success');
+          }
+        }
+
+        function rdvDeleteBooking(bookingId) {
+          if (confirm('Supprimer ce rendez-vous ?')) {
+            rdvState.bookings = rdvState.bookings.filter(function(b) { return b.id !== bookingId; });
+            localStorage.setItem('rdv_bookings', JSON.stringify(rdvState.bookings));
+            rdvRenderBookings(); rdvRenderCalendar(); rdvUpdateStats();
+            toast('Rendez-vous supprimé', 'success');
+          }
+        }
+
+        function rdvUpdateStats() {
+          var now = new Date();
+          var total = rdvState.bookings.length;
+          var todayCount = rdvState.bookings.filter(function(b) { return new Date(b.date).toDateString() === now.toDateString(); }).length;
+          var upcoming = rdvState.bookings.filter(function(b) { return new Date(b.date) >= now; }).length;
+          var confirmed = rdvState.bookings.filter(function(b) { return b.status === 'confirmed'; }).length;
+          var completed = rdvState.bookings.filter(function(b) { return b.status === 'completed'; }).length;
+          var noshow = rdvState.bookings.filter(function(b) { return b.status === 'no-show'; }).length;
+          var attendance = (completed + noshow) > 0 ? Math.round((completed / (completed + noshow)) * 100) : 0;
+          document.getElementById('rdv-stat-total').textContent = total;
+          document.getElementById('rdv-stat-today').textContent = todayCount;
+          document.getElementById('rdv-stat-upcoming').textContent = upcoming;
+          document.getElementById('rdv-stat-confirmed').textContent = confirmed;
+          document.getElementById('rdv-stat-attendance').textContent = attendance + '%';
+        }
+
+        function rdvGetStatusLabel(status) {
+          var l = { 'pending':'En attente','confirmed':'Confirmé','completed':'Complété','cancelled':'Annulé','no-show':'Absent' };
+          return l[status] || status;
+        }
+
+        // Create Booking
+        function rdvOpenCreateModal() {
+          document.getElementById('rdv-create-form').reset();
+          document.getElementById('rdv-form-time').value = '';
+          document.getElementById('rdv-time-picker').innerHTML = '';
+          document.getElementById('rdv-form-duration').textContent = '-';
+          openModal('modal-create-rdv');
+        }
+
+        function rdvHandleCreateSubmit(event) {
+          event.preventDefault();
+          var time = document.getElementById('rdv-form-time').value;
+          if (!time) { toast('Veuillez sélectionner une heure', 'warning'); return; }
+          var booking = {
+            id: 'rdv_' + Date.now(),
+            leadName: document.getElementById('rdv-form-name').value,
+            email: document.getElementById('rdv-form-email').value,
+            phone: document.getElementById('rdv-form-phone').value,
+            date: document.getElementById('rdv-form-date').value,
+            time: time,
+            eventType: document.querySelector('#rdv-form-type option:checked').text,
+            notes: document.getElementById('rdv-form-notes').value,
+            status: 'pending',
+            createdAt: new Date().toISOString()
+          };
+          rdvState.bookings.push(booking);
+          localStorage.setItem('rdv_bookings', JSON.stringify(rdvState.bookings));
+          rdvRenderBookings(); rdvRenderCalendar(); rdvUpdateStats();
+          closeModal('modal-create-rdv');
+          toast('Rendez-vous créé avec succès', 'success');
+        }
+
+        function rdvPopulateEventTypeSelect() {
+          var select = document.getElementById('rdv-form-type');
+          select.innerHTML = '<option value="">Sélectionner un type...</option>';
+          rdvState.eventTypes.filter(function(t) { return t.active; }).forEach(function(type) {
+            var opt = document.createElement('option');
+            opt.value = type.id;
+            opt.textContent = type.name + ' (' + type.duration + ' min)';
+            select.appendChild(opt);
+          });
+        }
+
+        function rdvUpdateFormDuration() {
+          var typeId = document.getElementById('rdv-form-type').value;
+          var type = rdvState.eventTypes.find(function(t) { return t.id === typeId; });
+          document.getElementById('rdv-form-duration').textContent = type ? type.duration + ' minutes' : '-';
+        }
+
+        function rdvLoadAvailableSlots() {
+          var dateStr = document.getElementById('rdv-form-date').value;
+          if (!dateStr) { document.getElementById('rdv-time-picker').innerHTML = ''; return; }
+          var date = new Date(dateStr + 'T00:00:00');
+          var dayOfWeek = date.getDay();
+          var dayName = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'][dayOfWeek];
+          var schedule = rdvState.availability.schedule[dayName];
+          var slots = [];
+          if (schedule && schedule.enabled) {
+            schedule.slots.forEach(function(slot) {
+              var parts = slot.split('-');
+              var current = rdvParseTime(parts[0]);
+              var end = rdvParseTime(parts[1]);
+              while (current < end) { slots.push(rdvFormatTime(current)); current += 30; }
             });
+          }
+          var picker = document.getElementById('rdv-time-picker');
+          picker.innerHTML = '';
+          if (slots.length === 0) { picker.innerHTML = '<div style="grid-column:1/-1;color:var(--text-secondary);text-align:center;padding:1rem;">Aucun créneau disponible</div>'; return; }
+          slots.forEach(function(slot) {
+            var btn = document.createElement('button');
+            btn.type = 'button'; btn.className = 'rdv-time-option'; btn.textContent = slot;
+            btn.onclick = function() {
+              document.getElementById('rdv-form-time').value = slot;
+              document.querySelectorAll('.rdv-time-option').forEach(function(b) { b.classList.remove('selected'); });
+              this.classList.add('selected');
+            };
+            picker.appendChild(btn);
+          });
+        }
+
+        function rdvParseTime(t) { var p = t.split(':'); return parseInt(p[0]) * 60 + parseInt(p[1]); }
+        function rdvFormatTime(m) { var h = Math.floor(m / 60); var mi = m % 60; return (h < 10 ? '0' : '') + h + ':' + (mi < 10 ? '0' : '') + mi; }
+
+        // Event Types
+        function rdvRenderEventTypes() {
+          var grid = document.getElementById('rdv-event-types-grid');
+          grid.innerHTML = '';
+          rdvState.eventTypes.forEach(function(type) {
+            var card = document.createElement('div'); card.className = 'rdv-event-type-card';
+            var statusClass = type.active ? 'active' : '';
+            card.innerHTML = '<div class="rdv-event-type-header"><div class="rdv-event-type-icon">' + type.icon + '</div>' +
+              '<button class="rdv-event-type-toggle ' + statusClass + '" onclick="rdvToggleEventType(\'' + type.id + '\')" title="Active/Inactive"></button></div>' +
+              '<div class="rdv-event-type-name">' + type.name + '</div>' +
+              '<div class="rdv-event-type-duration">⏱️ ' + type.duration + ' minutes</div>' +
+              '<div class="rdv-event-type-description">' + type.description + '</div>' +
+              '<div class="rdv-event-type-actions">' +
+              '<button class="rdv-event-type-btn share" onclick="rdvCopyEventLink(\'' + type.id + '\')">📋 Partager</button>' +
+              '<button class="rdv-event-type-btn" onclick="rdvDeleteEventType(\'' + type.id + '\')" style="color:var(--danger);">Supprimer</button></div>';
+            grid.appendChild(card);
+          });
+        }
+
+        function rdvToggleEventType(typeId) {
+          var type = rdvState.eventTypes.find(function(t) { return t.id === typeId; });
+          if (type) { type.active = !type.active; localStorage.setItem('rdv_event_types', JSON.stringify(rdvState.eventTypes)); rdvRenderEventTypes(); rdvPopulateEventTypeSelect(); }
+        }
+
+        function rdvCopyEventLink(typeId) {
+          navigator.clipboard.writeText(window.location.origin + '/booking/' + typeId).then(function() { toast('Lien copié', 'success'); });
+        }
+
+        function rdvDeleteEventType(typeId) {
+          if (confirm('Supprimer ce type ?')) {
+            rdvState.eventTypes = rdvState.eventTypes.filter(function(t) { return t.id !== typeId; });
+            localStorage.setItem('rdv_event_types', JSON.stringify(rdvState.eventTypes));
+            rdvRenderEventTypes(); rdvPopulateEventTypeSelect();
+            toast('Type supprimé', 'success');
+          }
+        }
+
+        function rdvOpenEventTypeModal() { document.getElementById('rdv-event-type-form').reset(); openModal('modal-event-type'); }
+
+        function rdvHandleEventTypeSubmit(event) {
+          event.preventDefault();
+          var colorRadios = document.getElementsByName('color');
+          var color = '#7c3aed';
+          for (var i = 0; i < colorRadios.length; i++) { if (colorRadios[i].checked) { color = colorRadios[i].value; break; } }
+          var icons = ['📞','🎯','💡','📊','🚀','👥'];
+          var type = {
+            id: 'et_' + Date.now(),
+            name: document.getElementById('rdv-et-name').value,
+            duration: parseInt(document.getElementById('rdv-et-duration').value),
+            description: document.getElementById('rdv-et-description').value,
+            icon: icons[Math.floor(Math.random() * icons.length)],
+            color: color, active: true
+          };
+          rdvState.eventTypes.push(type);
+          localStorage.setItem('rdv_event_types', JSON.stringify(rdvState.eventTypes));
+          rdvRenderEventTypes(); rdvPopulateEventTypeSelect();
+          closeModal('modal-event-type');
+          toast('Type créé', 'success');
+        }
+
+        // Availability
+        function rdvToggleDay(day) {
+          var cb = document.querySelector('[data-day="' + day + '"]');
+          rdvState.availability.schedule[day].enabled = cb.checked;
+          localStorage.setItem('rdv_availability', JSON.stringify(rdvState.availability));
+        }
+
+        function rdvSaveAvailability() {
+          rdvState.availability.bufferBefore = parseInt(document.getElementById('rdv-buffer-before').value);
+          rdvState.availability.bufferAfter = parseInt(document.getElementById('rdv-buffer-after').value);
+          rdvState.availability.minNotice = parseInt(document.getElementById('rdv-min-notice').value);
+          rdvState.availability.maxAdvance = parseInt(document.getElementById('rdv-max-advance').value);
+          localStorage.setItem('rdv_availability', JSON.stringify(rdvState.availability));
+          toast('Disponibilité enregistrée', 'success');
+        }
+
+        // Public Page
+        function rdvRenderPublicPage() {
+          rdvLoadPublicSettings();
+          document.getElementById('rdv-company-name').value = rdvState.publicSettings.companyName;
+          document.getElementById('rdv-logo-url').value = rdvState.publicSettings.logoUrl || '';
+          document.getElementById('rdv-welcome-message').value = rdvState.publicSettings.welcomeMessage;
+          rdvUpdatePreview(); rdvGeneratePublicLink(); rdvGenerateEmbedCode();
+        }
+
+        function rdvUpdatePreview() {
+          rdvState.publicSettings.companyName = document.getElementById('rdv-company-name').value;
+          rdvState.publicSettings.logoUrl = document.getElementById('rdv-logo-url').value;
+          rdvState.publicSettings.welcomeMessage = document.getElementById('rdv-welcome-message').value;
+          document.getElementById('rdv-preview-name').textContent = rdvState.publicSettings.companyName;
+          document.getElementById('rdv-preview-message').textContent = rdvState.publicSettings.welcomeMessage;
+          localStorage.setItem('rdv_public_settings', JSON.stringify(rdvState.publicSettings));
+        }
+
+        function rdvGeneratePublicLink() { document.getElementById('rdv-public-link').value = window.location.origin + '/booking/public'; }
+        function rdvCopyLink() { navigator.clipboard.writeText(document.getElementById('rdv-public-link').value).then(function() { toast('Lien copié', 'success'); }); }
+        function rdvCopyEmbed() { navigator.clipboard.writeText(document.getElementById('rdv-embed-code').value).then(function() { toast('Code copié', 'success'); }); }
+        function rdvGenerateEmbedCode() { document.getElementById('rdv-embed-code').value = '<iframe src="' + window.location.origin + '/booking/embed" width="100%" height="600" frameborder="0"></iframe>'; }
+
+        // Utils
+        function rdvFormatDate(date) {
+          var y = date.getFullYear();
+          var m = String(date.getMonth() + 1).padStart(2, '0');
+          var d = String(date.getDate()).padStart(2, '0');
+          return y + '-' + m + '-' + d;
+        }
+
+        function rdvEscape(str) {
+          if (!str) return '';
+          return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
         }
 
         // ============================================================================
