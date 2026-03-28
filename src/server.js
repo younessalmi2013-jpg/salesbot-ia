@@ -8,6 +8,7 @@ const { auth, role, createToken, hashPassword, checkPassword } = require('./midd
 const waManager = require('./agents/whatsapp/manager');
 
 const app = express();
+app.set('trust proxy', 1);
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json({ limit: '10mb' }));
@@ -24,7 +25,7 @@ app.post('/auth/login', (req, res) => {
   if (!user || !user.active || !checkPassword(password, user.password))
     return res.status(401).json({ error: 'Identifiants incorrects' });
   const token = createToken(user);
-  res.cookie('token', token, { httpOnly: true, maxAge: 7 * 24 * 3600 * 1000, sameSite: 'strict' });
+  res.cookie('token', token, { httpOnly: true, maxAge: 7 * 24 * 3600 * 1000, sameSite: 'lax' });
   res.json({ success: true, role: user.role, username: user.username });
 });
 
