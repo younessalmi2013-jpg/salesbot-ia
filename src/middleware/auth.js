@@ -28,7 +28,7 @@ function auth(req, res, next) {
   const token = req.cookies?.token || (req.headers.authorization || '').replace('Bearer ', '');
   if (!token) return res.status(401).json({ error: 'Non authentifie' });
   try {
-    const decoded = jwH.verify(token, SECRET);
+    const decoded = jwt.verify(token, SECRET);
     const user = db.users.findById(decoded.id);
     if (!user || !user.active) return res.status(401).json({ error: 'Utilisateur inactif ou introuvable' });
     req.user = user;
