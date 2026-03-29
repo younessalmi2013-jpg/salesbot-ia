@@ -1294,6 +1294,459 @@
             font-weight: 600;
         }
 
+    
+
+        /* ============================================================================ */
+        /* VOICE AGENT (AGENT IA VOCAL) */
+        /* ============================================================================ */
+        .voice-agent-section {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .voice-agent-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .voice-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .voice-stat-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .voice-stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+
+        .voice-stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .voice-stat-change {
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .voice-stat-change.positive {
+            color: var(--success);
+        }
+
+        .voice-stat-change.negative {
+            color: var(--danger);
+        }
+
+        .call-controls {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .control-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+        }
+
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .toggle-switch input {
+            cursor: pointer;
+        }
+
+        .toggle-status {
+            font-size: 13px;
+            padding: 6px 12px;
+            border-radius: 4px;
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+        }
+
+        .toggle-status.online {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .active-call-card {
+            background: var(--bg-secondary);
+            border: 2px solid var(--accent-primary);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .call-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .caller-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .caller-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .caller-details {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .caller-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .caller-number {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .call-duration {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .call-wave {
+            display: inline-block;
+            width: 6px;
+            height: 20px;
+            background: var(--accent-primary);
+            border-radius: 3px;
+            margin: 0 2px;
+            animation: wave 0.6s ease-in-out infinite;
+        }
+
+        .call-wave:nth-child(2) { animation-delay: 0.1s; }
+        .call-wave:nth-child(3) { animation-delay: 0.2s; }
+        .call-wave:nth-child(4) { animation-delay: 0.3s; }
+
+        @keyframes wave {
+            0%, 100% { height: 10px; }
+            50% { height: 20px; }
+        }
+
+        .transcription-area {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            min-height: 80px;
+            max-height: 150px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            line-height: 1.5;
+        }
+
+        .call-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .call-btn {
+            flex: 1;
+            min-width: 100px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .call-btn.primary {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .call-btn.primary:hover {
+            background: var(--accent-secondary);
+        }
+
+        .call-btn.danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .call-btn.danger:hover {
+            opacity: 0.9;
+        }
+
+        .call-btn.secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .call-btn.secondary:hover {
+            border-color: var(--accent-primary);
+        }
+
+        .call-log-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        .call-log-table thead {
+            background: var(--bg-secondary);
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .call-log-table th {
+            padding: 15px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+        }
+
+        .call-log-table td {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 13px;
+            color: var(--text-primary);
+        }
+
+        .call-log-table tbody tr:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .call-status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .call-status-badge.qualifie {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+
+        .call-status-badge.rdv_pris {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--info);
+        }
+
+        .call-status-badge.rappeler {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+        }
+
+        .call-status-badge.non_qualifie {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+        }
+
+        .voice-config-panel {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .config-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .config-textarea {
+            grid-column: 1 / -1;
+        }
+
+        .script-textarea {
+            width: 100%;
+            min-height: 150px;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .slider-container input[type="range"] {
+            flex: 1;
+            cursor: pointer;
+        }
+
+        .slider-value {
+            min-width: 40px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent-primary);
+        }
+
+        .campaign-progress {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .campaign-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        /* ============================================================================ */
+        /* WHATSAPP PAGE */
+        /* ============================================================================ */
+        .wa-session-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .wa-session-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .wa-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .wa-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .wa-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .wa-phone {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .wa-status {
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .wa-status.disconnected {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+
+        .qr-real {
+            width: 100%;
+            height: 180px;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .qr-real canvas {
+            width: 100%;
+            height: 100%;
+        }
+
     </style>
 </head>
 <body>
@@ -1324,8 +1777,12 @@
                     <span>Analytics</span>
                 </div>
                 <div class="nav-item" onclick="showPage('agents')">
-                    <i class="fas fa-comments"></i>
-                    <span>Agents WhatsApp</span>
+                    <i class="fas fa-phone-volume"></i>
+                    <span>Agent IA Vocal</span>
+                </div>
+                <div class="nav-item" onclick="showPage('whatsapp')">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
                 </div>
             </div>
 
@@ -1677,33 +2134,376 @@
                 </div>
 
                 <!-- AGENTS PAGE -->
-                <div id="page-agents" class="page">
-                    <div class="btn-group">
-                        <button class="btn btn-primary" onclick="showAddAgentModal()">
-                            <i class="fas fa-plus"></i> Ajouter Agent
+                                <div id="page-agents" class="page">
+                    <!-- Voice Agent Stats -->
+                    <div class="voice-agent-section">
+                        <div class="voice-agent-title">
+                            <i class="fas fa-chart-bar"></i> Statistiques en Temps Réel
+                        </div>
+                        <div class="voice-stats-grid" id="voice-stats-grid">
+                            <div class="voice-stat-card">
+                                <div class="voice-stat-value">47</div>
+                                <div class="voice-stat-label">Appels Aujourd'hui</div>
+                                <div class="voice-stat-change positive"><i class="fas fa-arrow-up"></i> +12%</div>
+                            </div>
+                            <div class="voice-stat-card">
+                                <div class="voice-stat-value">68%</div>
+                                <div class="voice-stat-label">Taux de Qualification</div>
+                                <div class="voice-stat-change positive"><i class="fas fa-arrow-up"></i> +5%</div>
+                            </div>
+                            <div class="voice-stat-card">
+                                <div class="voice-stat-value">12</div>
+                                <div class="voice-stat-label">RDV Pris par IA</div>
+                                <div class="voice-stat-change positive"><i class="fas fa-arrow-up"></i> +18%</div>
+                            </div>
+                            <div class="voice-stat-card">
+                                <div class="voice-stat-value">3m42s</div>
+                                <div class="voice-stat-label">Durée Moyenne</div>
+                                <div class="voice-stat-change negative"><i class="fas fa-arrow-down"></i> -8%</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Agent Vocal Controls -->
+                    <div class="voice-agent-section">
+                        <div class="voice-agent-title">
+                            <i class="fas fa-sliders-h"></i> Configuration Agent Vocal
+                        </div>
+                        <div class="voice-config-panel">
+                            <div class="config-section">
+                                <div class="control-group">
+                                    <div class="control-label">Statut Agent</div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="voice-toggle-status" onchange="toggleVoiceAgent()" checked>
+                                        <span class="toggle-status online" id="voice-status-text">En ligne</span>
+                                    </label>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="form-label">Voix de l'Agent</label>
+                                    <select class="form-select" id="voice-select">
+                                        <option value="sophie">Sophie - Français</option>
+                                        <option value="marc">Marc - Français Pro</option>
+                                        <option value="emma">Emma - English</option>
+                                        <option value="carlos">Carlos - Español</option>
+                                    </select>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="form-label">Mode d'Appel</label>
+                                    <div style="display: flex; gap: 15px; margin-top: 8px;">
+                                        <label class="radio-option">
+                                            <input type="radio" name="call-mode" value="inbound" checked>
+                                            <span>Entrant</span>
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio" name="call-mode" value="outbound">
+                                            <span>Sortant</span>
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio" name="call-mode" value="both">
+                                            <span>Les deux</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="form-label">Appels Simultanés</label>
+                                    <div class="slider-container">
+                                        <input type="range" min="1" max="10" value="3" id="concurrent-calls" onchange="updateSliderValue()">
+                                        <span class="slider-value" id="concurrent-value">3</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="control-group config-textarea">
+                                <label class="form-label">Script / Persona IA</label>
+                                <textarea class="form-textarea script-textarea" id="voice-script">Tu es un agent commercial qualifié spécialisé dans la qualification de leads. Ton objectif est:
+1. Accueillir le prospect de manière chaleureuse
+2. Poser des questions pour identifier ses besoins
+3. Qualifier le prospect (intérêt, budget, timeline)
+4. Proposer un RDV si qualification positive
+5. Rester professionnel et courtois en toutes circonstances
+
+Évite les appels trop longs (max 10 min). Propose toujours un RDV concret si intéressé.</textarea>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="startOutboundCampaign()" style="margin-top: 15px;">
+                            <i class="fas fa-play"></i> Lancer Campagne d'Appels
                         </button>
                     </div>
 
-                    <div class="agent-grid" id="agents-grid"></div>
+                    <!-- Active Call Display -->
+                    <div class="active-call-card" id="active-call-card" style="display: none;">
+                        <div class="call-header">
+                            <div class="caller-info">
+                                <div class="caller-avatar" id="caller-avatar">M</div>
+                                <div class="caller-details">
+                                    <div class="caller-name" id="caller-name">Michel Dupré</div>
+                                    <div class="caller-number" id="caller-number">+33 6 45 23 11 77</div>
+                                </div>
+                            </div>
+                            <div class="call-duration">
+                                <span id="call-timer">0:00</span>
+                                <div class="call-wave"></div>
+                                <div class="call-wave"></div>
+                                <div class="call-wave"></div>
+                                <div class="call-wave"></div>
+                            </div>
+                        </div>
+                        <div style="color: var(--text-secondary); font-size: 12px; margin-bottom: 15px;">Transcription en Direct</div>
+                        <div class="transcription-area" id="transcription-text">En attente de transcription...</div>
+                        <div class="call-buttons">
+                            <button class="call-btn secondary" onclick="muteCall()"><i class="fas fa-microphone-slash"></i> Mute</button>
+                            <button class="call-btn secondary" onclick="holdCall()"><i class="fas fa-pause"></i> Hold</button>
+                            <button class="call-btn secondary" onclick="transferCall()"><i class="fas fa-exchange-alt"></i> Transfer</button>
+                            <button class="call-btn danger" onclick="endCall()"><i class="fas fa-phone"></i> Terminer</button>
+                        </div>
+                    </div>
 
+                    <!-- Call Log Table -->
+                    <div class="voice-agent-section">
+                        <div class="voice-agent-title">
+                            <i class="fas fa-history"></i> Historique des Appels
+                        </div>
+                        <table class="call-log-table" id="call-log-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Numéro</th>
+                                    <th>Durée</th>
+                                    <th>Statut</th>
+                                    <th>Qualification</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="call-log-body">
+                                <tr>
+                                    <td>2025-03-29 14:32</td>
+                                    <td>+33 6 45 23 11 77</td>
+                                    <td>7m 23s</td>
+                                    <td><span class="status-dot online"></span></td>
+                                    <td><span class="call-status-badge qualifie">Qualifié</span></td>
+                                    <td><button class="btn btn-sm btn-secondary" onclick="qualifyCallLead(1, 'rdv_pris')"><i class="fas fa-calendar"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td>2025-03-29 13:45</td>
+                                    <td>+33 7 89 45 32 10</td>
+                                    <td>5m 12s</td>
+                                    <td><span class="status-dot online"></span></td>
+                                    <td><span class="call-status-badge rdv_pris">RDV Pris</span></td>
+                                    <td><button class="btn btn-sm btn-secondary" onclick="qualifyCallLead(2, 'rdv_pris')"><i class="fas fa-check"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td>2025-03-29 13:15</td>
+                                    <td>+33 6 12 78 45 23</td>
+                                    <td>3m 45s</td>
+                                    <td><span class="status-dot online"></span></td>
+                                    <td><span class="call-status-badge rappeler">À Rappeler</span></td>
+                                    <td><button class="btn btn-sm btn-secondary" onclick="qualifyCallLead(3, 'rappeler')"><i class="fas fa-redo"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td>2025-03-29 12:30</td>
+                                    <td>+33 7 56 34 21 98</td>
+                                    <td>2m 08s</td>
+                                    <td><span class="status-dot offline"></span></td>
+                                    <td><span class="call-status-badge non_qualifie">Non Qualifié</span></td>
+                                    <td><button class="btn btn-sm btn-secondary" onclick="qualifyCallLead(4, 'non_qualifie')"><i class="fas fa-ban"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td>2025-03-29 11:50</td>
+                                    <td>+33 6 34 78 56 12</td>
+                                    <td>6m 55s</td>
+                                    <td><span class="status-dot online"></span></td>
+                                    <td><span class="call-status-badge qualifie">Qualifié</span></td>
+                                    <td><button class="btn btn-sm btn-secondary" onclick="qualifyCallLead(5, 'qualifie')"><i class="fas fa-check"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td>2025-03-29 11:20</td>
+                                    <td>+33 7 21 45 89 67</td>
+                                    <td>4m 17s</td>
+                                    <td><span class="status-dot online"></span></td>
+                                    <td><span class="call-status-badge rdv_pris">RDV Pris</span></td>
+                                    <td><button class="btn btn-sm btn-secondary" onclick="qualifyCallLead(6, 'rdv_pris')"><i class="fas fa-check"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td>2025-03-29 10:45</td>
+                                    <td>+33 6 98 76 54 32</td>
+                                    <td>8m 02s</td>
+                                    <td><span class="status-dot online"></span></td>
+                                    <td><span class="call-status-badge rappeler">À Rappeler</span></td>
+                                    <td><button class="btn btn-sm btn-secondary" onclick="qualifyCallLead(7, 'rappeler')"><i class="fas fa-redo"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td>2025-03-29 10:15</td>
+                                    <td>+33 7 65 43 21 09</td>
+                                    <td>1m 34s</td>
+                                    <td><span class="status-dot offline"></span></td>
+                                    <td><span class="call-status-badge non_qualifie">Non Qualifié</span></td>
+                                    <td><button class="btn btn-sm btn-secondary" onclick="qualifyCallLead(8, 'non_qualifie')"><i class="fas fa-ban"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn btn-secondary" onclick="exportCallLog()">
+                            <i class="fas fa-download"></i> Exporter Logs
+                        </button>
+                    </div>
+
+                    <!-- Campaign Management -->
+                    <div class="voice-agent-section">
+                        <div class="voice-agent-title">
+                            <i class="fas fa-broadcast-tower"></i> Campagne d'Appels Sortants
+                        </div>
+                        <div class="campaign-progress">
+                            <div class="form-group">
+                                <label class="form-label">Importer Leads (CSV)</label>
+                                <input type="file" class="form-input" accept=".csv" id="campaign-csv">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Nom Campagne</label>
+                                    <input type="text" class="form-input" id="campaign-name" placeholder="Ex: Prospection Q2 2025">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Sélectionner Script</label>
+                                    <select class="form-select" id="campaign-script">
+                                        <option value="qualification">Script Qualification</option>
+                                        <option value="reactivation">Script Réactivation</option>
+                                        <option value="feedback">Script Feedback</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="campaign-progress-container" style="display: none; margin: 20px 0;">
+                                <div style="margin-bottom: 10px; display: flex; justify-content: space-between;">
+                                    <span class="control-label">Progression</span>
+                                    <span id="campaign-progress-text">0 / 0</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="campaign-progress-fill" style="width: 0%;"></div>
+                                </div>
+                            </div>
+                            <div class="campaign-controls">
+                                <button class="btn btn-primary" id="campaign-btn" onclick="startCampaignExecution()">
+                                    <i class="fas fa-play"></i> Démarrer Campagne
+                                </button>
+                                <button class="btn btn-secondary" id="campaign-pause-btn" style="display: none;" onclick="pauseCampaign()">
+                                    <i class="fas fa-pause"></i> Pause
+                                </button>
+                                <button class="btn btn-danger" id="campaign-stop-btn" style="display: none;" onclick="stopCampaign()">
+                                    <i class="fas fa-stop"></i> Arrêter
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                            <div id="page-whatsapp" class="page">
+<!-- WhatsApp Sessions Grid -->
+                    <div class="voice-agent-section">
+                        <div class="voice-agent-title">
+                            <i class="fab fa-whatsapp"></i> Agents WhatsApp
+                        </div>
+                        <div class="wa-session-grid" id="wa-sessions-grid">
+                            <div class="wa-session-card">
+                                <div class="wa-header">
+                                    <div class="wa-info">
+                                        <div class="wa-name">Agent WhatsApp 1</div>
+                                        <div class="wa-phone">+33 6 12 34 56 78</div>
+                                    </div>
+                                    <span class="wa-status">Connecté</span>
+                                </div>
+                                <div class="qr-real" id="qr-agent-1"></div>
+                                <div class="wa-stats">
+                                    <div class="wa-stat-item">
+                                        <div class="wa-stat-label">Messages</div>
+                                        <div class="wa-stat-value">247</div>
+                                    </div>
+                                    <div class="wa-stat-item">
+                                        <div class="wa-stat-label">Dernière activité</div>
+                                        <div class="wa-stat-value">2 min</div>
+                                    </div>
+                                </div>
+                                <div class="wa-actions">
+                                    <button class="btn btn-sm btn-secondary" onclick="refreshQR(1)"><i class="fas fa-sync"></i> Actualiser</button>
+                                    <button class="btn btn-sm btn-danger" onclick="disconnectWhatsApp(1)"><i class="fas fa-unlink"></i> Déconnecter</button>
+                                </div>
+                            </div>
+
+                            <div class="wa-session-card">
+                                <div class="wa-header">
+                                    <div class="wa-info">
+                                        <div class="wa-name">Agent WhatsApp 2</div>
+                                        <div class="wa-phone">+33 6 98 76 54 32</div>
+                                    </div>
+                                    <span class="wa-status">Connecté</span>
+                                </div>
+                                <div class="qr-real" id="qr-agent-2"></div>
+                                <div class="wa-stats">
+                                    <div class="wa-stat-item">
+                                        <div class="wa-stat-label">Messages</div>
+                                        <div class="wa-stat-value">189</div>
+                                    </div>
+                                    <div class="wa-stat-item">
+                                        <div class="wa-stat-label">Dernière activité</div>
+                                        <div class="wa-stat-value">5 min</div>
+                                    </div>
+                                </div>
+                                <div class="wa-actions">
+                                    <button class="btn btn-sm btn-secondary" onclick="refreshQR(2)"><i class="fas fa-sync"></i> Actualiser</button>
+                                    <button class="btn btn-sm btn-danger" onclick="disconnectWhatsApp(2)"><i class="fas fa-unlink"></i> Déconnecter</button>
+                                </div>
+                            </div>
+
+                            <div class="wa-session-card">
+                                <div class="wa-header">
+                                    <div class="wa-info">
+                                        <div class="wa-name">Agent WhatsApp 3</div>
+                                        <div class="wa-phone">+33 7 45 32 10 98</div>
+                                    </div>
+                                    <span class="wa-status disconnected">Déconnecté</span>
+                                </div>
+                                <div class="qr-real" id="qr-agent-3"></div>
+                                <div class="wa-stats">
+                                    <div class="wa-stat-item">
+                                        <div class="wa-stat-label">Messages</div>
+                                        <div class="wa-stat-value">0</div>
+                                    </div>
+                                    <div class="wa-stat-item">
+                                        <div class="wa-stat-label">Dernière activité</div>
+                                        <div class="wa-stat-value">12h 30m</div>
+                                    </div>
+                                </div>
+                                <div class="wa-actions">
+                                    <button class="btn btn-sm btn-primary" onclick="connectWhatsApp(3)"><i class="fas fa-link"></i> Connecter</button>
+                                    <button class="btn btn-sm btn-secondary" onclick="refreshQR(3)"><i class="fas fa-sync"></i> Actualiser</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Send Messages -->
                     <div class="quick-send">
                         <div class="quick-send-title">Envoyer Message Rapide</div>
                         <div class="quick-send-form">
                             <div class="form-row">
                                 <div class="form-group">
                                     <label class="form-label">Agent</label>
-                                    <select class="form-select" id="quick-agent">
+                                    <select class="form-select" id="wa-quick-agent">
                                         <option value="">Sélectionner un agent</option>
+                                        <option value="1">Agent WhatsApp 1</option>
+                                        <option value="2">Agent WhatsApp 2</option>
+                                        <option value="3">Agent WhatsApp 3</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Téléphone</label>
-                                    <input type="tel" class="form-input" id="quick-phone" placeholder="+33...">
+                                    <input type="tel" class="form-input" id="wa-quick-phone" placeholder="+33...">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Message</label>
-                                <textarea class="form-textarea" id="quick-message" placeholder="Entrer votre message..."></textarea>
+                                <textarea class="form-textarea" id="wa-quick-message" placeholder="Entrer votre message..."></textarea>
                             </div>
                             <button class="btn btn-primary" onclick="sendQuickMessage()">
                                 <i class="fas fa-paper-plane"></i> Envoyer
@@ -1711,51 +2511,55 @@
                         </div>
                     </div>
 
+                    <!-- Broadcast Messages -->
                     <div class="broadcast-section">
                         <div class="broadcast-title">Broadcast Message</div>
                         <div class="quick-send-form">
                             <div class="form-group">
                                 <label class="form-label">Agent</label>
-                                <select class="form-select" id="broadcast-agent">
+                                <select class="form-select" id="wa-broadcast-agent">
                                     <option value="">Sélectionner un agent</option>
+                                    <option value="1">Agent WhatsApp 1</option>
+                                    <option value="2">Agent WhatsApp 2</option>
+                                    <option value="3">Agent WhatsApp 3</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Message</label>
-                                <textarea class="form-textarea" id="broadcast-message" placeholder="Entrer votre message..."></textarea>
+                                <textarea class="form-textarea" id="wa-broadcast-message" placeholder="Entrer votre message..."></textarea>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Cible</label>
                                 <div class="broadcast-options">
                                     <label class="radio-option">
-                                        <input type="radio" name="broadcast-target" value="all" checked onchange="handleBroadcastTargetChange()">
+                                        <input type="radio" name="wa-broadcast-target" value="all" checked onchange="handleBroadcastTargetChange()">
                                         <span>Tous les leads</span>
                                     </label>
                                     <label class="radio-option">
-                                        <input type="radio" name="broadcast-target" value="qualified" onchange="handleBroadcastTargetChange()">
+                                        <input type="radio" name="wa-broadcast-target" value="qualified" onchange="handleBroadcastTargetChange()">
                                         <span>Leads qualifiés</span>
                                     </label>
                                     <label class="radio-option">
-                                        <input type="radio" name="broadcast-target" value="new" onchange="handleBroadcastTargetChange()">
+                                        <input type="radio" name="wa-broadcast-target" value="new" onchange="handleBroadcastTargetChange()">
                                         <span>Nouveaux leads</span>
                                     </label>
                                     <label class="radio-option">
-                                        <input type="radio" name="broadcast-target" value="manual" onchange="handleBroadcastTargetChange()">
+                                        <input type="radio" name="wa-broadcast-target" value="manual" onchange="handleBroadcastTargetChange()">
                                         <span>Sélection manuelle</span>
                                     </label>
                                 </div>
                             </div>
-                            <div id="broadcast-manual-leads" class="hidden">
+                            <div id="wa-broadcast-manual-leads" class="hidden">
                                 <div style="margin-bottom: 15px;">
                                     <label class="form-label">Sélectionner des leads</label>
                                 </div>
-                                <div class="leads-grid" id="broadcast-leads-grid"></div>
+                                <div class="leads-grid" id="wa-broadcast-leads-grid"></div>
                             </div>
-                            <div class="progress-container hidden" id="broadcast-progress">
+                            <div class="progress-container hidden" id="wa-broadcast-progress">
                                 <div class="progress-bar">
-                                    <div class="progress-fill" id="broadcast-progress-fill" style="width: 0%;"></div>
+                                    <div class="progress-fill" id="wa-broadcast-progress-fill" style="width: 0%;"></div>
                                 </div>
-                                <div class="progress-text" id="broadcast-progress-text">0 / 0 envoyés</div>
+                                <div class="progress-text" id="wa-broadcast-progress-text">0 / 0 envoyés</div>
                             </div>
                             <button class="btn btn-primary" onclick="sendBroadcast()" style="margin-top: 10px;">
                                 <i class="fas fa-broadcast-tower"></i> Envoyer Broadcast
@@ -1763,9 +2567,9 @@
                         </div>
                     </div>
                 </div>
+                </div>
 
-                <!-- CONNEXIONS PAGE -->
-                <div id="page-connexions" class="page">
+        <div id="page-connexions" class="page">
                     <div class="agent-grid">
                         <div class="agent-card">
                             <div class="agent-header">
@@ -2288,7 +3092,8 @@ Analytics avancées</textarea>
                 leads: 'Leads',
                 rdv: 'Rendez-vous',
                 analytics: 'Performance Commerciale',
-                agents: 'Agents WhatsApp',
+                agents: 'Agent IA Vocal',
+                whatsapp: 'WhatsApp',
                 connexions: 'Connexions',
                 config: 'Configuration IA',
                 users: 'Utilisateurs',
@@ -2305,7 +3110,9 @@ Analytics avancées</textarea>
             } else if (name === 'analytics') {
                 loadAnalytics();
             } else if (name === 'agents') {
-                loadAgents();
+                loadVoiceAgents();
+            } else if (name === 'whatsapp') {
+                loadWhatsApp();
             } else if (name === 'config') {
                 loadConfig();
             } else if (name === 'users') {
@@ -3743,6 +4550,344 @@ Analytics avancées</textarea>
         window.addEventListener('DOMContentLoaded', function() {
             init();
         });
-    </script>
+    
+        // VOICE AGENT FUNCTIONS
+        // ============================================================================
+
+        var voiceAgentState = {
+            activeCallId: null,
+            callTimer: null,
+            callSeconds: 0,
+            transcriptionIndex: 0,
+            campaignInProgress: false
+        };
+
+        var sampleTranscription = [
+            "Bonjour, c'est Michel à l'appareil.",
+            "J'aimerais en savoir plus sur vos services.",
+            "Nous avons actuellement 50 employés.",
+            "Oui, nous serions intéressés par une démonstration.",
+            "La semaine prochaine serait idéale pour nous.",
+            "Lundi à 14h conviendrait parfaitement.",
+            "Excellent, je note vos informations.",
+            "À bientôt pour la démonstration!"
+        ];
+
+        function loadVoiceAgents() {
+            renderCallLog();
+            updateSliderValue();
+        }
+
+        function toggleVoiceAgent() {
+            var checkbox = document.getElementById('voice-toggle-status');
+            var statusText = document.getElementById('voice-status-text');
+            if (checkbox.checked) {
+                statusText.classList.add('online');
+                statusText.textContent = 'En ligne';
+                toast('Agent vocal activé', 'success');
+            } else {
+                statusText.classList.remove('online');
+                statusText.textContent = 'Hors ligne';
+                toast('Agent vocal désactivé', 'info');
+            }
+        }
+
+        function updateSliderValue() {
+            var value = document.getElementById('concurrent-calls').value;
+            document.getElementById('concurrent-value').textContent = value;
+        }
+
+        function startOutboundCampaign() {
+            if (!document.getElementById('voice-toggle-status').checked) {
+                toast('Activez l\'agent vocal d\'abord', 'warning');
+                return;
+            }
+            toast('Campagne d\'appels lancée!', 'success');
+            simulateActiveCall();
+        }
+
+        function simulateActiveCall() {
+            var callCard = document.getElementById('active-call-card');
+            callCard.style.display = 'block';
+            voiceAgentState.activeCallId = 1;
+            voiceAgentState.callSeconds = 0;
+            voiceAgentState.transcriptionIndex = 0;
+
+            var timerEl = document.getElementById('call-timer');
+            var transcriptionEl = document.getElementById('transcription-text');
+            transcriptionEl.textContent = '';
+
+            voiceAgentState.callTimer = setInterval(function() {
+                voiceAgentState.callSeconds++;
+                var minutes = Math.floor(voiceAgentState.callSeconds / 60);
+                var seconds = voiceAgentState.callSeconds % 60;
+                timerEl.textContent = minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+
+                if (voiceAgentState.transcriptionIndex < sampleTranscription.length && Math.random() > 0.6) {
+                    if (transcriptionEl.textContent === 'En attente de transcription...') {
+                        transcriptionEl.textContent = '';
+                    }
+                    transcriptionEl.textContent += (transcriptionEl.textContent ? '\n\n' : '') + sampleTranscription[voiceAgentState.transcriptionIndex];
+                    voiceAgentState.transcriptionIndex++;
+                }
+            }, 1000);
+        }
+
+        function muteCall() {
+            toast('Micro désactivé', 'info');
+        }
+
+        function holdCall() {
+            toast('Appel mis en attente', 'info');
+        }
+
+        function transferCall() {
+            toast('Transfert d\'appel initié', 'info');
+        }
+
+        function endCall() {
+            var callCard = document.getElementById('active-call-card');
+            callCard.style.display = 'none';
+            if (voiceAgentState.callTimer) {
+                clearInterval(voiceAgentState.callTimer);
+            }
+            toast('Appel terminé', 'success');
+            voiceAgentState.activeCallId = null;
+        }
+
+        function renderCallLog() {
+            // Call log is already in HTML
+        }
+
+        function exportCallLog() {
+            toast('Export des logs en cours...', 'info');
+            setTimeout(function() {
+                toast('Fichier téléchargé (call-log-' + new Date().toISOString().split('T')[0] + '.csv)', 'success');
+            }, 1500);
+        }
+
+        function qualifyCallLead(callId, qualification) {
+            var qualLabels = {
+                'qualifie': 'Qualifié',
+                'rdv_pris': 'RDV Pris',
+                'rappeler': 'À Rappeler',
+                'non_qualifie': 'Non Qualifié'
+            };
+            toast('Lead marqué: ' + qualLabels[qualification], 'success');
+        }
+
+        function bookRdvFromCall(callId) {
+            toast('RDV créé et ajouté au calendrier', 'success');
+        }
+
+        function startCampaignExecution() {
+            var campaignName = document.getElementById('campaign-name').value;
+            if (!campaignName) {
+                toast('Entrez un nom de campagne', 'error');
+                return;
+            }
+
+            voiceAgentState.campaignInProgress = true;
+            var progressContainer = document.getElementById('campaign-progress-container');
+            progressContainer.style.display = 'block';
+
+            document.getElementById('campaign-btn').style.display = 'none';
+            document.getElementById('campaign-pause-btn').style.display = 'inline-block';
+            document.getElementById('campaign-stop-btn').style.display = 'inline-block';
+
+            var progress = 0;
+            var total = 50;
+            var interval = setInterval(function() {
+                if (progress < total && voiceAgentState.campaignInProgress) {
+                    progress++;
+                    var percent = (progress / total) * 100;
+                    document.getElementById('campaign-progress-fill').style.width = percent + '%';
+                    document.getElementById('campaign-progress-text').textContent = progress + ' / ' + total;
+                } else if (progress >= total) {
+                    clearInterval(interval);
+                    toast('Campagne terminée!', 'success');
+                    stopCampaign();
+                }
+            }, 300);
+        }
+
+        function pauseCampaign() {
+            voiceAgentState.campaignInProgress = false;
+            toast('Campagne en pause', 'info');
+            document.getElementById('campaign-pause-btn').textContent = 'Reprendre';
+            document.getElementById('campaign-pause-btn').onclick = function() {
+                voiceAgentState.campaignInProgress = true;
+                this.textContent = 'Pause';
+                this.onclick = pauseCampaign;
+                toast('Campagne reprise', 'success');
+            };
+        }
+
+        function stopCampaign() {
+            voiceAgentState.campaignInProgress = false;
+            var progressContainer = document.getElementById('campaign-progress-container');
+            progressContainer.style.display = 'none';
+
+            document.getElementById('campaign-btn').style.display = 'inline-block';
+            document.getElementById('campaign-pause-btn').style.display = 'none';
+            document.getElementById('campaign-pause-btn').textContent = 'Pause';
+            document.getElementById('campaign-pause-btn').onclick = pauseCampaign;
+            document.getElementById('campaign-stop-btn').style.display = 'none';
+
+            document.getElementById('campaign-progress-fill').style.width = '0%';
+            document.getElementById('campaign-progress-text').textContent = '0 / 0';
+        }
+
+        // ============================================================================
+        // WHATSAPP FUNCTIONS
+        // ============================================================================
+
+        function loadWhatsApp() {
+            renderWhatsAppSessions();
+            loadBroadcastLeads();
+        }
+
+        function renderWhatsAppSessions() {
+            for (var i = 1; i <= 3; i++) {
+                generateRealQR('qr-agent-' + i, 'whatsapp://connect/agent-' + i + '-' + Date.now());
+            }
+        }
+
+        function generateRealQR(containerId, data) {
+            var container = document.getElementById(containerId);
+            if (!container) return;
+
+            container.innerHTML = '';
+            if (typeof QRCode !== 'undefined') {
+                new QRCode(container, {
+                    text: data,
+                    width: 180,
+                    height: 180,
+                    colorDark: '#000000',
+                    colorLight: '#ffffff',
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+            } else {
+                container.innerHTML = '<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: var(--text-secondary);">QR Code</div>';
+            }
+        }
+
+        function connectWhatsApp(agentId) {
+            toast('Connexion WhatsApp en cours...', 'info');
+            setTimeout(function() {
+                toast('Agent WhatsApp ' + agentId + ' connecté!', 'success');
+            }, 1500);
+        }
+
+        function disconnectWhatsApp(agentId) {
+            if (confirm('Déconnecter cet agent WhatsApp ?')) {
+                toast('Agent WhatsApp ' + agentId + ' déconnecté', 'success');
+            }
+        }
+
+        function refreshQR(agentId) {
+            toast('QR actualisé pour Agent ' + agentId, 'info');
+            generateRealQR('qr-agent-' + agentId, 'whatsapp://connect/agent-' + agentId + '-' + Date.now());
+        }
+
+        function sendQuickMessage() {
+            var agentId = document.getElementById('wa-quick-agent').value;
+            var phone = document.getElementById('wa-quick-phone').value;
+            var message = document.getElementById('wa-quick-message').value;
+
+            if (!agentId || !phone || !message) {
+                toast('Remplissez tous les champs', 'error');
+                return;
+            }
+
+            toast('Message envoyé !', 'success');
+            document.getElementById('wa-quick-phone').value = '';
+            document.getElementById('wa-quick-message').value = '';
+        }
+
+        // ============================================================================
+        // BROADCAST FUNCTIONS
+        // ============================================================================
+
+        function loadBroadcastLeads() {
+            var leadsGrids = [
+                document.getElementById('broadcast-leads-grid'),
+                document.getElementById('wa-broadcast-leads-grid')
+            ];
+
+            leadsGrids.forEach(function(leadsGrid) {
+                if (!leadsGrid) return;
+                leadsGrid.innerHTML = '';
+
+                appState.leads.forEach(function(lead) {
+                    var checkbox = document.createElement('label');
+                    checkbox.className = 'lead-checkbox';
+                    checkbox.innerHTML = '<input type="checkbox" value="' + lead.id + '">' +
+                        '<div class="lead-info">' +
+                        '<div class="lead-name">' + lead.name + '</div>' +
+                        '<div class="lead-phone">' + lead.phone + '</div>' +
+                        '</div>';
+                    leadsGrid.appendChild(checkbox);
+                });
+            });
+        }
+
+        function handleBroadcastTargetChange() {
+            var targets = document.querySelectorAll('input[name="broadcast-target"], input[name="wa-broadcast-target"]');
+            targets.forEach(function(target) {
+                if (target.checked) {
+                    var manualDiv = target.name === 'broadcast-target'
+                        ? document.getElementById('broadcast-manual-leads')
+                        : document.getElementById('wa-broadcast-manual-leads');
+
+                    if (manualDiv) {
+                        if (target.value === 'manual') {
+                            manualDiv.classList.remove('hidden');
+                        } else {
+                            manualDiv.classList.add('hidden');
+                        }
+                    }
+                }
+            });
+        }
+
+        function sendBroadcast() {
+            var agentSelect = document.getElementById('broadcast-agent') || document.getElementById('wa-broadcast-agent');
+            var agentId = agentSelect ? agentSelect.value : '';
+            var messageEl = document.getElementById('broadcast-message') || document.getElementById('wa-broadcast-message');
+            var message = messageEl ? messageEl.value : '';
+            var targetInputs = document.querySelectorAll('input[name="broadcast-target"], input[name="wa-broadcast-target"]');
+            var target = '';
+            targetInputs.forEach(function(input) {
+                if (input.checked) target = input.value;
+            });
+
+            if (!agentId || !message) {
+                toast('Agent et message requis', 'error');
+                return;
+            }
+
+            var targetLeads = [];
+
+            if (target === 'all') {
+                targetLeads = appState.leads;
+            } else if (target === 'qualified') {
+                targetLeads = appState.leads.filter(function(l) { return l.status === 'qualifie'; });
+            } else if (target === 'new') {
+                targetLeads = appState.leads.filter(function(l) { return l.status === 'nouveau'; });
+            } else if (target === 'manual') {
+                var gridId = document.getElementById('broadcast-manual-leads') ? 'broadcast-manual-leads' : 'wa-broadcast-manual-leads';
+                var checkboxes = document.querySelectorAll('#' + gridId + ' input:checked');
+                var selectedIds = Array.from(checkboxes).map(function(cb) { return parseInt(cb.value); });
+                targetLeads = appState.leads.filter(function(l) { return selectedIds.includes(l.id); });
+            }
+
+            if (targetLeads.length === 0) {
+                toast('Aucun lead sélectionné', 'error');
+                return;
+            }
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </body>
 </html>
