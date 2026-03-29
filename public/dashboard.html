@@ -2142,22 +2142,22 @@
                         </div>
                         <div class="voice-stats-grid" id="voice-stats-grid">
                             <div class="voice-stat-card">
-                                <div class="voice-stat-value">47</div>
+                                <div class="voice-stat-value">0</div>
                                 <div class="voice-stat-label">Appels Aujourd'hui</div>
                                 <div class="voice-stat-change positive"><i class="fas fa-arrow-up"></i> +12%</div>
                             </div>
                             <div class="voice-stat-card">
-                                <div class="voice-stat-value">68%</div>
+                                <div class="voice-stat-value">0%</div>
                                 <div class="voice-stat-label">Taux de Qualification</div>
                                 <div class="voice-stat-change positive"><i class="fas fa-arrow-up"></i> +5%</div>
                             </div>
                             <div class="voice-stat-card">
-                                <div class="voice-stat-value">12</div>
+                                <div class="voice-stat-value">0</div>
                                 <div class="voice-stat-label">RDV Pris par IA</div>
                                 <div class="voice-stat-change positive"><i class="fas fa-arrow-up"></i> +18%</div>
                             </div>
                             <div class="voice-stat-card">
-                                <div class="voice-stat-value">3m42s</div>
+                                <div class="voice-stat-value">0m0s</div>
                                 <div class="voice-stat-label">Durée Moyenne</div>
                                 <div class="voice-stat-change negative"><i class="fas fa-arrow-down"></i> -8%</div>
                             </div>
@@ -2405,79 +2405,10 @@
                             <i class="fab fa-whatsapp"></i> Agents WhatsApp
                         </div>
                         <div class="wa-session-grid" id="wa-sessions-grid">
-                            <div class="wa-session-card">
-                                <div class="wa-header">
-                                    <div class="wa-info">
-                                        <div class="wa-name">Agent WhatsApp 1</div>
-                                        <div class="wa-phone">+33 6 12 34 56 78</div>
-                                    </div>
-                                    <span class="wa-status">Connecté</span>
-                                </div>
-                                <div class="qr-real" id="qr-agent-1"></div>
-                                <div class="wa-stats">
-                                    <div class="wa-stat-item">
-                                        <div class="wa-stat-label">Messages</div>
-                                        <div class="wa-stat-value">247</div>
-                                    </div>
-                                    <div class="wa-stat-item">
-                                        <div class="wa-stat-label">Dernière activité</div>
-                                        <div class="wa-stat-value">2 min</div>
-                                    </div>
-                                </div>
-                                <div class="wa-actions">
-                                    <button class="btn btn-sm btn-secondary" onclick="refreshQR(1)"><i class="fas fa-sync"></i> Actualiser</button>
-                                    <button class="btn btn-sm btn-danger" onclick="disconnectWhatsApp(1)"><i class="fas fa-unlink"></i> Déconnecter</button>
-                                </div>
-                            </div>
-
-                            <div class="wa-session-card">
-                                <div class="wa-header">
-                                    <div class="wa-info">
-                                        <div class="wa-name">Agent WhatsApp 2</div>
-                                        <div class="wa-phone">+33 6 98 76 54 32</div>
-                                    </div>
-                                    <span class="wa-status">Connecté</span>
-                                </div>
-                                <div class="qr-real" id="qr-agent-2"></div>
-                                <div class="wa-stats">
-                                    <div class="wa-stat-item">
-                                        <div class="wa-stat-label">Messages</div>
-                                        <div class="wa-stat-value">189</div>
-                                    </div>
-                                    <div class="wa-stat-item">
-                                        <div class="wa-stat-label">Dernière activité</div>
-                                        <div class="wa-stat-value">5 min</div>
-                                    </div>
-                                </div>
-                                <div class="wa-actions">
-                                    <button class="btn btn-sm btn-secondary" onclick="refreshQR(2)"><i class="fas fa-sync"></i> Actualiser</button>
-                                    <button class="btn btn-sm btn-danger" onclick="disconnectWhatsApp(2)"><i class="fas fa-unlink"></i> Déconnecter</button>
-                                </div>
-                            </div>
-
-                            <div class="wa-session-card">
-                                <div class="wa-header">
-                                    <div class="wa-info">
-                                        <div class="wa-name">Agent WhatsApp 3</div>
-                                        <div class="wa-phone">+33 7 45 32 10 98</div>
-                                    </div>
-                                    <span class="wa-status disconnected">Déconnecté</span>
-                                </div>
-                                <div class="qr-real" id="qr-agent-3"></div>
-                                <div class="wa-stats">
-                                    <div class="wa-stat-item">
-                                        <div class="wa-stat-label">Messages</div>
-                                        <div class="wa-stat-value">0</div>
-                                    </div>
-                                    <div class="wa-stat-item">
-                                        <div class="wa-stat-label">Dernière activité</div>
-                                        <div class="wa-stat-value">12h 30m</div>
-                                    </div>
-                                </div>
-                                <div class="wa-actions">
-                                    <button class="btn btn-sm btn-primary" onclick="connectWhatsApp(3)"><i class="fas fa-link"></i> Connecter</button>
-                                    <button class="btn btn-sm btn-secondary" onclick="refreshQR(3)"><i class="fas fa-sync"></i> Actualiser</button>
-                                </div>
+                            <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-secondary);">
+                                <i class="fab fa-whatsapp" style="font-size: 48px; margin-bottom: 15px; opacity: 0.3; display: block;"></i>
+                                <p>Aucun agent WhatsApp connecte pour le moment</p>
+                                <p style="font-size: 12px; margin-top: 8px;">Configurez vos agents dans la section Connexions</p>
                             </div>
                         </div>
                     </div>
@@ -2491,10 +2422,7 @@
                                     <label class="form-label">Agent</label>
                                     <select class="form-select" id="wa-quick-agent">
                                         <option value="">Sélectionner un agent</option>
-                                        <option value="1">Agent WhatsApp 1</option>
-                                        <option value="2">Agent WhatsApp 2</option>
-                                        <option value="3">Agent WhatsApp 3</option>
-                                    </select>
+                                        </select>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Téléphone</label>
@@ -2519,10 +2447,7 @@
                                 <label class="form-label">Agent</label>
                                 <select class="form-select" id="wa-broadcast-agent">
                                     <option value="">Sélectionner un agent</option>
-                                    <option value="1">Agent WhatsApp 1</option>
-                                    <option value="2">Agent WhatsApp 2</option>
-                                    <option value="3">Agent WhatsApp 3</option>
-                                </select>
+                                    </select>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Message</label>
@@ -2730,7 +2655,7 @@ Analytics avancées</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Téléphone de contact</label>
-                                    <input type="tel" class="form-input" id="config-phone" value="+33612345678">
+                                    <input type="tel" class="form-input" id="config-phone" value="">
                                 </div>
                             </div>
                         </div>
@@ -2874,7 +2799,7 @@ Analytics avancées</textarea>
             <form class="modal-form" onsubmit="importCSV(event)">
                 <div class="form-group">
                     <label class="form-label">Coller votre CSV (format: Nom, Téléphone, Email, Statut)</label>
-                    <textarea class="form-textarea" id="csv-textarea" placeholder="Nom,Téléphone,Email,Statut&#10;Jean Dupont,+33612345678,jean@example.com,nouveau&#10;Marie Martin,+33698765432,marie@example.com,qualifie" style="min-height: 150px;"></textarea>
+                    <textarea class="form-textarea" id="csv-textarea" placeholder="Nom,Telephone,Email,Statut" style="min-height: 150px;"></textarea>
                 </div>
                 <div id="csv-preview" style="display: none;">
                     <div class="form-label">Aperçu</div>
@@ -2910,8 +2835,8 @@ Analytics avancées</textarea>
         </div>
         <form id="rdv-create-form" onsubmit="rdvHandleCreateSubmit(event)">
           <div class="form-group"><label class="form-label">Type d'événement</label><select class="form-input rdv-select" id="rdv-form-type" required onchange="rdvUpdateFormDuration()"><option value="">Sélectionner un type...</option></select></div>
-          <div class="form-group"><label class="form-label">Nom du client</label><input type="text" class="form-input" id="rdv-form-name" required placeholder="Jean Dupont"></div>
-          <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" id="rdv-form-email" required placeholder="jean@example.com"></div>
+          <div class="form-group"><label class="form-label">Nom du client</label><input type="text" class="form-input" id="rdv-form-name" required placeholder="Nom du client"></div>
+          <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" id="rdv-form-email" required placeholder="email@client.com"></div>
           <div class="form-group"><label class="form-label">Téléphone</label><input type="tel" class="form-input" id="rdv-form-phone" placeholder="+33 6 12 34 56 78"></div>
           <div class="form-group"><label class="form-label">Date</label><input type="date" class="form-input rdv-select" id="rdv-form-date" required onchange="rdvLoadAvailableSlots()"></div>
           <div class="form-group"><label class="form-label">Heure disponible</label><div class="rdv-time-picker-grid" id="rdv-time-picker"></div><input type="hidden" id="rdv-form-time"></div>
@@ -4115,11 +4040,7 @@ Analytics avancées</textarea>
         // ============================================================================
 
         function loadAgents() {
-            var agents = [
-                { id: 1, name: 'Agent WhatsApp 1', phone: '+33612345678', status: 'connected' },
-                { id: 2, name: 'Agent WhatsApp 2', phone: '+33698765432', status: 'qr_ready' },
-                { id: 3, name: 'Agent WhatsApp 3', phone: '+33645678901', status: 'connected' }
-            ];
+            var agents = [];
 
             appState.agents = agents;
             renderAgentCards(agents);
@@ -4368,7 +4289,7 @@ Analytics avancées</textarea>
                 endTime: '18:00',
                 maxMsgs: 20,
                 bookingUrl: 'https://calendly.com/example',
-                phone: '+33612345678'
+                phone: ''
             };
 
             appState.config = config;
