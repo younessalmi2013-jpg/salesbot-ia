@@ -2405,10 +2405,12 @@
                             <i class="fab fa-whatsapp"></i> Agents WhatsApp
                         </div>
                         <div class="wa-session-grid" id="wa-sessions-grid">
-                            <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-secondary);">
-                                <i class="fab fa-whatsapp" style="font-size: 48px; margin-bottom: 15px; opacity: 0.3; display: block;"></i>
-                                <p>Aucun agent WhatsApp connecte pour le moment</p>
-                                <p style="font-size: 12px; margin-top: 8px;">Configurez vos agents dans la section Connexions</p>
+                            <div class="wa-session-card" id="wa-add-agent-card" style="display: flex; align-items: center; justify-content: center; min-height: 300px; border: 2px dashed var(--border-color); cursor: pointer;" onclick="addWhatsAppAgent()">
+                                <div style="text-align: center; color: var(--text-secondary);">
+                                    <i class="fab fa-whatsapp" style="font-size: 48px; margin-bottom: 15px; color: #25D366;"></i>
+                                    <p style="font-size: 16px; font-weight: 600; margin-bottom: 5px; color: var(--text-primary);">Connecter un Agent</p>
+                                    <p style="font-size: 13px;">Cliquez pour ajouter un nouvel agent WhatsApp</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -4639,6 +4641,38 @@ Analytics avancées</textarea>
             }
         }
 
+        function addWhatsAppAgent() {
+            var grid = document.getElementById("wa-sessions-grid");
+            if (!grid) return;
+            var agentCount = grid.querySelectorAll(".wa-session-card:not(#wa-add-agent-card)").length + 1;
+            var agentId = "agent-" + agentCount + "-" + Date.now();
+            var card = document.createElement("div");
+            card.className = "wa-session-card";
+            card.id = "wa-card-" + agentCount;
+            card.innerHTML = '<div class="wa-header">' +
+                '<div class="wa-info"><div class="wa-name">Agent WhatsApp ' + agentCount + '</div>' +
+                '<div class="wa-phone">En attente de connexion...</div></div>' +
+                '<span class="wa-status disconnected">En attente</span></div>' +
+                '<div class="qr-real" id="qr-' + agentId + '" style="background:#fff; padding:10px; border-radius:8px; display:flex; align-items:center; justify-content:center; min-height:200px;"></div>' +
+                '<div class="wa-stats"><div class="wa-stat-item"><div class="wa-stat-label">Messages</div><div class="wa-stat-value">0</div></div>' +
+                '<div class="wa-stat-item"><div class="wa-stat-label">Statut</div><div class="wa-stat-value">Scannez le QR</div></div></div>' +
+                '<div class="wa-actions">' +
+                '<button class="btn btn-sm btn-secondary" onclick="refreshQR(this)"><i class="fas fa-sync"></i> Actualiser</button>' +
+                '<button class="btn btn-sm btn-danger" onclick="removeWhatsAppAgent(this)"><i class="fas fa-trash"></i> Supprimer</button></div>';
+            var addCard = document.getElementById("wa-add-agent-card");
+            grid.insertBefore(card, addCard);
+            generateRealQR("qr-" + agentId, "https://wa.me/connect/" + agentId);
+            toast("Agent WhatsApp " + agentCount + " ajouté - Scannez le QR code", "success");
+        }
+
+        function removeWhatsAppAgent(btn) {
+            if (confirm("Supprimer cet agent WhatsApp ?")) {
+                var card = btn.closest(".wa-session-card");
+                if (card) card.remove();
+                toast("Agent supprimé", "success");
+            }
+        }
+
         function connectWhatsApp(agentId) {
             toast('Connexion WhatsApp en cours...', 'info');
             setTimeout(function() {
@@ -4652,9 +4686,14 @@ Analytics avancées</textarea>
             }
         }
 
-        function refreshQR(agentId) {
-            toast('QR actualisé pour Agent ' + agentId, 'info');
-            generateRealQR('qr-agent-' + agentId, 'whatsapp://connect/agent-' + agentId + '-' + Date.now());
+        function refreshQR(btn) {
+            var card = btn.closest('.wa-session-card');
+            if (!card) return;
+            var qrDiv = card.querySelector('.qr-real');
+            if (qrDiv) {
+                generateRealQR(qrDiv.id, 'https://wa.me/connect/' + qrDiv.id + '-' + Date.now());
+                toast('QR code actualisé', 'info');
+            }
         }
 
 </script>
