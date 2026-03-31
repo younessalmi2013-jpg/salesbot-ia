@@ -1754,7 +1754,7 @@
         <!-- SIDEBAR -->
         <aside class="sidebar">
             <div class="logo">
-                <span>🤖</span>
+                <span>ð¤</span>
                 <span>SalesBot IA</span>
             </div>
 
@@ -1812,7 +1812,7 @@
 
             <button class="logout-btn" onclick="logout()">
                 <i class="fas fa-sign-out-alt"></i>
-                <span>Déconnexion</span>
+                <span>DÃ©connexion</span>
             </button>
         </aside>
 
@@ -1843,13 +1843,13 @@
 
                     <div class="table-container">
                         <div style="padding: 25px; border-bottom: 1px solid var(--border-color);">
-                            <div class="chart-title" style="margin: 0;">Leads Récents</div>
+                            <div class="chart-title" style="margin: 0;">Leads RÃ©cents</div>
                         </div>
                         <table>
                             <thead>
                                 <tr>
                                     <th>Nom</th>
-                                    <th>Téléphone</th>
+                                    <th>TÃ©lÃ©phone</th>
                                     <th>Email</th>
                                     <th>Statut</th>
                                     <th>Score</th>
@@ -1888,11 +1888,11 @@
                     </div>
 
                     <div class="search-bar">
-                        <input type="text" class="search-input" id="leads-search" placeholder="Chercher par nom ou téléphone..." onkeyup="searchLeads()">
+                        <input type="text" class="search-input" id="leads-search" placeholder="Chercher par nom ou tÃ©lÃ©phone..." onkeyup="searchLeads()">
                         <select class="form-select" id="leads-status-filter" style="min-width: 150px;" onchange="searchLeads()">
                             <option value="">Tous les statuts</option>
                             <option value="nouveau">Nouveau</option>
-                            <option value="qualifie">Qualifié</option>
+                            <option value="qualifie">QualifiÃ©</option>
                             <option value="rdv">RDV</option>
                             <option value="client">Client</option>
                             <option value="perdu">Perdu</option>
@@ -1910,7 +1910,7 @@
                             <thead>
                                 <tr>
                                     <th>Nom</th>
-                                    <th>Téléphone</th>
+                                    <th>TÃ©lÃ©phone</th>
                                     <th>Email</th>
                                     <th>Statut</th>
                                     <th>Score</th>
@@ -1929,8 +1929,8 @@
                 <div id="page-rdv" class="page rdv-container">
                   <div class="rdv-tabs">
                     <button class="rdv-tab-button active" data-tab="bookings">Rendez-vous</button>
-                    <button class="rdv-tab-button" data-tab="event-types">Types d'événements</button>
-                    <button class="rdv-tab-button" data-tab="availability">Disponibilité</button>
+                    <button class="rdv-tab-button" data-tab="event-types">Types d'Ã©vÃ©nements</button>
+                    <button class="rdv-tab-button" data-tab="availability">DisponibilitÃ©</button>
                     <button class="rdv-tab-button" data-tab="public-page">Page publique</button>
                   </div>
 
@@ -1942,9 +1942,9 @@
                     <div class="rdv-kpi-grid">
                       <div class="rdv-kpi-card"><div class="rdv-kpi-label">Total RDV</div><div class="rdv-kpi-value" id="rdv-stat-total">0</div></div>
                       <div class="rdv-kpi-card"><div class="rdv-kpi-label">Aujourd'hui</div><div class="rdv-kpi-value" id="rdv-stat-today">0</div></div>
-                      <div class="rdv-kpi-card"><div class="rdv-kpi-label">À venir</div><div class="rdv-kpi-value" id="rdv-stat-upcoming">0</div></div>
-                      <div class="rdv-kpi-card"><div class="rdv-kpi-label">Confirmés</div><div class="rdv-kpi-value" id="rdv-stat-confirmed">0</div></div>
-                      <div class="rdv-kpi-card"><div class="rdv-kpi-label">Taux présence</div><div class="rdv-kpi-value" id="rdv-stat-attendance">-</div></div>
+                      <div class="rdv-kpi-card"><div class="rdv-kpi-label">Ã venir</div><div class="rdv-kpi-value" id="rdv-stat-upcoming">0</div></div>
+                      <div class="rdv-kpi-card"><div class="rdv-kpi-label">ConfirmÃ©s</div><div class="rdv-kpi-value" id="rdv-stat-confirmed">0</div></div>
+                      <div class="rdv-kpi-card"><div class="rdv-kpi-label">Taux prÃ©sence</div><div class="rdv-kpi-value" id="rdv-stat-attendance">-</div></div>
                     </div>
                     <div class="rdv-filters">
                       <div class="rdv-filter-group rdv-search-box">
@@ -1954,9 +1954,9 @@
                         <select class="rdv-select" id="rdv-filter-status" onchange="rdvFilterBookings()">
                           <option value="">Tous les statuts</option>
                           <option value="pending">En attente</option>
-                          <option value="confirmed">Confirmé</option>
-                          <option value="completed">Complété</option>
-                          <option value="cancelled">Annulé</option>
+                          <option value="confirmed">ConfirmÃ©</option>
+                          <option value="completed">ComplÃ©tÃ©</option>
+                          <option value="cancelled">AnnulÃ©</option>
                           <option value="no-show">Absent</option>
                         </select>
                       </div>
@@ -1982,9 +1982,9 @@
                       </div>
                       <div class="rdv-bookings-container">
                         <table class="rdv-table">
-                          <thead><tr><th>Client</th><th>Événement</th><th>Date & Heure</th><th>Statut</th><th>Actions</th></tr></thead>
+                          <thead><tr><th>Client</th><th>ÃvÃ©nement</th><th>Date & Heure</th><th>Statut</th><th>Actions</th></tr></thead>
                           <tbody id="rdv-bookings-tbody">
-                            <tr><td colspan="5" class="rdv-empty-state"><div class="rdv-empty-state-icon">📅</div><div class="rdv-empty-state-text">Aucun rendez-vous pour le moment</div></td></tr>
+                            <tr><td colspan="5" class="rdv-empty-state"><div class="rdv-empty-state-icon">ð</div><div class="rdv-empty-state-text">Aucun rendez-vous pour le moment</div></td></tr>
                           </tbody>
                         </table>
                       </div>
@@ -1993,14 +1993,14 @@
 
                   <div id="rdv-tab-event-types" class="rdv-tab-content">
                     <div class="rdv-header">
-                      <h2 class="rdv-title">Types d'événements</h2>
-                      <button class="btn btn-primary" onclick="rdvOpenEventTypeModal()">+ Créer un type</button>
+                      <h2 class="rdv-title">Types d'Ã©vÃ©nements</h2>
+                      <button class="btn btn-primary" onclick="rdvOpenEventTypeModal()">+ CrÃ©er un type</button>
                     </div>
                     <div class="rdv-event-types-grid" id="rdv-event-types-grid"></div>
                   </div>
 
                   <div id="rdv-tab-availability" class="rdv-tab-content">
-                    <div class="rdv-header"><h2 class="rdv-title">Disponibilité</h2></div>
+                    <div class="rdv-header"><h2 class="rdv-title">DisponibilitÃ©</h2></div>
                     <div class="rdv-availability-container">
                       <div class="rdv-schedule-grid">
                         <div class="rdv-schedule-title">Horaires de travail</div>
@@ -2009,14 +2009,14 @@
                         <div class="rdv-day-schedule"><label class="rdv-day-name"><input type="checkbox" data-day="wednesday" onchange="rdvToggleDay('wednesday')" checked> Mercredi</label><div class="rdv-time-slots"><span class="rdv-time-slot">09:00 - 12:00</span><span class="rdv-time-slot">14:00 - 18:00</span></div></div>
                         <div class="rdv-day-schedule"><label class="rdv-day-name"><input type="checkbox" data-day="thursday" onchange="rdvToggleDay('thursday')" checked> Jeudi</label><div class="rdv-time-slots"><span class="rdv-time-slot">09:00 - 12:00</span><span class="rdv-time-slot">14:00 - 18:00</span></div></div>
                         <div class="rdv-day-schedule"><label class="rdv-day-name"><input type="checkbox" data-day="friday" onchange="rdvToggleDay('friday')" checked> Vendredi</label><div class="rdv-time-slots"><span class="rdv-time-slot">09:00 - 12:00</span><span class="rdv-time-slot">14:00 - 18:00</span></div></div>
-                        <div class="rdv-day-schedule"><label class="rdv-day-name"><input type="checkbox" data-day="saturday" onchange="rdvToggleDay('saturday')"> Samedi</label><div class="rdv-time-slots"><span class="rdv-time-slot">Fermé</span></div></div>
-                        <div class="rdv-day-schedule"><label class="rdv-day-name"><input type="checkbox" data-day="sunday" onchange="rdvToggleDay('sunday')"> Dimanche</label><div class="rdv-time-slots"><span class="rdv-time-slot">Fermé</span></div></div>
+                        <div class="rdv-day-schedule"><label class="rdv-day-name"><input type="checkbox" data-day="saturday" onchange="rdvToggleDay('saturday')"> Samedi</label><div class="rdv-time-slots"><span class="rdv-time-slot">FermÃ©</span></div></div>
+                        <div class="rdv-day-schedule"><label class="rdv-day-name"><input type="checkbox" data-day="sunday" onchange="rdvToggleDay('sunday')"> Dimanche</label><div class="rdv-time-slots"><span class="rdv-time-slot">FermÃ©</span></div></div>
                       </div>
                       <div class="rdv-settings-sidebar">
-                        <div class="rdv-setting-card"><label class="rdv-setting-label">Délai avant réunion</label><input type="number" class="rdv-setting-input" id="rdv-buffer-before" value="0" min="0" max="120"><div class="rdv-setting-hint">minutes (préparation)</div></div>
-                        <div class="rdv-setting-card"><label class="rdv-setting-label">Délai après réunion</label><input type="number" class="rdv-setting-input" id="rdv-buffer-after" value="0" min="0" max="120"><div class="rdv-setting-hint">minutes (nettoyage)</div></div>
-                        <div class="rdv-setting-card"><label class="rdv-setting-label">Préavis minimum</label><select class="rdv-setting-input" id="rdv-min-notice"><option value="0">Immédiat</option><option value="1">1 heure</option><option value="4" selected>4 heures</option><option value="24">1 jour</option><option value="48">2 jours</option></select><div class="rdv-setting-hint">avant le RDV</div></div>
-                        <div class="rdv-setting-card"><label class="rdv-setting-label">Réservation max</label><input type="number" class="rdv-setting-input" id="rdv-max-advance" value="30" min="1" max="365"><div class="rdv-setting-hint">jours à l'avance</div></div>
+                        <div class="rdv-setting-card"><label class="rdv-setting-label">DÃ©lai avant rÃ©union</label><input type="number" class="rdv-setting-input" id="rdv-buffer-before" value="0" min="0" max="120"><div class="rdv-setting-hint">minutes (prÃ©paration)</div></div>
+                        <div class="rdv-setting-card"><label class="rdv-setting-label">DÃ©lai aprÃ¨s rÃ©union</label><input type="number" class="rdv-setting-input" id="rdv-buffer-after" value="0" min="0" max="120"><div class="rdv-setting-hint">minutes (nettoyage)</div></div>
+                        <div class="rdv-setting-card"><label class="rdv-setting-label">PrÃ©avis minimum</label><select class="rdv-setting-input" id="rdv-min-notice"><option value="0">ImmÃ©diat</option><option value="1">1 heure</option><option value="4" selected>4 heures</option><option value="24">1 jour</option><option value="48">2 jours</option></select><div class="rdv-setting-hint">avant le RDV</div></div>
+                        <div class="rdv-setting-card"><label class="rdv-setting-label">RÃ©servation max</label><input type="number" class="rdv-setting-input" id="rdv-max-advance" value="30" min="1" max="365"><div class="rdv-setting-hint">jours Ã  l'avance</div></div>
                         <button class="btn btn-primary" onclick="rdvSaveAvailability()" style="width: 100%;">Enregistrer</button>
                       </div>
                     </div>
@@ -2027,23 +2027,23 @@
                     <div class="rdv-public-page-container">
                       <div class="rdv-preview-card">
                         <div class="rdv-preview-header"><h3 class="rdv-preview-title" id="rdv-preview-name">SalesBot IA</h3><p class="rdv-preview-subtitle">Planifiez un rendez-vous</p></div>
-                        <div class="rdv-preview-body"><p class="rdv-preview-message" id="rdv-preview-message">Bienvenue sur ma page de réservation.</p><div style="text-align: center; color: var(--text-secondary);">Aperçu de votre page publique</div></div>
+                        <div class="rdv-preview-body"><p class="rdv-preview-message" id="rdv-preview-message">Bienvenue sur ma page de rÃ©servation.</p><div style="text-align: center; color: var(--text-secondary);">AperÃ§u de votre page publique</div></div>
                       </div>
                       <div class="rdv-public-settings">
                         <div class="rdv-settings-group">
                           <label class="rdv-settings-group-title">Informations</label>
                           <div class="rdv-form-group"><label class="rdv-setting-label">Nom de l'entreprise</label><input type="text" class="rdv-setting-input" id="rdv-company-name" value="SalesBot IA" oninput="rdvUpdatePreview()"></div>
                           <div class="rdv-form-group"><label class="rdv-setting-label">Logo URL</label><input type="text" class="rdv-setting-input" id="rdv-logo-url" placeholder="https://..." oninput="rdvUpdatePreview()"></div>
-                          <div class="rdv-form-group"><label class="rdv-setting-label">Message d'accueil</label><textarea class="form-textarea" id="rdv-welcome-message" rows="3" oninput="rdvUpdatePreview()">Bienvenue sur ma page de réservation. Sélectionnez une disponibilité qui vous convient.</textarea></div>
+                          <div class="rdv-form-group"><label class="rdv-setting-label">Message d'accueil</label><textarea class="form-textarea" id="rdv-welcome-message" rows="3" oninput="rdvUpdatePreview()">Bienvenue sur ma page de rÃ©servation. SÃ©lectionnez une disponibilitÃ© qui vous convient.</textarea></div>
                         </div>
                         <div class="rdv-settings-group">
                           <label class="rdv-settings-group-title">Partage</label>
                           <div class="rdv-form-group"><label class="rdv-setting-label">Lien public</label><div class="rdv-link-box"><input type="text" class="rdv-link-input" id="rdv-public-link" readonly><button class="rdv-copy-btn" onclick="rdvCopyLink()">Copier</button></div></div>
-                          <div class="rdv-form-group"><label class="rdv-setting-label">Code QR</label><div class="rdv-qr-code" id="rdv-qr-code">Bientôt disponible</div></div>
+                          <div class="rdv-form-group"><label class="rdv-setting-label">Code QR</label><div class="rdv-qr-code" id="rdv-qr-code">BientÃ´t disponible</div></div>
                         </div>
                         <div class="rdv-settings-group">
-                          <label class="rdv-settings-group-title">Intégration</label>
-                          <div class="rdv-form-group"><label class="rdv-setting-label">Code d'intégration</label><textarea class="form-textarea" id="rdv-embed-code" rows="4" readonly style="font-family: monospace; font-size: 0.8rem;"></textarea><button class="rdv-copy-btn" onclick="rdvCopyEmbed()" style="width: 100%; margin-top: 0.75rem;">Copier le code</button></div>
+                          <label class="rdv-settings-group-title">IntÃ©gration</label>
+                          <div class="rdv-form-group"><label class="rdv-setting-label">Code d'intÃ©gration</label><textarea class="form-textarea" id="rdv-embed-code" rows="4" readonly style="font-family: monospace; font-size: 0.8rem;"></textarea><button class="rdv-copy-btn" onclick="rdvCopyEmbed()" style="width: 100%; margin-top: 0.75rem;">Copier le code</button></div>
                         </div>
                       </div>
                     </div>
@@ -2059,7 +2059,7 @@
                     <div class="analytics-panel" style="margin-bottom:30px;">
                         <div class="panel-header">
                             <div class="panel-title"><i class="fas fa-filter" style="margin-right:8px;color:var(--accent-primary)"></i>Entonnoir de Conversion</div>
-                            <div class="panel-badge">Temps réel</div>
+                            <div class="panel-badge">Temps rÃ©el</div>
                         </div>
                         <div id="analytics-conv-funnel" class="conv-funnel"></div>
                         <div style="display:flex;gap:20px;margin-top:15px;" id="analytics-conv-rates"></div>
@@ -2078,7 +2078,7 @@
                             <div id="analytics-revenue-chart" class="rev-chart"></div>
                             <div style="display:flex;gap:15px;margin-top:12px;">
                                 <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-secondary);">
-                                    <div style="width:12px;height:4px;border-radius:2px;background:var(--accent-primary);"></div> Réalisé
+                                    <div style="width:12px;height:4px;border-radius:2px;background:var(--accent-primary);"></div> RÃ©alisÃ©
                                 </div>
                                 <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-secondary);">
                                     <div style="width:12px;height:4px;border-radius:2px;border:1px dashed var(--accent-primary);"></div> Objectif
@@ -2090,7 +2090,7 @@
                         <div class="analytics-panel">
                             <div class="panel-header">
                                 <div class="panel-title"><i class="fas fa-stream" style="margin-right:8px;color:var(--info)"></i>Pipeline Commercial</div>
-                                <div class="panel-badge" id="analytics-pipeline-total">0 €</div>
+                                <div class="panel-badge" id="analytics-pipeline-total">0 â¬</div>
                             </div>
                             <div id="analytics-pipeline"></div>
                         </div>
@@ -2126,7 +2126,7 @@
                         </div>
                         <div class="analytics-panel">
                             <div class="panel-header">
-                                <div class="panel-title"><i class="fas fa-handshake" style="margin-right:8px;color:var(--success)"></i>Derniers Deals Closés</div>
+                                <div class="panel-title"><i class="fas fa-handshake" style="margin-right:8px;color:var(--success)"></i>Derniers Deals ClosÃ©s</div>
                             </div>
                             <div id="analytics-deals"></div>
                         </div>
@@ -2138,7 +2138,7 @@
                     <!-- Voice Agent Stats -->
                     <div class="voice-agent-section">
                         <div class="voice-agent-title">
-                            <i class="fas fa-chart-bar"></i> Statistiques en Temps Réel
+                            <i class="fas fa-chart-bar"></i> Statistiques en Temps RÃ©el
                         </div>
                         <div class="voice-stats-grid" id="voice-stats-grid">
                             <div class="voice-stat-card">
@@ -2158,7 +2158,7 @@
                             </div>
                             <div class="voice-stat-card">
                                 <div class="voice-stat-value">0m0s</div>
-                                <div class="voice-stat-label">Durée Moyenne</div>
+                                <div class="voice-stat-label">DurÃ©e Moyenne</div>
                                 <div class="voice-stat-change negative"><i class="fas fa-arrow-down"></i> -8%</div>
                             </div>
                         </div>
@@ -2182,10 +2182,10 @@
                                 <div class="control-group">
                                     <label class="form-label">Voix de l'Agent</label>
                                     <select class="form-select" id="voice-select">
-                                        <option value="sophie">Sophie - Français</option>
-                                        <option value="marc">Marc - Français Pro</option>
+                                        <option value="sophie">Sophie - FranÃ§ais</option>
+                                        <option value="marc">Marc - FranÃ§ais Pro</option>
                                         <option value="emma">Emma - English</option>
-                                        <option value="carlos">Carlos - Español</option>
+                                        <option value="carlos">Carlos - EspaÃ±ol</option>
                                     </select>
                                 </div>
 
@@ -2208,7 +2208,7 @@
                                 </div>
 
                                 <div class="control-group">
-                                    <label class="form-label">Appels Simultanés</label>
+                                    <label class="form-label">Appels SimultanÃ©s</label>
                                     <div class="slider-container">
                                         <input type="range" min="1" max="10" value="3" id="concurrent-calls" onchange="updateSliderValue()">
                                         <span class="slider-value" id="concurrent-value">3</span>
@@ -2218,14 +2218,14 @@
 
                             <div class="control-group config-textarea">
                                 <label class="form-label">Script / Persona IA</label>
-                                <textarea class="form-textarea script-textarea" id="voice-script">Tu es un agent commercial qualifié spécialisé dans la qualification de leads. Ton objectif est:
-1. Accueillir le prospect de manière chaleureuse
+                                <textarea class="form-textarea script-textarea" id="voice-script">Tu es un agent commercial qualifiÃ© spÃ©cialisÃ© dans la qualification de leads. Ton objectif est:
+1. Accueillir le prospect de maniÃ¨re chaleureuse
 2. Poser des questions pour identifier ses besoins
-3. Qualifier le prospect (intérêt, budget, timeline)
+3. Qualifier le prospect (intÃ©rÃªt, budget, timeline)
 4. Proposer un RDV si qualification positive
 5. Rester professionnel et courtois en toutes circonstances
 
-Évite les appels trop longs (max 10 min). Propose toujours un RDV concret si intéressé.</textarea>
+Ãvite les appels trop longs (max 10 min). Propose toujours un RDV concret si intÃ©ressÃ©.</textarea>
                             </div>
                         </div>
                         <button class="btn btn-primary" onclick="startOutboundCampaign()" style="margin-top: 15px;">
@@ -2239,7 +2239,7 @@
                             <div class="caller-info">
                                 <div class="caller-avatar" id="caller-avatar">M</div>
                                 <div class="caller-details">
-                                    <div class="caller-name" id="caller-name">Michel Dupré</div>
+                                    <div class="caller-name" id="caller-name">Michel DuprÃ©</div>
                                     <div class="caller-number" id="caller-number">+33 6 45 23 11 77</div>
                                 </div>
                             </div>
@@ -2270,8 +2270,8 @@
                             <thead>
                                 <tr>
                                     <th>Date</th>
-                                    <th>Numéro</th>
-                                    <th>Durée</th>
+                                    <th>NumÃ©ro</th>
+                                    <th>DurÃ©e</th>
                                     <th>Statut</th>
                                     <th>Qualification</th>
                                     <th>Action</th>
@@ -2283,7 +2283,7 @@
                                     <td>+33 6 45 23 11 77</td>
                                     <td>7m 23s</td>
                                     <td><span class="status-dot online"></span></td>
-                                    <td><span class="call-status-badge qualifie">Qualifié</span></td>
+                                    <td><span class="call-status-badge qualifie">QualifiÃ©</span></td>
                                     <td><button class="btn btn-sm btn-secondary" onclick="qualifyCallLead(1, 'rdv_pris')"><i class="fas fa-calendar"></i></button></td>
                                 </tr>
                                 <tr>
@@ -2299,7 +2299,7 @@
                                     <td>+33 6 12 78 45 23</td>
                                     <td>3m 45s</td>
                                     <td><span class="status-dot online"></span></td>
-                                    <td><span class="call-status-badge rappeler">À Rappeler</span></td>
+                                    <td><span class="call-status-badge rappeler">Ã Rappeler</span></td>
                                     <td><button class="btn btn-sm btn-secondary" onclick="qualifyCallLead(3, 'rappeler')"><i class="fas fa-redo"></i></button></td>
                                 </tr>
                                 <tr>
@@ -2307,7 +2307,7 @@
                                     <td>+33 7 56 34 21 98</td>
                                     <td>2m 08s</td>
                                     <td><span class="status-dot offline"></span></td>
-                                    <td><span class="call-status-badge non_qualifie">Non Qualifié</span></td>
+                                    <td><span class="call-status-badge non_qualifie">Non QualifiÃ©</span></td>
                                     <td><button class="btn btn-sm btn-secondary" onclick="qualifyCallLead(4, 'non_qualifie')"><i class="fas fa-ban"></i></button></td>
                                 </tr>
                                 <tr>
@@ -2315,7 +2315,7 @@
                                     <td>+33 6 34 78 56 12</td>
                                     <td>6m 55s</td>
                                     <td><span class="status-dot online"></span></td>
-                                    <td><span class="call-status-badge qualifie">Qualifié</span></td>
+                                    <td><span class="call-status-badge qualifie">QualifiÃ©</span></td>
                                     <td><button class="btn btn-sm btn-secondary" onclick="qualifyCallLead(5, 'qualifie')"><i class="fas fa-check"></i></button></td>
                                 </tr>
                                 <tr>
@@ -2331,7 +2331,7 @@
                                     <td>+33 6 98 76 54 32</td>
                                     <td>8m 02s</td>
                                     <td><span class="status-dot online"></span></td>
-                                    <td><span class="call-status-badge rappeler">À Rappeler</span></td>
+                                    <td><span class="call-status-badge rappeler">Ã Rappeler</span></td>
                                     <td><button class="btn btn-sm btn-secondary" onclick="qualifyCallLead(7, 'rappeler')"><i class="fas fa-redo"></i></button></td>
                                 </tr>
                                 <tr>
@@ -2339,7 +2339,7 @@
                                     <td>+33 7 65 43 21 09</td>
                                     <td>1m 34s</td>
                                     <td><span class="status-dot offline"></span></td>
-                                    <td><span class="call-status-badge non_qualifie">Non Qualifié</span></td>
+                                    <td><span class="call-status-badge non_qualifie">Non QualifiÃ©</span></td>
                                     <td><button class="btn btn-sm btn-secondary" onclick="qualifyCallLead(8, 'non_qualifie')"><i class="fas fa-ban"></i></button></td>
                                 </tr>
                             </tbody>
@@ -2365,10 +2365,10 @@
                                     <input type="text" class="form-input" id="campaign-name" placeholder="Ex: Prospection Q2 2025">
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label">Sélectionner Script</label>
+                                    <label class="form-label">SÃ©lectionner Script</label>
                                     <select class="form-select" id="campaign-script">
                                         <option value="qualification">Script Qualification</option>
-                                        <option value="reactivation">Script Réactivation</option>
+                                        <option value="reactivation">Script RÃ©activation</option>
                                         <option value="feedback">Script Feedback</option>
                                     </select>
                                 </div>
@@ -2384,13 +2384,13 @@
                             </div>
                             <div class="campaign-controls">
                                 <button class="btn btn-primary" id="campaign-btn" onclick="startCampaignExecution()">
-                                    <i class="fas fa-play"></i> Démarrer Campagne
+                                    <i class="fas fa-play"></i> DÃ©marrer Campagne
                                 </button>
                                 <button class="btn btn-secondary" id="campaign-pause-btn" style="display: none;" onclick="pauseCampaign()">
                                     <i class="fas fa-pause"></i> Pause
                                 </button>
                                 <button class="btn btn-danger" id="campaign-stop-btn" style="display: none;" onclick="stopCampaign()">
-                                    <i class="fas fa-stop"></i> Arrêter
+                                    <i class="fas fa-stop"></i> ArrÃªter
                                 </button>
                             </div>
                         </div>
@@ -2423,11 +2423,11 @@
                                 <div class="form-group">
                                     <label class="form-label">Agent</label>
                                     <select class="form-select" id="wa-quick-agent">
-                                        <option value="">Sélectionner un agent</option>
+                                        <option value="">SÃ©lectionner un agent</option>
                                         </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label">Téléphone</label>
+                                    <label class="form-label">TÃ©lÃ©phone</label>
                                     <input type="tel" class="form-input" id="wa-quick-phone" placeholder="+33...">
                                 </div>
                             </div>
@@ -2448,7 +2448,7 @@
                             <div class="form-group">
                                 <label class="form-label">Agent</label>
                                 <select class="form-select" id="wa-broadcast-agent">
-                                    <option value="">Sélectionner un agent</option>
+                                    <option value="">SÃ©lectionner un agent</option>
                                     </select>
                             </div>
                             <div class="form-group">
@@ -2464,7 +2464,7 @@
                                     </label>
                                     <label class="radio-option">
                                         <input type="radio" name="wa-broadcast-target" value="qualified" onchange="handleBroadcastTargetChange()">
-                                        <span>Leads qualifiés</span>
+                                        <span>Leads qualifiÃ©s</span>
                                     </label>
                                     <label class="radio-option">
                                         <input type="radio" name="wa-broadcast-target" value="new" onchange="handleBroadcastTargetChange()">
@@ -2472,13 +2472,13 @@
                                     </label>
                                     <label class="radio-option">
                                         <input type="radio" name="wa-broadcast-target" value="manual" onchange="handleBroadcastTargetChange()">
-                                        <span>Sélection manuelle</span>
+                                        <span>SÃ©lection manuelle</span>
                                     </label>
                                 </div>
                             </div>
                             <div id="wa-broadcast-manual-leads" class="hidden">
                                 <div style="margin-bottom: 15px;">
-                                    <label class="form-label">Sélectionner des leads</label>
+                                    <label class="form-label">SÃ©lectionner des leads</label>
                                 </div>
                                 <div class="leads-grid" id="wa-broadcast-leads-grid"></div>
                             </div>
@@ -2486,7 +2486,7 @@
                                 <div class="progress-bar">
                                     <div class="progress-fill" id="wa-broadcast-progress-fill" style="width: 0%;"></div>
                                 </div>
-                                <div class="progress-text" id="wa-broadcast-progress-text">0 / 0 envoyés</div>
+                                <div class="progress-text" id="wa-broadcast-progress-text">0 / 0 envoyÃ©s</div>
                             </div>
                             <button class="btn btn-primary" onclick="sendBroadcast()" style="margin-top: 10px;">
                                 <i class="fas fa-broadcast-tower"></i> Envoyer Broadcast
@@ -2502,7 +2502,7 @@
                             <div class="agent-header">
                                 <div>
                                     <div class="agent-name">WhatsApp</div>
-                                    <div class="agent-phone">Agents connectés: 3</div>
+                                    <div class="agent-phone">Agents connectÃ©s: 3</div>
                                 </div>
                                 <span class="status-dot online"></span>
                             </div>
@@ -2520,7 +2520,7 @@
                                 </div>
                                 <span class="status-dot offline"></span>
                             </div>
-                            <p style="font-size: 13px; color: var(--text-secondary); margin: 10px 0;">Intégration Telegram pour contacter les clients</p>
+                            <p style="font-size: 13px; color: var(--text-secondary); margin: 10px 0;">IntÃ©gration Telegram pour contacter les clients</p>
                             <button onclick="toast('Telegram - Bientot disponible', 'info')" class="btn btn-secondary btn-sm" style="width: 100%; margin-top: 10px;">
                                 <i class="fas fa-cog"></i> Configurer
                             </button>
@@ -2560,7 +2560,7 @@
                 <div id="page-config" class="page">
                     <form onsubmit="saveConfig(event)" style="max-width: 800px;">
                         <div style="background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 8px; padding: 25px; margin-bottom: 20px;">
-                            <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 20px; color: var(--text-primary);">Identité du Bot</h3>
+                            <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 20px; color: var(--text-primary);">IdentitÃ© du Bot</h3>
                             <div class="modal-form">
                                 <div class="form-group">
                                     <label class="form-label">Nom du Bot</label>
@@ -2577,9 +2577,9 @@
                                 <div class="form-group">
                                     <label class="form-label">Langue</label>
                                     <select class="form-select" id="config-language">
-                                        <option value="fr">Français</option>
+                                        <option value="fr">FranÃ§ais</option>
                                         <option value="en">English</option>
-                                        <option value="es">Español</option>
+                                        <option value="es">EspaÃ±ol</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -2598,7 +2598,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Prix</label>
-                                    <input type="text" class="form-input" id="config-price" value="99€/mois">
+                                    <input type="text" class="form-input" id="config-price" value="99â¬/mois">
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Description</label>
@@ -2608,8 +2608,8 @@
                                     <label class="form-label">Avantages (un par ligne)</label>
                                     <textarea class="form-textarea" id="config-advantages">Automatisation 24/7
 Support prioritaire
-Intégrations illimitées
-Analytics avancées</textarea>
+IntÃ©grations illimitÃ©es
+Analytics avancÃ©es</textarea>
                                 </div>
                             </div>
                         </div>
@@ -2622,7 +2622,7 @@ Analytics avancées</textarea>
                                     <textarea class="form-textarea" id="config-welcome-msg">Bonjour ! Je suis votre assistant ventes. Comment puis-je vous aider ?</textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label">Prompt système (instructions IA)</label>
+                                    <label class="form-label">Prompt systÃ¨me (instructions IA)</label>
                                     <textarea class="form-textarea" id="config-system-prompt">Tu es un assistant commercial expert...</textarea>
                                 </div>
                             </div>
@@ -2633,7 +2633,7 @@ Analytics avancées</textarea>
                             <div class="modal-form">
                                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                                     <div class="form-group">
-                                        <label class="form-label">Heure de début</label>
+                                        <label class="form-label">Heure de dÃ©but</label>
                                         <input type="time" class="form-input" id="config-start-time" value="09:00">
                                     </div>
                                     <div class="form-group">
@@ -2649,14 +2649,14 @@ Analytics avancées</textarea>
                         </div>
 
                         <div style="background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 8px; padding: 25px; margin-bottom: 20px;">
-                            <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 20px; color: var(--text-primary);">Lien de Réservation</h3>
+                            <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 20px; color: var(--text-primary);">Lien de RÃ©servation</h3>
                             <div class="modal-form">
                                 <div class="form-group">
                                     <label class="form-label">URL Calendly / Booking</label>
                                     <input type="url" class="form-input" id="config-booking-url" value="https://calendly.com/example">
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label">Téléphone de contact</label>
+                                    <label class="form-label">TÃ©lÃ©phone de contact</label>
                                     <input type="tel" class="form-input" id="config-phone" value="">
                                 </div>
                             </div>
@@ -2684,7 +2684,7 @@ Analytics avancées</textarea>
                                 <tr>
                                     <th>Nom</th>
                                     <th>Email</th>
-                                    <th>Rôle</th>
+                                    <th>RÃ´le</th>
                                     <th>Agents</th>
                                     <th>Leads</th>
                                     <th>Statut</th>
@@ -2719,18 +2719,18 @@ Analytics avancées</textarea>
                                 <td style="padding: 10px; font-weight: 600;">45,678</td>
                             </tr>
                             <tr>
-                                <td style="padding: 10px; color: var(--text-secondary);">Messages traités</td>
+                                <td style="padding: 10px; color: var(--text-secondary);">Messages traitÃ©s</td>
                                 <td style="padding: 10px; font-weight: 600;">2,345,678</td>
                             </tr>
                             <tr style="background: var(--bg-secondary);">
-                                <td style="padding: 10px; color: var(--text-secondary);">Base de données</td>
+                                <td style="padding: 10px; color: var(--text-secondary);">Base de donnÃ©es</td>
                                 <td style="padding: 10px; font-weight: 600;">456 MB</td>
                             </tr>
                         </table>
                     </div>
 
                     <div class="chart-container">
-                        <div class="chart-title">Configuration Système</div>
+                        <div class="chart-title">Configuration SystÃ¨me</div>
                         <pre style="background: var(--bg-secondary); padding: 15px; border-radius: 6px; overflow-x: auto; font-size: 12px;">{
   "version": "3.0.0",
   "environment": "production",
@@ -2766,7 +2766,7 @@ Analytics avancées</textarea>
                     <input type="text" class="form-input" id="lead-name" required>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Téléphone</label>
+                    <label class="form-label">TÃ©lÃ©phone</label>
                     <input type="tel" class="form-input" id="lead-phone" required>
                 </div>
                 <div class="form-group">
@@ -2777,7 +2777,7 @@ Analytics avancées</textarea>
                     <label class="form-label">Statut</label>
                     <select class="form-select" id="lead-status">
                         <option value="nouveau">Nouveau</option>
-                        <option value="qualifie">Qualifié</option>
+                        <option value="qualifie">QualifiÃ©</option>
                         <option value="rdv">RDV</option>
                     </select>
                 </div>
@@ -2800,17 +2800,17 @@ Analytics avancées</textarea>
             <div class="modal-title">Importer Leads (CSV)</div>
             <form class="modal-form" onsubmit="importCSV(event)">
                 <div class="form-group">
-                    <label class="form-label">Coller votre CSV (format: Nom, Téléphone, Email, Statut)</label>
+                    <label class="form-label">Coller votre CSV (format: Nom, TÃ©lÃ©phone, Email, Statut)</label>
                     <textarea class="form-textarea" id="csv-textarea" placeholder="Nom,Telephone,Email,Statut" style="min-height: 150px;"></textarea>
                 </div>
                 <div id="csv-preview" style="display: none;">
-                    <div class="form-label">Aperçu</div>
+                    <div class="form-label">AperÃ§u</div>
                     <div class="table-container">
                         <table id="csv-preview-table">
                             <thead>
                                 <tr>
                                     <th>Nom</th>
-                                    <th>Téléphone</th>
+                                    <th>TÃ©lÃ©phone</th>
                                     <th>Email</th>
                                     <th>Statut</th>
                                 </tr>
@@ -2821,7 +2821,7 @@ Analytics avancées</textarea>
                 </div>
                 <div class="form-actions">
                     <button type="button" class="btn btn-secondary" onclick="closeModal('modal-import-csv')">Annuler</button>
-                    <button type="button" class="btn btn-secondary" id="csv-parse-btn" onclick="parseCSV()">Aperçu</button>
+                    <button type="button" class="btn btn-secondary" id="csv-parse-btn" onclick="parseCSV()">AperÃ§u</button>
                     <button type="submit" class="btn btn-primary" id="csv-confirm-btn" style="display: none;">Importer</button>
                 </div>
             </form>
@@ -2836,15 +2836,15 @@ Analytics avancées</textarea>
           <button class="modal-close" onclick="closeModal('modal-create-rdv')">&times;</button>
         </div>
         <form id="rdv-create-form" onsubmit="rdvHandleCreateSubmit(event)">
-          <div class="form-group"><label class="form-label">Type d'événement</label><select class="form-input rdv-select" id="rdv-form-type" required onchange="rdvUpdateFormDuration()"><option value="">Sélectionner un type...</option></select></div>
+          <div class="form-group"><label class="form-label">Type d'Ã©vÃ©nement</label><select class="form-input rdv-select" id="rdv-form-type" required onchange="rdvUpdateFormDuration()"><option value="">SÃ©lectionner un type...</option></select></div>
           <div class="form-group"><label class="form-label">Nom du client</label><input type="text" class="form-input" id="rdv-form-name" required placeholder="Nom du client"></div>
           <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" id="rdv-form-email" required placeholder="email@client.com"></div>
-          <div class="form-group"><label class="form-label">Téléphone</label><input type="tel" class="form-input" id="rdv-form-phone" placeholder="+33 6 12 34 56 78"></div>
+          <div class="form-group"><label class="form-label">TÃ©lÃ©phone</label><input type="tel" class="form-input" id="rdv-form-phone" placeholder="+33 6 12 34 56 78"></div>
           <div class="form-group"><label class="form-label">Date</label><input type="date" class="form-input rdv-select" id="rdv-form-date" required onchange="rdvLoadAvailableSlots()"></div>
           <div class="form-group"><label class="form-label">Heure disponible</label><div class="rdv-time-picker-grid" id="rdv-time-picker"></div><input type="hidden" id="rdv-form-time"></div>
-          <div class="form-group"><label class="form-label">Durée</label><div class="rdv-detail-value" id="rdv-form-duration">-</div></div>
+          <div class="form-group"><label class="form-label">DurÃ©e</label><div class="rdv-detail-value" id="rdv-form-duration">-</div></div>
           <div class="form-group"><label class="form-label">Notes (optionnel)</label><textarea class="form-textarea" id="rdv-form-notes" rows="3" placeholder="Ajouter des notes..."></textarea></div>
-          <div class="form-actions"><button type="button" class="btn btn-secondary" onclick="closeModal('modal-create-rdv')">Annuler</button><button type="submit" class="btn btn-primary">Créer le RDV</button></div>
+          <div class="form-actions"><button type="button" class="btn btn-secondary" onclick="closeModal('modal-create-rdv')">Annuler</button><button type="submit" class="btn btn-primary">CrÃ©er le RDV</button></div>
         </form>
       </div>
     </div>
@@ -2853,7 +2853,7 @@ Analytics avancées</textarea>
     <div id="modal-booking-details" class="modal">
       <div class="modal-content" style="max-width: 500px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-          <h3 class="modal-title">Détails du Rendez-vous</h3>
+          <h3 class="modal-title">DÃ©tails du Rendez-vous</h3>
           <button class="modal-close" onclick="closeModal('modal-booking-details')">&times;</button>
         </div>
         <div id="rdv-details-content"></div>
@@ -2865,12 +2865,12 @@ Analytics avancées</textarea>
     <div id="modal-event-type" class="modal">
       <div class="modal-content" style="max-width: 500px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-          <h3 class="modal-title">Créer un type d'événement</h3>
+          <h3 class="modal-title">CrÃ©er un type d'Ã©vÃ©nement</h3>
           <button class="modal-close" onclick="closeModal('modal-event-type')">&times;</button>
         </div>
         <form id="rdv-event-type-form" onsubmit="rdvHandleEventTypeSubmit(event)">
-          <div class="form-group"><label class="form-label">Nom</label><input type="text" class="form-input" id="rdv-et-name" required placeholder="Appel Découverte"></div>
-          <div class="form-group"><label class="form-label">Durée (minutes)</label><input type="number" class="form-input" id="rdv-et-duration" required value="30" min="5" max="480"></div>
+          <div class="form-group"><label class="form-label">Nom</label><input type="text" class="form-input" id="rdv-et-name" required placeholder="Appel DÃ©couverte"></div>
+          <div class="form-group"><label class="form-label">DurÃ©e (minutes)</label><input type="number" class="form-input" id="rdv-et-duration" required value="30" min="5" max="480"></div>
           <div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" id="rdv-et-description" rows="3" placeholder="Description du type..."></textarea></div>
           <div class="form-group"><label class="form-label">Couleur</label>
             <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
@@ -2880,7 +2880,7 @@ Analytics avancées</textarea>
               <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;"><input type="radio" name="color" value="#f59e0b"><span style="width: 20px; height: 20px; background-color: #f59e0b; border-radius: 50%; display: inline-block;"></span></label>
             </div>
           </div>
-          <div class="form-actions"><button type="button" class="btn btn-secondary" onclick="closeModal('modal-event-type')">Annuler</button><button type="submit" class="btn btn-primary">Créer</button></div>
+          <div class="form-actions"><button type="button" class="btn btn-secondary" onclick="closeModal('modal-event-type')">Annuler</button><button type="submit" class="btn btn-primary">CrÃ©er</button></div>
         </form>
       </div>
     </div>
@@ -2896,7 +2896,7 @@ Analytics avancées</textarea>
                     <input type="text" class="form-input" id="agent-name" required>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Numéro WhatsApp</label>
+                    <label class="form-label">NumÃ©ro WhatsApp</label>
                     <input type="tel" class="form-input" id="agent-phone" placeholder="+33..." required>
                 </div>
                 <div class="form-actions">
@@ -2913,7 +2913,7 @@ Analytics avancées</textarea>
             <button class="modal-close" onclick="closeModal('modal-qr')">&times;</button>
             <div class="modal-title">Scanner QR Code</div>
             <div class="qr-container">
-                <p style="color: var(--text-secondary); margin-bottom: 15px;">Scannez ce code QR avec votre téléphone pour connecter l'agent</p>
+                <p style="color: var(--text-secondary); margin-bottom: 15px;">Scannez ce code QR avec votre tÃ©lÃ©phone pour connecter l'agent</p>
                 <img id="qr-image" class="qr-image" src="https://via.placeholder.com/200?text=QR+Code" alt="QR Code">
                 <div class="qr-status" id="qr-status">En attente de scan...</div>
             </div>
@@ -2935,7 +2935,7 @@ Analytics avancées</textarea>
                     <input type="email" class="form-input" id="user-email" required>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Rôle</label>
+                    <label class="form-label">RÃ´le</label>
                     <select class="form-select" id="user-role">
                         <option value="user">User</option>
                         <option value="manager">Manager</option>
@@ -3024,7 +3024,7 @@ Analytics avancées</textarea>
                 connexions: 'Connexions',
                 config: 'Configuration IA',
                 users: 'Utilisateurs',
-                admin: 'Système'
+                admin: 'SystÃ¨me'
             };
             document.getElementById('page-title').textContent = pageTitle[name] || name;
 
@@ -3050,8 +3050,8 @@ Analytics avancées</textarea>
         }
 
         function logout() {
-            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
-                toast('Déconnexion en cours...', 'success');
+            if (confirm('Ãtes-vous sÃ»r de vouloir vous dÃ©connecter ?')) {
+                toast('DÃ©connexion en cours...', 'success');
                 setTimeout(function() {
                     window.location.href = '/login';
                 }, 1000);
@@ -3110,11 +3110,11 @@ Analytics avancées</textarea>
         function loadDashboard() {
             var kpis = [
                 { label: 'Leads Total', value: '0', change: '--', icon: 'fa-users' },
-                { label: 'Leads Qualifiés', value: '0', change: '--', icon: 'fa-user-check' },
+                { label: 'Leads QualifiÃ©s', value: '0', change: '--', icon: 'fa-user-check' },
                 { label: 'RDV Pris', value: '0', change: '--', icon: 'fa-calendar-check' },
                 { label: 'Clients Convertis', value: '0', change: '--', icon: 'fa-handshake' },
                 { label: 'Taux de Closing', value: '0%', change: '--', icon: 'fa-chart-line' },
-                { label: 'Agents Connectés', value: '0/0', change: 'Aucun', icon: 'fa-robot' }
+                { label: 'Agents ConnectÃ©s', value: '0/0', change: 'Aucun', icon: 'fa-robot' }
             ];
 
             var kpiContainer = document.getElementById('kpi-container');
@@ -3147,13 +3147,13 @@ Analytics avancées</textarea>
 
         function analyticsRenderKPIs() {
             var kpis = [
-                { icon: 'fas fa-euro-sign', label: "Chiffre d'Affaires", value: '127,450 €', trend: 'up', trendVal: '+18.2%', bg: 'linear-gradient(135deg,#7c3aed22,#7c3aed08)' },
+                { icon: 'fas fa-euro-sign', label: "Chiffre d'Affaires", value: '127,450 â¬', trend: 'up', trendVal: '+18.2%', bg: 'linear-gradient(135deg,#7c3aed22,#7c3aed08)' },
                 { icon: 'fas fa-percentage', label: 'Taux de Conversion', value: '34.1%', trend: 'up', trendVal: '+4.5%', bg: 'linear-gradient(135deg,#10b98122,#10b98108)' },
-                { icon: 'fas fa-shopping-cart', label: 'Panier Moyen', value: '3,035 €', trend: 'up', trendVal: '+7.8%', bg: 'linear-gradient(135deg,#3b82f622,#3b82f608)' },
+                { icon: 'fas fa-shopping-cart', label: 'Panier Moyen', value: '3,035 â¬', trend: 'up', trendVal: '+7.8%', bg: 'linear-gradient(135deg,#3b82f622,#3b82f608)' },
                 { icon: 'fas fa-user-check', label: 'Nouveaux Clients', value: '0', trend: 'up', trendVal: '--', bg: 'linear-gradient(135deg,#f59e0b22,#f59e0b08)' },
-                { icon: 'fas fa-redo', label: 'Clients Récurrents', value: '28', trend: 'up', trendVal: '+9%', bg: 'linear-gradient(135deg,#06b6d422,#06b6d408)' },
+                { icon: 'fas fa-redo', label: 'Clients RÃ©currents', value: '28', trend: 'up', trendVal: '+9%', bg: 'linear-gradient(135deg,#06b6d422,#06b6d408)' },
                 { icon: 'fas fa-clock', label: 'Cycle Moyen (jours)', value: '12.4', trend: 'down', trendVal: '-2.1', bg: 'linear-gradient(135deg,#ef444422,#ef444408)' },
-                { icon: 'fas fa-hand-holding-usd', label: 'Valeur Pipeline', value: '284,600 €', trend: 'up', trendVal: '+22%', bg: 'linear-gradient(135deg,#8b5cf622,#8b5cf608)' },
+                { icon: 'fas fa-hand-holding-usd', label: 'Valeur Pipeline', value: '284,600 â¬', trend: 'up', trendVal: '+22%', bg: 'linear-gradient(135deg,#8b5cf622,#8b5cf608)' },
                 { icon: 'fas fa-chart-line', label: 'ROI Marketing', value: '4.2x', trend: 'up', trendVal: '+0.8x', bg: 'linear-gradient(135deg,#ec489922,#ec489908)' }
             ];
             var c = document.getElementById('analytics-kpis');
@@ -3174,7 +3174,7 @@ Analytics avancées</textarea>
             var steps = [
                 { label: 'Visiteurs', value: 3620, color: '#3b82f6' },
                 { label: 'Leads', value: 1234, color: '#8b5cf6' },
-                { label: 'Qualifiés', value: 456, color: '#7c3aed' },
+                { label: 'QualifiÃ©s', value: 456, color: '#7c3aed' },
                 { label: 'RDV', value: 178, color: '#f59e0b' },
                 { label: 'Propositions', value: 98, color: '#06b6d4' },
                 { label: 'Clients', value: 42, color: '#10b981' }
@@ -3195,10 +3195,10 @@ Analytics avancées</textarea>
             var rc = document.getElementById('analytics-conv-rates');
             rc.innerHTML = '';
             var rates = [
-                { label: 'Lead → Qualifié', val: '36.9%' },
-                { label: 'Qualifié → RDV', val: '39.0%' },
-                { label: 'RDV → Proposition', val: '55.1%' },
-                { label: 'Proposition → Client', val: '42.9%' },
+                { label: 'Lead â QualifiÃ©', val: '36.9%' },
+                { label: 'QualifiÃ© â RDV', val: '39.0%' },
+                { label: 'RDV â Proposition', val: '55.1%' },
+                { label: 'Proposition â Client', val: '42.9%' },
                 { label: 'Global', val: '1.16%' }
             ];
             rates.forEach(function(r) {
@@ -3215,9 +3215,9 @@ Analytics avancées</textarea>
                 data = [
                     { label: 'Oct', actual: 82000, target: 90000 },
                     { label: 'Nov', actual: 95000, target: 95000 },
-                    { label: 'Déc', actual: 110000, target: 100000 },
+                    { label: 'DÃ©c', actual: 110000, target: 100000 },
                     { label: 'Jan', actual: 88000, target: 105000 },
-                    { label: 'Fév', actual: 104000, target: 110000 },
+                    { label: 'FÃ©v', actual: 104000, target: 110000 },
                     { label: 'Mar', actual: 127450, target: 120000 }
                 ];
             } else {
@@ -3241,7 +3241,7 @@ Analytics avancées</textarea>
                     '<div class="rev-bar" style="height:' + tH + 'px;background:transparent;border:1px dashed var(--accent-primary);"></div>' +
                     '</div>' +
                     '<div class="rev-bar-label">' + d.label + '</div>' +
-                    '<div class="rev-bar-value">' + (d.actual / 1000).toFixed(0) + 'k €</div>' +
+                    '<div class="rev-bar-value">' + (d.actual / 1000).toFixed(0) + 'k â¬</div>' +
                     '</div>';
             });
         }
@@ -3251,12 +3251,12 @@ Analytics avancées</textarea>
                 { name: 'Prospection', count: 145, value: 72500, color: '#3b82f6', pct: 100 },
                 { name: 'Qualification', count: 68, value: 85000, color: '#8b5cf6', pct: 75 },
                 { name: 'Proposition', count: 34, value: 68000, color: '#f59e0b', pct: 50 },
-                { name: 'Négociation', count: 18, value: 41100, color: '#06b6d4', pct: 35 },
+                { name: 'NÃ©gociation', count: 18, value: 41100, color: '#06b6d4', pct: 35 },
                 { name: 'Closing', count: 8, value: 18000, color: '#10b981', pct: 15 }
             ];
             var total = 0;
             stages.forEach(function(s) { total += s.value; });
-            document.getElementById('analytics-pipeline-total').textContent = total.toLocaleString() + ' €';
+            document.getElementById('analytics-pipeline-total').textContent = total.toLocaleString() + ' â¬';
             var c = document.getElementById('analytics-pipeline');
             c.innerHTML = '';
             stages.forEach(function(s) {
@@ -3266,7 +3266,7 @@ Analytics avancées</textarea>
                     '<div class="pipeline-name">' + s.name + '</div>' +
                     '<div style="display:flex;justify-content:space-between;">' +
                     '<span class="pipeline-count">' + s.count + ' deals</span>' +
-                    '<span class="pipeline-value">' + s.value.toLocaleString() + ' €</span></div>' +
+                    '<span class="pipeline-value">' + s.value.toLocaleString() + ' â¬</span></div>' +
                     '<div class="pipeline-bar-bg"><div class="pipeline-bar-fill" style="width:' + s.pct + '%;background:' + s.color + ';"></div></div>' +
                     '</div></div>';
             });
@@ -3274,7 +3274,7 @@ Analytics avancées</textarea>
 
         function analyticsRenderGauges() {
             var gauges = [
-                { label: 'CA Mensuel', current: 127450, target: 120000, unit: '€' },
+                { label: 'CA Mensuel', current: 127450, target: 120000, unit: 'â¬' },
                 { label: 'Nouveaux Clients', current: 42, target: 50, unit: '' },
                 { label: 'Taux Conversion', current: 34.1, target: 30, unit: '%' }
             ];
@@ -3303,7 +3303,7 @@ Analytics avancées</textarea>
                 { name: 'Karim B.', avatar: 'KB', deals: 14, ca: 42350, rate: 41 },
                 { name: 'Sophie M.', avatar: 'SM', deals: 12, ca: 38900, rate: 38 },
                 { name: 'Youssef A.', avatar: 'YA', deals: 9, ca: 28200, rate: 35 },
-                { name: 'Léa D.', avatar: 'LD', deals: 7, ca: 18000, rate: 29 }
+                { name: 'LÃ©a D.', avatar: 'LD', deals: 7, ca: 18000, rate: 29 }
             ];
             var c = document.getElementById('analytics-performers');
             c.innerHTML = '<thead><tr><th style="text-align:left;padding:8px 10px;color:var(--text-secondary);font-size:11px;">Agent</th><th style="padding:8px 10px;color:var(--text-secondary);font-size:11px;">Deals</th><th style="padding:8px 10px;color:var(--text-secondary);font-size:11px;">CA</th><th style="padding:8px 10px;color:var(--text-secondary);font-size:11px;min-width:80px;">Conversion</th></tr></thead><tbody>';
@@ -3315,7 +3315,7 @@ Analytics avancées</textarea>
                     (i === 0 ? '<i class="fas fa-crown" style="color:#f59e0b;font-size:11px;"></i>' : '') +
                     '</div></td>' +
                     '<td style="padding:8px 10px;text-align:center;font-weight:600;">' + p.deals + '</td>' +
-                    '<td style="padding:8px 10px;text-align:center;font-weight:600;color:var(--success);">' + p.ca.toLocaleString() + ' €</td>' +
+                    '<td style="padding:8px 10px;text-align:center;font-weight:600;color:var(--success);">' + p.ca.toLocaleString() + ' â¬</td>' +
                     '<td style="padding:8px 10px;"><div class="perf-mini-bar"><div class="perf-mini-fill" style="width:' + p.rate + '%;"></div></div><div style="text-align:center;font-size:11px;margin-top:2px;">' + p.rate + '%</div></td>' +
                     '</tr>';
             });
@@ -3339,7 +3339,7 @@ Analytics avancées</textarea>
                 c.innerHTML += '<div style="margin-bottom:14px;">' +
                     '<div style="display:flex;justify-content:space-between;margin-bottom:4px;">' +
                     '<span style="font-size:13px;font-weight:500;color:var(--text-primary);">' + s.name + '</span>' +
-                    '<span style="font-size:12px;color:var(--text-secondary);">' + s.leads + ' leads · <span style="color:var(--success);">' + convRate + '% conv.</span></span></div>' +
+                    '<span style="font-size:12px;color:var(--text-secondary);">' + s.leads + ' leads Â· <span style="color:var(--success);">' + convRate + '% conv.</span></span></div>' +
                     '<div style="height:8px;background:var(--bg-primary);border-radius:4px;overflow:hidden;">' +
                     '<div style="height:100%;width:' + pctBar + '%;background:' + s.color + ';border-radius:4px;transition:width .6s;"></div></div></div>';
             });
@@ -3350,7 +3350,7 @@ Analytics avancées</textarea>
                 { client: 'TechnoPlus SARL', montant: 12500, date: '27 Mars', agent: 'Karim B.', type: 'Nouveau' },
                 { client: 'GreenFood SAS', montant: 8900, date: '26 Mars', agent: 'Sophie M.', type: 'Upsell' },
                 { client: 'AutoParts Pro', montant: 6400, date: '25 Mars', agent: 'Youssef A.', type: 'Nouveau' },
-                { client: 'Maison & Déco', montant: 4800, date: '24 Mars', agent: 'Léa D.', type: 'Renouvellement' },
+                { client: 'Maison & DÃ©co', montant: 4800, date: '24 Mars', agent: 'LÃ©a D.', type: 'Renouvellement' },
                 { client: 'DigiMarket', montant: 15200, date: '23 Mars', agent: 'Karim B.', type: 'Nouveau' }
             ];
             var c = document.getElementById('analytics-deals');
@@ -3359,8 +3359,8 @@ Analytics avancées</textarea>
                 var typeColor = d.type === 'Nouveau' ? 'var(--success)' : d.type === 'Upsell' ? 'var(--info)' : 'var(--warning)';
                 c.innerHTML += '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border-color);">' +
                     '<div><div style="font-weight:600;font-size:13px;color:var(--text-primary);">' + d.client + '</div>' +
-                    '<div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">' + d.agent + ' · ' + d.date + '</div></div>' +
-                    '<div style="text-align:right;"><div style="font-weight:700;color:var(--success);">' + d.montant.toLocaleString() + ' €</div>' +
+                    '<div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">' + d.agent + ' Â· ' + d.date + '</div></div>' +
+                    '<div style="text-align:right;"><div style="font-weight:700;color:var(--success);">' + d.montant.toLocaleString() + ' â¬</div>' +
                     '<div style="font-size:10px;padding:2px 8px;border-radius:10px;background:' + typeColor + '22;color:' + typeColor + ';margin-top:3px;display:inline-block;">' + d.type + '</div></div></div>';
             });
         }
@@ -3380,7 +3380,7 @@ Analytics avancées</textarea>
             return [
                 { label: 'Visiteurs', value: 0, pct: 0 },
                 { label: 'Leads', value: 0, pct: 0 },
-                { label: 'Qualifiés', value: 0, pct: 0 },
+                { label: 'QualifiÃ©s', value: 0, pct: 0 },
                 { label: 'RDV', value: 0, pct: 0 },
                 { label: 'Clients', value: 0, pct: 0 }
             ];
@@ -3415,7 +3415,7 @@ Analytics avancées</textarea>
                 row.innerHTML = '<td>' + lead.name + '</td>' +
                     '<td>' + lead.phone + '</td>' +
                     '<td>' + lead.email + '</td>' +
-                    '<td><select class="form-select" style="padding: 5px; font-size: 12px;" onchange="updateLeadStatus(' + lead.id + ', this.value)"><option value="nouveau" ' + (lead.status === 'nouveau' ? 'selected' : '') + '>Nouveau</option><option value="qualifie" ' + (lead.status === 'qualifie' ? 'selected' : '') + '>Qualifié</option><option value="rdv" ' + (lead.status === 'rdv' ? 'selected' : '') + '>RDV</option><option value="client" ' + (lead.status === 'client' ? 'selected' : '') + '>Client</option><option value="perdu" ' + (lead.status === 'perdu' ? 'selected' : '') + '>Perdu</option></select></td>' +
+                    '<td><select class="form-select" style="padding: 5px; font-size: 12px;" onchange="updateLeadStatus(' + lead.id + ', this.value)"><option value="nouveau" ' + (lead.status === 'nouveau' ? 'selected' : '') + '>Nouveau</option><option value="qualifie" ' + (lead.status === 'qualifie' ? 'selected' : '') + '>QualifiÃ©</option><option value="rdv" ' + (lead.status === 'rdv' ? 'selected' : '') + '>RDV</option><option value="client" ' + (lead.status === 'client' ? 'selected' : '') + '>Client</option><option value="perdu" ' + (lead.status === 'perdu' ? 'selected' : '') + '>Perdu</option></select></td>' +
                     '<td><div class="score-container"><div class="score-bar"><div class="score-fill" style="width: ' + lead.score + '%"></div></div><span class="score-text">' + lead.score + '%</span></div></td>' +
                     '<td>' + lead.messages + '</td>' +
                     '<td><span class="badge blue">' + lead.channel + '</span></td>' +
@@ -3469,7 +3469,7 @@ Analytics avancées</textarea>
             };
 
             appState.leads.push(newLead);
-            toast('Lead ajouté avec succès', 'success');
+            toast('Lead ajoutÃ© avec succÃ¨s', 'success');
             closeModal('modal-add-lead');
             loadLeads();
         }
@@ -3481,7 +3481,7 @@ Analytics avancées</textarea>
         function deleteLead(id) {
             if (confirm('Supprimer ce lead ?')) {
                 appState.leads = appState.leads.filter(function(l) { return l.id !== id; });
-                toast('Lead supprimé', 'success');
+                toast('Lead supprimÃ©', 'success');
                 loadLeads();
             }
         }
@@ -3490,12 +3490,12 @@ Analytics avancées</textarea>
             var lead = appState.leads.find(function(l) { return l.id === id; });
             if (lead) {
                 lead.status = status;
-                toast('Statut mis à jour', 'success');
+                toast('Statut mis Ã  jour', 'success');
             }
         }
 
         function exportCSV() {
-            var csv = 'Nom,Téléphone,Email,Statut,Score,Date\n';
+            var csv = 'Nom,TÃ©lÃ©phone,Email,Statut,Score,Date\n';
             appState.leads.forEach(function(lead) {
                 csv += lead.name + ',' + lead.phone + ',' + lead.email + ',' + lead.status + ',' + lead.score + ',' + lead.date + '\n';
             });
@@ -3506,7 +3506,7 @@ Analytics avancées</textarea>
             a.href = url;
             a.download = 'leads-' + new Date().toISOString().split('T')[0] + '.csv';
             a.click();
-            toast('CSV exporté', 'success');
+            toast('CSV exportÃ©', 'success');
         }
 
         function showImportModal() {
@@ -3541,7 +3541,7 @@ Analytics avancées</textarea>
             }
 
             if (data.length === 0) {
-                toast('Aucune donnée valide trouvée', 'error');
+                toast('Aucune donnÃ©e valide trouvÃ©e', 'error');
                 return;
             }
 
@@ -3567,7 +3567,7 @@ Analytics avancées</textarea>
         function importCSV(event) {
             event.preventDefault();
             if (!csvData || csvData.length === 0) {
-                toast('Pas de données à importer', 'error');
+                toast('Pas de donnÃ©es Ã  importer', 'error');
                 return;
             }
 
@@ -3585,7 +3585,7 @@ Analytics avancées</textarea>
                 });
             });
 
-            toast(csvData.length + ' leads importés avec succès', 'success');
+            toast(csvData.length + ' leads importÃ©s avec succÃ¨s', 'success');
             closeModal('modal-import-csv');
             csvData = null;
             loadLeads();
@@ -3601,7 +3601,7 @@ Analytics avancées</textarea>
           bookings: [],
           eventTypes: [],
           availability: {},
-          publicSettings: { companyName: 'SalesBot IA', logoUrl: '', welcomeMessage: 'Bienvenue sur ma page de réservation.' }
+          publicSettings: { companyName: 'SalesBot IA', logoUrl: '', welcomeMessage: 'Bienvenue sur ma page de rÃ©servation.' }
         };
 
         function rdvInitTabs() {
@@ -3649,9 +3649,9 @@ Analytics avancées</textarea>
           if (types) { rdvState.eventTypes = JSON.parse(types); }
           else {
             rdvState.eventTypes = [
-              { id: '1', name: 'Appel Découverte', duration: 15, description: 'Un appel rapide pour en savoir plus', icon: '📞', color: '#7c3aed', active: true },
-              { id: '2', name: 'Démo Produit', duration: 30, description: 'Démonstration complète de SalesBot IA', icon: '🎯', color: '#3b82f6', active: true },
-              { id: '3', name: 'Consultation', duration: 60, description: 'Consultation approfondie avec notre équipe', icon: '💡', color: '#10b981', active: true }
+              { id: '1', name: 'Appel DÃ©couverte', duration: 15, description: 'Un appel rapide pour en savoir plus', icon: 'ð', color: '#7c3aed', active: true },
+              { id: '2', name: 'DÃ©mo Produit', duration: 30, description: 'DÃ©monstration complÃ¨te de SalesBot IA', icon: 'ð¯', color: '#3b82f6', active: true },
+              { id: '3', name: 'Consultation', duration: 60, description: 'Consultation approfondie avec notre Ã©quipe', icon: 'ð¡', color: '#10b981', active: true }
             ];
             localStorage.setItem('rdv_event_types', JSON.stringify(rdvState.eventTypes));
           }
@@ -3686,7 +3686,7 @@ Analytics avancées</textarea>
         function rdvRenderCalendar() {
           var year = rdvState.currentMonth.getFullYear();
           var month = rdvState.currentMonth.getMonth();
-          var monthNames = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+          var monthNames = ['Janvier','FÃ©vrier','Mars','Avril','Mai','Juin','Juillet','AoÃ»t','Septembre','Octobre','Novembre','DÃ©cembre'];
           document.getElementById('rdv-calendar-title').textContent = monthNames[month] + ' ' + year;
 
           var firstDay = new Date(year, month, 1).getDay();
@@ -3737,19 +3737,19 @@ Analytics avancées</textarea>
           tbody.innerHTML = '';
           var filtered = rdvGetFilteredBookings();
           if (filtered.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="5" class="rdv-empty-state"><div class="rdv-empty-state-icon">📅</div><div class="rdv-empty-state-text">Aucun rendez-vous pour le moment</div></td></tr>';
+            tbody.innerHTML = '<tr><td colspan="5" class="rdv-empty-state"><div class="rdv-empty-state-icon">ð</div><div class="rdv-empty-state-text">Aucun rendez-vous pour le moment</div></td></tr>';
             return;
           }
           filtered.forEach(function(booking) {
             var row = document.createElement('tr');
             var dateObj = new Date(booking.date);
-            var dateStr = rdvFormatDate(dateObj) + ' à ' + booking.time;
+            var dateStr = rdvFormatDate(dateObj) + ' Ã  ' + booking.time;
             row.innerHTML = '<td>' + rdvEscape(booking.leadName) + '</td>' +
-              '<td>' + rdvEscape(booking.eventType || 'Non spécifié') + '</td>' +
+              '<td>' + rdvEscape(booking.eventType || 'Non spÃ©cifiÃ©') + '</td>' +
               '<td>' + dateStr + '</td>' +
               '<td><span class="rdv-table-status rdv-status-' + booking.status + '">' + rdvGetStatusLabel(booking.status) + '</span></td>' +
               '<td><div class="rdv-table-actions">' +
-              '<button class="rdv-btn-action" onclick="rdvViewBooking(\'' + rdvEscape(booking.id) + '\')">Détails</button>' +
+              '<button class="rdv-btn-action" onclick="rdvViewBooking(\'' + rdvEscape(booking.id) + '\')">DÃ©tails</button>' +
               '<button class="rdv-btn-action" onclick="rdvShowStatusOptions(\'' + rdvEscape(booking.id) + '\')">Statut</button>' +
               '<button class="rdv-btn-action" onclick="rdvDeleteBooking(\'' + rdvEscape(booking.id) + '\')" style="color: var(--danger);">Supprimer</button>' +
               '</div></td>';
@@ -3782,9 +3782,9 @@ Analytics avancées</textarea>
           var html = '<div class="rdv-detail-grid">' +
             '<div><div class="rdv-detail-label">Nom</div><div class="rdv-detail-value">' + rdvEscape(booking.leadName) + '</div></div>' +
             '<div><div class="rdv-detail-label">Email</div><div class="rdv-detail-value">' + rdvEscape(booking.email) + '</div></div>' +
-            '<div><div class="rdv-detail-label">Téléphone</div><div class="rdv-detail-value">' + (booking.phone || '-') + '</div></div>' +
-            '<div><div class="rdv-detail-label">Date</div><div class="rdv-detail-value">' + dateStr + ' à ' + booking.time + '</div></div>' +
-            '<div><div class="rdv-detail-label">Événement</div><div class="rdv-detail-value">' + (booking.eventType || '-') + '</div></div>' +
+            '<div><div class="rdv-detail-label">TÃ©lÃ©phone</div><div class="rdv-detail-value">' + (booking.phone || '-') + '</div></div>' +
+            '<div><div class="rdv-detail-label">Date</div><div class="rdv-detail-value">' + dateStr + ' Ã  ' + booking.time + '</div></div>' +
+            '<div><div class="rdv-detail-label">ÃvÃ©nement</div><div class="rdv-detail-value">' + (booking.eventType || '-') + '</div></div>' +
             '<div><div class="rdv-detail-label">Statut</div><div class="rdv-detail-value"><span class="rdv-table-status rdv-status-' + booking.status + '">' + rdvGetStatusLabel(booking.status) + '</span></div></div>' +
             '<div class="rdv-detail-row"><div class="rdv-detail-label">Notes</div><div class="rdv-detail-value">' + (booking.notes || 'Aucune note') + '</div></div></div>';
           document.getElementById('rdv-details-content').innerHTML = html;
@@ -3793,7 +3793,7 @@ Analytics avancées</textarea>
 
         function rdvShowStatusOptions(bookingId) {
           var statuses = ['pending','confirmed','completed','cancelled','no-show'];
-          var labels = { 'pending':'En attente','confirmed':'Confirmé','completed':'Complété','cancelled':'Annulé','no-show':'Absent' };
+          var labels = { 'pending':'En attente','confirmed':'ConfirmÃ©','completed':'ComplÃ©tÃ©','cancelled':'AnnulÃ©','no-show':'Absent' };
           var opts = statuses.map(function(s) {
             return '<button class="btn btn-secondary" style="width:100%;margin-bottom:0.5rem;" onclick="rdvUpdateBookingStatus(\'' + bookingId + '\',\'' + s + '\')">' + labels[s] + '</button>';
           }).join('');
@@ -3808,7 +3808,7 @@ Analytics avancées</textarea>
             localStorage.setItem('rdv_bookings', JSON.stringify(rdvState.bookings));
             rdvRenderBookings(); rdvUpdateStats();
             closeModal('modal-booking-details');
-            toast('Statut mis à jour', 'success');
+            toast('Statut mis Ã  jour', 'success');
           }
         }
 
@@ -3817,7 +3817,7 @@ Analytics avancées</textarea>
             rdvState.bookings = rdvState.bookings.filter(function(b) { return b.id !== bookingId; });
             localStorage.setItem('rdv_bookings', JSON.stringify(rdvState.bookings));
             rdvRenderBookings(); rdvRenderCalendar(); rdvUpdateStats();
-            toast('Rendez-vous supprimé', 'success');
+            toast('Rendez-vous supprimÃ©', 'success');
           }
         }
 
@@ -3838,7 +3838,7 @@ Analytics avancées</textarea>
         }
 
         function rdvGetStatusLabel(status) {
-          var l = { 'pending':'En attente','confirmed':'Confirmé','completed':'Complété','cancelled':'Annulé','no-show':'Absent' };
+          var l = { 'pending':'En attente','confirmed':'ConfirmÃ©','completed':'ComplÃ©tÃ©','cancelled':'AnnulÃ©','no-show':'Absent' };
           return l[status] || status;
         }
 
@@ -3854,7 +3854,7 @@ Analytics avancées</textarea>
         function rdvHandleCreateSubmit(event) {
           event.preventDefault();
           var time = document.getElementById('rdv-form-time').value;
-          if (!time) { toast('Veuillez sélectionner une heure', 'warning'); return; }
+          if (!time) { toast('Veuillez sÃ©lectionner une heure', 'warning'); return; }
           var booking = {
             id: 'rdv_' + Date.now(),
             leadName: document.getElementById('rdv-form-name').value,
@@ -3871,12 +3871,12 @@ Analytics avancées</textarea>
           localStorage.setItem('rdv_bookings', JSON.stringify(rdvState.bookings));
           rdvRenderBookings(); rdvRenderCalendar(); rdvUpdateStats();
           closeModal('modal-create-rdv');
-          toast('Rendez-vous créé avec succès', 'success');
+          toast('Rendez-vous crÃ©Ã© avec succÃ¨s', 'success');
         }
 
         function rdvPopulateEventTypeSelect() {
           var select = document.getElementById('rdv-form-type');
-          select.innerHTML = '<option value="">Sélectionner un type...</option>';
+          select.innerHTML = '<option value="">SÃ©lectionner un type...</option>';
           rdvState.eventTypes.filter(function(t) { return t.active; }).forEach(function(type) {
             var opt = document.createElement('option');
             opt.value = type.id;
@@ -3909,7 +3909,7 @@ Analytics avancées</textarea>
           }
           var picker = document.getElementById('rdv-time-picker');
           picker.innerHTML = '';
-          if (slots.length === 0) { picker.innerHTML = '<div style="grid-column:1/-1;color:var(--text-secondary);text-align:center;padding:1rem;">Aucun créneau disponible</div>'; return; }
+          if (slots.length === 0) { picker.innerHTML = '<div style="grid-column:1/-1;color:var(--text-secondary);text-align:center;padding:1rem;">Aucun crÃ©neau disponible</div>'; return; }
           slots.forEach(function(slot) {
             var btn = document.createElement('button');
             btn.type = 'button'; btn.className = 'rdv-time-option'; btn.textContent = slot;
@@ -3935,10 +3935,10 @@ Analytics avancées</textarea>
             card.innerHTML = '<div class="rdv-event-type-header"><div class="rdv-event-type-icon">' + type.icon + '</div>' +
               '<button class="rdv-event-type-toggle ' + statusClass + '" onclick="rdvToggleEventType(\'' + type.id + '\')" title="Active/Inactive"></button></div>' +
               '<div class="rdv-event-type-name">' + type.name + '</div>' +
-              '<div class="rdv-event-type-duration">⏱️ ' + type.duration + ' minutes</div>' +
+              '<div class="rdv-event-type-duration">â±ï¸ ' + type.duration + ' minutes</div>' +
               '<div class="rdv-event-type-description">' + type.description + '</div>' +
               '<div class="rdv-event-type-actions">' +
-              '<button class="rdv-event-type-btn share" onclick="rdvCopyEventLink(\'' + type.id + '\')">📋 Partager</button>' +
+              '<button class="rdv-event-type-btn share" onclick="rdvCopyEventLink(\'' + type.id + '\')">ð Partager</button>' +
               '<button class="rdv-event-type-btn" onclick="rdvDeleteEventType(\'' + type.id + '\')" style="color:var(--danger);">Supprimer</button></div>';
             grid.appendChild(card);
           });
@@ -3950,7 +3950,7 @@ Analytics avancées</textarea>
         }
 
         function rdvCopyEventLink(typeId) {
-          navigator.clipboard.writeText(window.location.origin + '/booking/' + typeId).then(function() { toast('Lien copié', 'success'); });
+          navigator.clipboard.writeText(window.location.origin + '/booking/' + typeId).then(function() { toast('Lien copiÃ©', 'success'); });
         }
 
         function rdvDeleteEventType(typeId) {
@@ -3958,7 +3958,7 @@ Analytics avancées</textarea>
             rdvState.eventTypes = rdvState.eventTypes.filter(function(t) { return t.id !== typeId; });
             localStorage.setItem('rdv_event_types', JSON.stringify(rdvState.eventTypes));
             rdvRenderEventTypes(); rdvPopulateEventTypeSelect();
-            toast('Type supprimé', 'success');
+            toast('Type supprimÃ©', 'success');
           }
         }
 
@@ -3969,7 +3969,7 @@ Analytics avancées</textarea>
           var colorRadios = document.getElementsByName('color');
           var color = '#7c3aed';
           for (var i = 0; i < colorRadios.length; i++) { if (colorRadios[i].checked) { color = colorRadios[i].value; break; } }
-          var icons = ['📞','🎯','💡','📊','🚀','👥'];
+          var icons = ['ð','ð¯','ð¡','ð','ð','ð¥'];
           var type = {
             id: 'et_' + Date.now(),
             name: document.getElementById('rdv-et-name').value,
@@ -3982,7 +3982,7 @@ Analytics avancées</textarea>
           localStorage.setItem('rdv_event_types', JSON.stringify(rdvState.eventTypes));
           rdvRenderEventTypes(); rdvPopulateEventTypeSelect();
           closeModal('modal-event-type');
-          toast('Type créé', 'success');
+          toast('Type crÃ©Ã©', 'success');
         }
 
         // Availability
@@ -3998,7 +3998,7 @@ Analytics avancées</textarea>
           rdvState.availability.minNotice = parseInt(document.getElementById('rdv-min-notice').value);
           rdvState.availability.maxAdvance = parseInt(document.getElementById('rdv-max-advance').value);
           localStorage.setItem('rdv_availability', JSON.stringify(rdvState.availability));
-          toast('Disponibilité enregistrée', 'success');
+          toast('DisponibilitÃ© enregistrÃ©e', 'success');
         }
 
         // Public Page
@@ -4020,8 +4020,8 @@ Analytics avancées</textarea>
         }
 
         function rdvGeneratePublicLink() { document.getElementById('rdv-public-link').value = window.location.origin + '/booking/public'; }
-        function rdvCopyLink() { navigator.clipboard.writeText(document.getElementById('rdv-public-link').value).then(function() { toast('Lien copié', 'success'); }); }
-        function rdvCopyEmbed() { navigator.clipboard.writeText(document.getElementById('rdv-embed-code').value).then(function() { toast('Code copié', 'success'); }); }
+        function rdvCopyLink() { navigator.clipboard.writeText(document.getElementById('rdv-public-link').value).then(function() { toast('Lien copiÃ©', 'success'); }); }
+        function rdvCopyEmbed() { navigator.clipboard.writeText(document.getElementById('rdv-embed-code').value).then(function() { toast('Code copiÃ©', 'success'); }); }
         function rdvGenerateEmbedCode() { document.getElementById('rdv-embed-code').value = '<iframe src="' + window.location.origin + '/booking/embed" width="100%" height="600" frameborder="0"></iframe>'; }
 
         // Utils
@@ -4064,7 +4064,7 @@ Analytics avancées</textarea>
                     '</div>' +
                     '<div class="agent-actions">' +
                     '<button class="btn btn-sm btn-secondary" onclick="showQR(' + agent.id + ')"><i class="fas fa-qrcode"></i> Scanner QR</button>' +
-                    '<button class="btn btn-sm btn-secondary" onclick="restartAgent(' + agent.id + ')"><i class="fas fa-sync"></i> Redémarrer</button>' +
+                    '<button class="btn btn-sm btn-secondary" onclick="restartAgent(' + agent.id + ')"><i class="fas fa-sync"></i> RedÃ©marrer</button>' +
                     '<button class="btn btn-sm btn-danger" onclick="deleteAgent(' + agent.id + ')"><i class="fas fa-trash"></i></button>' +
                     '</div>';
                 container.appendChild(card);
@@ -4078,7 +4078,7 @@ Analytics avancées</textarea>
             ];
 
             selects.forEach(function(select) {
-                select.innerHTML = '<option value="">Sélectionner un agent</option>';
+                select.innerHTML = '<option value="">SÃ©lectionner un agent</option>';
                 agents.forEach(function(agent) {
                     var option = document.createElement('option');
                     option.value = agent.id;
@@ -4104,7 +4104,7 @@ Analytics avancées</textarea>
             };
 
             appState.agents.push(newAgent);
-            toast('Agent ajouté - Code QR en attente', 'success');
+            toast('Agent ajoutÃ© - Code QR en attente', 'success');
             closeModal('modal-add-agent');
             loadAgents();
         }
@@ -4119,23 +4119,23 @@ Analytics avancées</textarea>
 
             var agent = appState.agents.find(function(a) { return a.id === id; });
             if (agent && agent.status === 'connected') {
-                document.getElementById('qr-status').textContent = 'Agent connecté !';
+                document.getElementById('qr-status').textContent = 'Agent connectÃ© !';
             }
 
             qrRefreshInterval = setInterval(function() {
                 if (Math.random() > 0.8) {
-                    document.getElementById('qr-status').textContent = 'Agent connecté !';
+                    document.getElementById('qr-status').textContent = 'Agent connectÃ© !';
                     clearInterval(qrRefreshInterval);
                 }
             }, 3000);
         }
 
         function restartAgent(id) {
-            if (confirm('Redémarrer cet agent ?')) {
+            if (confirm('RedÃ©marrer cet agent ?')) {
                 var agent = appState.agents.find(function(a) { return a.id === id; });
                 if (agent) {
                     agent.status = 'qr_ready';
-                    toast('Agent redémarré', 'success');
+                    toast('Agent redÃ©marrÃ©', 'success');
                     loadAgents();
                 }
             }
@@ -4144,7 +4144,7 @@ Analytics avancées</textarea>
         function deleteAgent(id) {
             if (confirm('Supprimer cet agent ?')) {
                 appState.agents = appState.agents.filter(function(a) { return a.id !== id; });
-                toast('Agent supprimé', 'success');
+                toast('Agent supprimÃ©', 'success');
                 loadAgents();
             }
         }
@@ -4282,7 +4282,7 @@ Analytics avancées</textarea>
                 language: 'fr',
                 signature: 'SalesBot IA',
                 productName: 'Logiciel SaaS',
-                price: '99€/mois',
+                price: '99â¬/mois',
                 productDesc: 'Plateforme d\'automatisation',
                 advantages: 'Automatisation 24/7\nSupport prioritaire',
                 welcomeMsg: 'Bonjour !',
@@ -4334,7 +4334,7 @@ Analytics avancées</textarea>
                 phone: document.getElementById('config-phone').value
             };
 
-            toast('Configuration sauvegardée !', 'success');
+            toast('Configuration sauvegardÃ©e !', 'success');
         }
 
         // ============================================================================
@@ -4373,7 +4373,7 @@ Analytics avancées</textarea>
 
         function createUser(event) {
             event.preventDefault();
-            toast('Utilisateur créé - Invitation envoyée', 'success');
+            toast('Utilisateur crÃ©Ã© - Invitation envoyÃ©e', 'success');
             closeModal('modal-add-user');
             loadUsers();
         }
@@ -4384,7 +4384,7 @@ Analytics avancées</textarea>
 
         function deleteUser(id) {
             if (confirm('Supprimer cet utilisateur ?')) {
-                toast('Utilisateur supprimé', 'success');
+                toast('Utilisateur supprimÃ©', 'success');
                 loadUsers();
             }
         }
@@ -4432,14 +4432,14 @@ Analytics avancées</textarea>
         };
 
         var sampleTranscription = [
-            "Bonjour, c'est Michel à l'appareil.",
+            "Bonjour, c'est Michel Ã  l'appareil.",
             "J'aimerais en savoir plus sur vos services.",
-            "Nous avons actuellement 50 employés.",
-            "Oui, nous serions intéressés par une démonstration.",
-            "La semaine prochaine serait idéale pour nous.",
-            "Lundi à 14h conviendrait parfaitement.",
+            "Nous avons actuellement 50 employÃ©s.",
+            "Oui, nous serions intÃ©ressÃ©s par une dÃ©monstration.",
+            "La semaine prochaine serait idÃ©ale pour nous.",
+            "Lundi Ã  14h conviendrait parfaitement.",
             "Excellent, je note vos informations.",
-            "À bientôt pour la démonstration!"
+            "Ã bientÃ´t pour la dÃ©monstration!"
         ];
 
         function loadVoiceAgents() {
@@ -4453,11 +4453,11 @@ Analytics avancées</textarea>
             if (checkbox.checked) {
                 statusText.classList.add('online');
                 statusText.textContent = 'En ligne';
-                toast('Agent vocal activé', 'success');
+                toast('Agent vocal activÃ©', 'success');
             } else {
                 statusText.classList.remove('online');
                 statusText.textContent = 'Hors ligne';
-                toast('Agent vocal désactivé', 'info');
+                toast('Agent vocal dÃ©sactivÃ©', 'info');
             }
         }
 
@@ -4471,7 +4471,7 @@ Analytics avancées</textarea>
                 toast('Activez l\'agent vocal d\'abord', 'warning');
                 return;
             }
-            toast('Campagne d\'appels lancée!', 'success');
+            toast('Campagne d\'appels lancÃ©e!', 'success');
             simulateActiveCall();
         }
 
@@ -4503,7 +4503,7 @@ Analytics avancées</textarea>
         }
 
         function muteCall() {
-            toast('Micro désactivé', 'info');
+            toast('Micro dÃ©sactivÃ©', 'info');
         }
 
         function holdCall() {
@@ -4511,7 +4511,7 @@ Analytics avancées</textarea>
         }
 
         function transferCall() {
-            toast('Transfert d\'appel initié', 'info');
+            toast('Transfert d\'appel initiÃ©', 'info');
         }
 
         function endCall() {
@@ -4520,7 +4520,7 @@ Analytics avancées</textarea>
             if (voiceAgentState.callTimer) {
                 clearInterval(voiceAgentState.callTimer);
             }
-            toast('Appel terminé', 'success');
+            toast('Appel terminÃ©', 'success');
             voiceAgentState.activeCallId = null;
         }
 
@@ -4531,22 +4531,22 @@ Analytics avancées</textarea>
         function exportCallLog() {
             toast('Export des logs en cours...', 'info');
             setTimeout(function() {
-                toast('Fichier téléchargé (call-log-' + new Date().toISOString().split('T')[0] + '.csv)', 'success');
+                toast('Fichier tÃ©lÃ©chargÃ© (call-log-' + new Date().toISOString().split('T')[0] + '.csv)', 'success');
             }, 1500);
         }
 
         function qualifyCallLead(callId, qualification) {
             var qualLabels = {
-                'qualifie': 'Qualifié',
+                'qualifie': 'QualifiÃ©',
                 'rdv_pris': 'RDV Pris',
-                'rappeler': 'À Rappeler',
-                'non_qualifie': 'Non Qualifié'
+                'rappeler': 'Ã Rappeler',
+                'non_qualifie': 'Non QualifiÃ©'
             };
-            toast('Lead marqué: ' + qualLabels[qualification], 'success');
+            toast('Lead marquÃ©: ' + qualLabels[qualification], 'success');
         }
 
         function bookRdvFromCall(callId) {
-            toast('RDV créé et ajouté au calendrier', 'success');
+            toast('RDV crÃ©Ã© et ajoutÃ© au calendrier', 'success');
         }
 
         function startCampaignExecution() {
@@ -4574,7 +4574,7 @@ Analytics avancées</textarea>
                     document.getElementById('campaign-progress-text').textContent = progress + ' / ' + total;
                 } else if (progress >= total) {
                     clearInterval(interval);
-                    toast('Campagne terminée!', 'success');
+                    toast('Campagne terminÃ©e!', 'success');
                     stopCampaign();
                 }
             }, 300);
@@ -4642,47 +4642,96 @@ Analytics avancées</textarea>
         }
 
         function addWhatsAppAgent() {
-            var grid = document.getElementById("wa-sessions-grid");
-            if (!grid) return;
-            var agentCount = grid.querySelectorAll(".wa-session-card:not(#wa-add-agent-card)").length + 1;
-            var agentId = "agent-" + agentCount + "-" + Date.now();
-            var card = document.createElement("div");
-            card.className = "wa-session-card";
-            card.id = "wa-card-" + agentCount;
-            card.innerHTML = '<div class="wa-header">' +
-                '<div class="wa-info"><div class="wa-name">Agent WhatsApp ' + agentCount + '</div>' +
-                '<div class="wa-phone">En attente de connexion...</div></div>' +
-                '<span class="wa-status disconnected">En attente</span></div>' +
-                '<div class="qr-real" id="qr-' + agentId + '" style="background:#fff; padding:10px; border-radius:8px; display:flex; align-items:center; justify-content:center; min-height:200px;"></div>' +
-                '<div class="wa-stats"><div class="wa-stat-item"><div class="wa-stat-label">Messages</div><div class="wa-stat-value">0</div></div>' +
-                '<div class="wa-stat-item"><div class="wa-stat-label">Statut</div><div class="wa-stat-value">Scannez le QR</div></div></div>' +
-                '<div class="wa-actions">' +
-                '<button class="btn btn-sm btn-secondary" onclick="refreshQR(this)"><i class="fas fa-sync"></i> Actualiser</button>' +
-                '<button class="btn btn-sm btn-danger" onclick="removeWhatsAppAgent(this)"><i class="fas fa-trash"></i> Supprimer</button></div>';
-            var addCard = document.getElementById("wa-add-agent-card");
-            grid.insertBefore(card, addCard);
-            generateRealQR("qr-" + agentId, "https://wa.me/connect/" + agentId);
-            toast("Agent WhatsApp " + agentCount + " ajouté - Scannez le QR code", "success");
-        }
+  var grid = document.getElementById('whatsapp-grid');
+  if (!grid) return;
+  var sessionId = 'agent-' + Date.now();
+  var card = document.createElement('div');
+  card.className = 'glass-card';
+  card.setAttribute('data-session-id', sessionId);
+  card.style.cssText = 'padding:20px;border-radius:16px;text-align:center;';
+  card.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">' +
+    '<h4 style="margin:0;color:#fff;">Agent WhatsApp</h4>' +
+    '<button onclick="removeWhatsAppAgent(this)" style="background:rgba(239,68,68,0.2);border:1px solid rgba(239,68,68,0.3);color:#ef4444;border-radius:8px;padding:4px 10px;cursor:pointer;font-size:12px;">Supprimer</button>' +
+    '</div>' +
+    '<div class="qr-container" style="background:rgba(255,255,255,0.05);border-radius:12px;padding:20px;margin-bottom:15px;min-height:200px;display:flex;align-items:center;justify-content:center;">' +
+    '<div class="qr-status" style="color:#94a3b8;">Connexion en cours...</div>' +
+    '</div>' +
+    '<div class="session-info" style="color:#94a3b8;font-size:13px;">Initialisation...</div>' +
+    '<div style="margin-top:10px;">' +
+    '<button onclick="refreshQR(this)" style="background:linear-gradient(135deg,#3b82f6,#8b5cf6);border:none;color:#fff;border-radius:8px;padding:8px 16px;cursor:pointer;font-size:13px;">Reconnecter</button>' +
+    '</div>';
+  var addCard = grid.querySelector('[onclick*="addWhatsAppAgent"]');
+  if (addCard) { grid.insertBefore(card, addCard); } else { grid.appendChild(card); }
+  connectWhatsAppSSE(card, sessionId);
+}
+
+function connectWhatsAppSSE(card, sessionId) {
+  var qrContainer = card.querySelector('.qr-container');
+  var statusDiv = card.querySelector('.session-info');
+  var qrStatus = card.querySelector('.qr-status');
+  if (qrStatus) qrStatus.textContent = 'Connexion au serveur...';
+  if (statusDiv) statusDiv.textContent = 'Initialisation de WhatsApp...';
+
+  var evtSource = new EventSource('/api/whatsapp/qr/' + sessionId);
+  card._evtSource = evtSource;
+
+  evtSource.onmessage = function(event) {
+    try {
+      var data = JSON.parse(event.data);
+      if (data.status === 'qr' && data.qr) {
+        qrContainer.innerHTML = '<img src="' + data.qr + '" style="width:200px;height:200px;border-radius:8px;background:#fff;padding:8px;" />';
+        statusDiv.textContent = 'Scannez le QR code avec WhatsApp';
+        statusDiv.style.color = '#f59e0b';
+      } else if (data.status === 'ready') {
+        qrContainer.innerHTML = '<div style="color:#22c55e;font-size:48px;">&#10003;</div><div style="color:#22c55e;margin-top:10px;">Connecte!</div>';
+        statusDiv.textContent = 'Telephone: ' + (data.phone || 'connecte');
+        statusDiv.style.color = '#22c55e';
+        card.querySelector('h4').textContent = 'Agent ' + (data.phone || sessionId);
+      } else if (data.status === 'authenticated') {
+        statusDiv.textContent = 'Authentifie! En attente...';
+        statusDiv.style.color = '#3b82f6';
+      } else if (data.status === 'error') {
+        qrContainer.innerHTML = '<div style="color:#ef4444;">&#10007; Erreur</div>';
+        statusDiv.textContent = data.message || 'Erreur de connexion';
+        statusDiv.style.color = '#ef4444';
+      } else if (data.status === 'initializing') {
+        if (qrStatus) qrStatus.textContent = data.message || 'Initialisation...';
+        statusDiv.textContent = 'Demarrage du client WhatsApp...';
+      } else if (data.status === 'disconnected') {
+        qrContainer.innerHTML = '<div style="color:#f59e0b;">Deconnecte</div>';
+        statusDiv.textContent = data.message || 'Session terminee';
+        statusDiv.style.color = '#f59e0b';
+      }
+    } catch(e) { console.error('SSE parse error:', e); }
+  };
+
+  evtSource.onerror = function() {
+    statusDiv.textContent = 'Connexion perdue. Cliquez Reconnecter.';
+    statusDiv.style.color = '#ef4444';
+    evtSource.close();
+  };
+}
+
+
 
         function removeWhatsAppAgent(btn) {
             if (confirm("Supprimer cet agent WhatsApp ?")) {
                 var card = btn.closest(".wa-session-card");
                 if (card) card.remove();
-                toast("Agent supprimé", "success");
+                toast("Agent supprimÃ©", "success");
             }
         }
 
         function connectWhatsApp(agentId) {
             toast('Connexion WhatsApp en cours...', 'info');
             setTimeout(function() {
-                toast('Agent WhatsApp ' + agentId + ' connecté!', 'success');
+                toast('Agent WhatsApp ' + agentId + ' connectÃ©!', 'success');
             }, 1500);
         }
 
         function disconnectWhatsApp(agentId) {
-            if (confirm('Déconnecter cet agent WhatsApp ?')) {
-                toast('Agent WhatsApp ' + agentId + ' déconnecté', 'success');
+            if (confirm('DÃ©connecter cet agent WhatsApp ?')) {
+                toast('Agent WhatsApp ' + agentId + ' dÃ©connectÃ©', 'success');
             }
         }
 
@@ -4692,7 +4741,7 @@ Analytics avancées</textarea>
             var qrDiv = card.querySelector('.qr-real');
             if (qrDiv) {
                 generateRealQR(qrDiv.id, 'https://wa.me/connect/' + qrDiv.id + '-' + Date.now());
-                toast('QR code actualisé', 'info');
+                toast('QR code actualisÃ©', 'info');
             }
         }
 
