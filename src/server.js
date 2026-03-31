@@ -912,7 +912,7 @@ app.get('/book/:userId', (req, res) => {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Réserver un créneau</title>
+  <title>RÃ©server un crÃ©neau</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -1068,7 +1068,7 @@ app.get('/book/:userId', (req, res) => {
 <body>
   <div class="container">
     <div class="header">
-      <h1>Réserver un créneau</h1>
+      <h1>RÃ©server un crÃ©neau</h1>
       <p style="color: #999; margin-top: 8px;">Choisissez votre date et heure</p>
     </div>
 
@@ -1089,7 +1089,7 @@ app.get('/book/:userId', (req, res) => {
 
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
         <div class="form-group">
-          <label for="firstName">Prénom</label>
+          <label for="firstName">PrÃ©nom</label>
           <input type="text" id="firstName" placeholder="Jean">
         </div>
         <div class="form-group">
@@ -1104,7 +1104,7 @@ app.get('/book/:userId', (req, res) => {
       </div>
 
       <div class="form-group">
-        <label for="phone">Téléphone</label>
+        <label for="phone">TÃ©lÃ©phone</label>
         <input type="tel" id="phone" placeholder="+33612345678">
       </div>
 
@@ -1113,9 +1113,9 @@ app.get('/book/:userId', (req, res) => {
         <textarea id="notes" placeholder="Ajoutez un message..."></textarea>
       </div>
 
-      <div class="loading" id="loading">Réservation en cours...</div>
-      <button class="submit-button" id="submitBtn">Confirmer la réservation</button>
-      <div class="success-message" id="successMsg">Réservation confirmée! Vous recevrez un email de confirmation.</div>
+      <div class="loading" id="loading">RÃ©servation en cours...</div>
+      <button class="submit-button" id="submitBtn">Confirmer la rÃ©servation</button>
+      <div class="success-message" id="successMsg">RÃ©servation confirmÃ©e! Vous recevrez un email de confirmation.</div>
     </div>
   </div>
 
@@ -1138,7 +1138,7 @@ app.get('/book/:userId', (req, res) => {
         const container = document.getElementById('slotsContainer');
 
         if (daySlots.length === 0) {
-          container.innerHTML = '<p style="color: #999; grid-column: 1/-1;">Aucun créneau disponible</p>';
+          container.innerHTML = '<p style="color: #999; grid-column: 1/-1;">Aucun crÃ©neau disponible</p>';
           return;
         }
 
@@ -1199,7 +1199,7 @@ app.get('/book/:userId', (req, res) => {
           document.getElementById('slotsContainer').innerHTML = '<p style="color: #999; grid-column: 1/-1;">Choisissez une date d\\'abord</p>';
           successMsg.style.display = 'block';
         } else {
-          errorMsg.textContent = data.error || 'Erreur lors de la réservation';
+          errorMsg.textContent = data.error || 'Erreur lors de la rÃ©servation';
           errorMsg.style.display = 'block';
         }
       } catch (err) {
@@ -1549,6 +1549,11 @@ app.use((req, res) => {
 // ============================================================================
 // SERVER START
 // ============================================================================
+
+
+// WhatsApp API routes (QR code SSE + login)
+const { setupWhatsAppRoutes } = require('./routes/whatsapp-api');
+setupWhatsAppRoutes(app);
 
 app.listen(PORT, () => {
   console.log(`SalesBot IA v3.0 running on port ${PORT}`);
