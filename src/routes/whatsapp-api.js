@@ -7,7 +7,8 @@ function setupWhatsAppRoutes(app) {
 
   app.get('/api/whatsapp/qr/:sessionId', (req, res) => {
     const sessionId = req.params.sessionId;
-    res.writeHead(200, { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache', 'Connection': 'keep-alive', 'Access-Control-Allow-Origin': '*' });
+    res.writeHead(200, { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache', 'Connection': 'keep-alive', 'Access-Control-Allow-Origin': '*', 'X-Accel-Buffering': 'no' });
+    if (typeof res.flush === 'function') res.flush();
     res.write('data: ' + JSON.stringify({ status: 'initializing', message: 'Initialisation du client WhatsApp...' }) + '\n\n');
     if (sessions.has(sessionId)) {
       const existing = sessions.get(sessionId);
@@ -81,6 +82,15 @@ function setupWhatsAppRoutes(app) {
       sessions.delete(sid);
       res.json({ success: true, message: 'Session deconnectee' });
     } else { res.json({ success: false, message: 'Session non trouvee' }); }
+  });
+
+  app.get('/api/sse-test', (req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache', 'Connection': 'keep-alive', 'X-Accel-Buffering': 'no', 'Access-Control-Allow-Origin': '*' });
+    if (typeof res.flush === 'function') res.flush();
+    res.write('data: ' + JSON.stringify({ status: 'test', message: 'SSE working!' }) + '\n\n');
+    if (typeof res.flush === 'function') res.flush();
+    var interval = setInterval(() => { res.write('data: ' + JSON.stringify({ status: 'ping', time: Date.now() }) + '\n\n'); if (typeof res.flush === 'function') res.flush(); }, 5000);
+    req.on('close', () => clearInterval(interval));
   });
 
   app.get('/api/health', (req, res) => {
