@@ -6,3 +6,10 @@ cmds = ["npm install --omit=dev"]
 
 [phases.build]
 cmds = []
+
+[start]
+cmd = "node src/server.js"
+
+[variables]
+PUPPETEER_EXECUTABLE_PATH = "/nix/var/nix/profiles/default/bin/chromium"
+PUPPETEER_SKIP_DOWNLOAD = "true"
