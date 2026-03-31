@@ -1537,6 +1537,11 @@ app.get('/dashboard', (req, res) => {
 // ERROR HANDLING
 // ============================================================================
 
+
+// WhatsApp API routes (QR code SSE + login)
+const { setupWhatsAppRoutes } = require('./routes/whatsapp-api');
+setupWhatsAppRoutes(app);
+
 app.use((err, req, res, next) => {
   console.error('Error:', err);
   res.status(500).json({ error: 'Internal server error' });
@@ -1549,11 +1554,6 @@ app.use((req, res) => {
 // ============================================================================
 // SERVER START
 // ============================================================================
-
-
-// WhatsApp API routes (QR code SSE + login)
-const { setupWhatsAppRoutes } = require('./routes/whatsapp-api');
-setupWhatsAppRoutes(app);
 
 app.listen(PORT, () => {
   console.log(`SalesBot IA v3.0 running on port ${PORT}`);
